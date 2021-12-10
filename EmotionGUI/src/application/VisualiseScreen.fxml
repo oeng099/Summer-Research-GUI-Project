@@ -129,7 +129,7 @@
                   <Insets bottom="70.0" left="150.0" right="25.0" top="10.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="mainMenu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-radius: 10;" text="Main Menu" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+            <Button fx:id="mainMenu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#returnToMainMenu" style="-fx-background-radius: 10;" text="Main Menu" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="30.0" left="50.0" right="50.0" top="30.0" />
                </GridPane.margin>
