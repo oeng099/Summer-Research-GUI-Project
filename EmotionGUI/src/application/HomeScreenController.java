@@ -25,7 +25,7 @@ public class HomeScreenController {
 	
 	public void changeToVisualise(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(getClass().getResource("fxml/VisualiseScreen.fxml"));
+			root = FXMLLoader.load(getClass().getResource("VisualiseScreen.fxml"));
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
 			stage.setScene(scene);
