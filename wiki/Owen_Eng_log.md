@@ -8,3 +8,6 @@ Implemented functionality for buttons on HomeScreen scene and added in the compo
 
 #10 December 2021
 Initial functionality for select file button implemented. Main menu button functionality in VisualScreen scene implemented.
+
+#13 December 2021
+Added in a scatter plot to represent the valence-arosual model. Also added in functionality for the manual plot. Need to look into scatter plot further to stop it from changing scale.
