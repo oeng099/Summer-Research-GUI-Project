@@ -15,13 +15,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class VisualiseScreenController implements Initializable {
+public class VisualiseScreenController {
 	
 	@FXML
 	Button selectFile;
@@ -34,9 +36,15 @@ public class VisualiseScreenController implements Initializable {
 	@FXML
 	TextField fileName;
 	@FXML
+	TextField valenceCoordinate;
+	@FXML
+	TextField arousalCoordinate;
+	@FXML
 	BorderPane borderPane;
 	@FXML
-	ScatterChart ValenceArousalPlot;
+	ScatterChart<Number, Number> ValenceArousalPlot;
+	
+	XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number,Number>();
 	
 	private Stage stage;
 	private Scene scene;
@@ -63,12 +71,12 @@ public class VisualiseScreenController implements Initializable {
 			e.printStackTrace();
 		} 
 	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		NumberAxis xAxis = new NumberAxis(0,10,1);
-		NumberAxis yAxis = new NumberAxis(0,10,1);
-		NumberAxis a = (NumberAxis) ValenceArousalPlot.getXAxis();
-
+	
+	@SuppressWarnings("unchecked")
+	public void plotManual(ActionEvent event) {
+		double valence = Double.parseDouble(valenceCoordinate.getText());
+		double arousal = Double.parseDouble(arousalCoordinate.getText());
+		emotionCoordinates.getData().add(new Data<Number, Number>(valence, arousal));
+		ValenceArousalPlot.getData().addAll(emotionCoordinates);
 	}
 }
