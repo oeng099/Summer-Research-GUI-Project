@@ -1,20 +1,27 @@
 package application;
 
 import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class VisualiseScreenController {
+public class VisualiseScreenController implements Initializable {
 	
 	@FXML
 	Button selectFile;
@@ -28,6 +35,8 @@ public class VisualiseScreenController {
 	TextField fileName;
 	@FXML
 	BorderPane borderPane;
+	@FXML
+	ScatterChart ValenceArousalPlot;
 	
 	private Stage stage;
 	private Scene scene;
@@ -52,6 +61,14 @@ public class VisualiseScreenController {
 			stage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
+		} 
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		NumberAxis xAxis = new NumberAxis(0,10,1);
+		NumberAxis yAxis = new NumberAxis(0,10,1);
+		NumberAxis a = (NumberAxis) ValenceArousalPlot.getXAxis();
+
 	}
 }
