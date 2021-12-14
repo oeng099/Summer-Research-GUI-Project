@@ -36,7 +36,7 @@ public class VisualiseScreenController {
 	@FXML
 	Button saveCoordinates;
 	@FXML
-	Button clearChart;
+	Button clear;
 	@FXML
 	TextField fileName;
 	@FXML
@@ -87,5 +87,10 @@ public class VisualiseScreenController {
 			ValenceArousalPlot.getData().remove((int) (Math.random() * (ValenceArousalPlot.getData().size() - 1)));
 			ValenceArousalPlot.getData().addAll(emotionCoordinates);
 		}
+	}
+	
+	public void clearModel(ActionEvent event) {
+		emotionCoordinates.getData().clear();
+		ValenceArousalPlot.getData().remove((int) (Math.random() * (ValenceArousalPlot.getData().size() - 1)));
 	}
 }
