@@ -139,12 +139,12 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <ScatterChart fx:id="ValenceArousalPlot" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.rowSpan="4">
+            <ScatterChart fx:id="ValenceArousalPlot" animated="false" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.rowSpan="4">
               <xAxis>
-                <NumberAxis label="Valence" lowerBound="-9.0" side="BOTTOM" upperBound="9.0" />
+                <NumberAxis autoRanging="false" label="Valence" lowerBound="-10.0" side="BOTTOM" upperBound="10.0" />
               </xAxis>
               <yAxis>
-                <NumberAxis label="Arousal" lowerBound="-9.0" side="LEFT" upperBound="9.0" />
+                <NumberAxis autoRanging="false" label="Arousal" lowerBound="-10.0" side="LEFT" upperBound="10.0" />
               </yAxis>
             </ScatterChart>
          </children>
