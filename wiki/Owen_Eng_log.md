@@ -11,3 +11,6 @@ Initial functionality for select file button implemented. Main menu button funct
 
 #13 December 2021
 Added in a scatter plot to represent the valence-arosual model. Also added in functionality for the manual plot. Need to look into scatter plot further to stop it from changing scale.
+
+#14 December 2021
+Improved Scatter Chart valence-arousal model so that it now does not change its axes when a series is added. The duplicate series error regardining plotting multiple manual points was also resolved. Clear and save buttons were added to visualise screen with clear functionality implemented.
