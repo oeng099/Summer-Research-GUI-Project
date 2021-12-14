@@ -34,6 +34,10 @@ public class VisualiseScreenController {
 	@FXML
 	Button mainMenu;
 	@FXML
+	Button saveCoordinates;
+	@FXML
+	Button clearChart;
+	@FXML
 	TextField fileName;
 	@FXML
 	TextField valenceCoordinate;

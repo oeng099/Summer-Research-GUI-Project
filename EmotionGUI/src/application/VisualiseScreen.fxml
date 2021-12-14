@@ -147,6 +147,22 @@
                 <NumberAxis autoRanging="false" label="Arousal" lowerBound="-10.0" side="LEFT" upperBound="10.0" />
               </yAxis>
             </ScatterChart>
+            <Button fx:id="saveCoordinates" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-radius: 10;" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="70.0" left="550.0" right="25.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="clearChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-radius: 10;" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="70.0" left="400.0" right="175.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
    </center>
