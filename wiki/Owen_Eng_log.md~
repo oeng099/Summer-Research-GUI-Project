@@ -14,7 +14,3 @@ Added in a scatter plot to represent the valence-arosual model. Also added in fu
 
 #14 December 2021
 Improved Scatter Chart valence-arousal model so that it now does not change its axes when a series is added. The duplicate series error regardining plotting multiple manual points was also resolved. Clear and save buttons were added to visualise screen with clear functionality implemented.
-
-#15 December 2021
-Changed the axes for the valence-arousal model to -1 to 1, following the meeting with my supervisor today. Also added in the outline of a circle on the model to put on landmark emotions in the future.
-
