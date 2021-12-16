@@ -17,3 +17,6 @@ Improved Scatter Chart valence-arousal model so that it now does not change its 
 
 #15 December 2021
 Changed the axes for the valence-arousal model to -1 to 1, following the meeting with my supervisor today. Also added in the outline of a circle on the model to put on landmark emotions in the future.
+
+#16 December 2021
+Added in error handling to display an error message when plotting manually on the visualise screen. This protects against trying to plot when no numbers have been entered, or if a number entered is outside of the acceptable range.
