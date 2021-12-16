@@ -1,6 +1,7 @@
 package application;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -20,6 +21,7 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -43,6 +45,8 @@ public class VisualiseScreenController {
 	TextField valenceCoordinate;
 	@FXML
 	TextField arousalCoordinate;
+	@FXML
+	Text manualPlotError;
 	@FXML
 	BorderPane borderPane;
 	@FXML
@@ -77,15 +81,25 @@ public class VisualiseScreenController {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void plotManual(ActionEvent event) {
-		double valence = Double.parseDouble(valenceCoordinate.getText());
-		double arousal = Double.parseDouble(arousalCoordinate.getText());
-		emotionCoordinates.getData().add(new Data<Number, Number>(valence, arousal));
-		if (ValenceArousalPlot.getData().isEmpty()) {
-			ValenceArousalPlot.getData().addAll(emotionCoordinates);
+	public void plotManual(ActionEvent event) throws IOException {
+		if (valenceCoordinate.getText().isEmpty() || arousalCoordinate.getText().isEmpty()) {
+			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1 to 1");
+		} else if (!(Double.parseDouble(valenceCoordinate.getText()) < 1.0
+				&& Double.parseDouble(valenceCoordinate.getText()) > -1.0)
+				|| !(Double.parseDouble(arousalCoordinate.getText()) < 1.0
+						&& Double.parseDouble(arousalCoordinate.getText()) > -1.0)) {
+			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1 to 1");
 		} else {
-			ValenceArousalPlot.getData().remove((int) (Math.random() * (ValenceArousalPlot.getData().size() - 1)));
-			ValenceArousalPlot.getData().addAll(emotionCoordinates);
+			manualPlotError.setText(" ");
+			double valence = Double.parseDouble(valenceCoordinate.getText());
+			double arousal = Double.parseDouble(arousalCoordinate.getText());
+			emotionCoordinates.getData().add(new Data<Number, Number>(valence, arousal));
+			if (ValenceArousalPlot.getData().isEmpty()) {
+				ValenceArousalPlot.getData().addAll(emotionCoordinates);
+			} else {
+				ValenceArousalPlot.getData().remove((int) (Math.random() * (ValenceArousalPlot.getData().size() - 1)));
+				ValenceArousalPlot.getData().addAll(emotionCoordinates);
+			}
 		}
 	}
 	

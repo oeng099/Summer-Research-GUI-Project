@@ -17,4 +17,3 @@ Improved Scatter Chart valence-arousal model so that it now does not change its 
 
 #15 December 2021
 Changed the axes for the valence-arousal model to -1 to 1, following the meeting with my supervisor today. Also added in the outline of a circle on the model to put on landmark emotions in the future.
-
