@@ -1,9 +1,10 @@
 package application;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
-import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -102,6 +103,25 @@ public class VisualiseScreenController {
 				ValenceArousalPlot.getData().addAll(emotionCoordinates);
 			}
 		}
+	}
+	
+	public void saveAsCSV(ActionEvent event) throws IOException {
+		String csv = "emotion.csv";
+		CSVWriter writer = new CSVWriter(new FileWriter(csv));
+		
+		String [] record = "Valence,Arousal".split(",");
+		writer.writeNext(record);
+		
+		for(int i = 0; i < emotionCoordinates.getData().size(); i++) {
+			Number valence = emotionCoordinates.getData().get(i).getXValue();
+			Number  arousal = emotionCoordinates.getData().get(i).getYValue();
+			String[] coordinates = new String[2];
+			coordinates[0] = valence.toString();
+			coordinates[1] = arousal.toString();
+			writer.writeNext(coordinates);
+		}
+		
+		writer.close();
 	}
 
 	public void clearModel(ActionEvent event) {
