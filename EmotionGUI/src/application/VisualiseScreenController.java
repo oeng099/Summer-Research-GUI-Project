@@ -2,8 +2,8 @@ package application;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+
+import com.opencsv.CSVReader;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -90,6 +90,7 @@ public class VisualiseScreenController {
 						&& Double.parseDouble(arousalCoordinate.getText()) > -1.0)) {
 			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1 to 1");
 		} else {
+			emotionCoordinates.setName("Emotion Points");
 			manualPlotError.setText(" ");
 			double valence = Double.parseDouble(valenceCoordinate.getText());
 			double arousal = Double.parseDouble(arousalCoordinate.getText());
@@ -102,7 +103,7 @@ public class VisualiseScreenController {
 			}
 		}
 	}
-	
+
 	public void clearModel(ActionEvent event) {
 		emotionCoordinates.getData().clear();
 		ValenceArousalPlot.getData().remove((int) (Math.random() * (ValenceArousalPlot.getData().size() - 1)));
