@@ -20,6 +20,3 @@ Changed the axes for the valence-arousal model to -1 to 1, following the meeting
 
 #16 December 2021
 Added in error handling to display an error message when plotting manually on the visualise screen. This protects against trying to plot when no numbers have been entered, or if a number entered is outside of the acceptable range.
-
-#17 December 2021
-Downloaded in the Opencsv project to help write to and read csv files. This allowed for the implemenentation of the save method linked to the save button in the visualise screen.
