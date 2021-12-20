@@ -23,3 +23,6 @@ Added in error handling to display an error message when plotting manually on th
 
 #17 December 2021
 Downloaded in the Opencsv project to help write to and read csv files. This allowed for the implemenentation of the save method linked to the save button in the visualise screen.
+
+#20 December 2021
+Added in a separate save button to be able to save the model as a png. Refactored the implementation of the circle so that it shows up on the saved png.
