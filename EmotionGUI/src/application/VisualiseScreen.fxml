@@ -43,7 +43,7 @@
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" percentHeight="17.5" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -148,12 +148,12 @@
                 <NumberAxis autoRanging="false" label="Arousal" lowerBound="-1.0" side="LEFT" tickLabelGap="0.1" tickUnit="0.1" upperBound="1.0" />
               </yAxis>
             </ScatterChart>
-            <Button fx:id="saveCoordinates" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveAsCSV" style="-fx-background-radius: 10;" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Button fx:id="saveCoordinates" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveAsCSV" prefHeight="36.0" prefWidth="139.0" style="-fx-background-radius: 10;" text="Save as CSV" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font size="18.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="70.0" left="550.0" right="25.0" top="10.0" />
+                  <Insets bottom="70.0" left="400.0" right="160.0" top="10.0" />
                </GridPane.margin>
             </Button>
             <Button fx:id="clearChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearModel" style="-fx-background-radius: 10;" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="4">
@@ -161,7 +161,7 @@
                   <Font size="18.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="70.0" left="400.0" right="175.0" top="10.0" />
+                  <Insets bottom="70.0" left="265.0" right="310.0" top="10.0" />
                </GridPane.margin>
             </Button>
             <Circle fill="#e3e7eb" opacity="0.13" radius="225.0" stroke="BLACK" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowSpan="4" GridPane.valignment="CENTER">
@@ -177,6 +177,14 @@
                   <Insets bottom="90.0" />
                </GridPane.margin>
             </Text>
+            <Button fx:id="saveImage" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveAsPNG" prefHeight="36.0" prefWidth="139.0" style="-fx-background-radius: 10;" text="Save as PNG" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="70.0" left="550.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
    </center>

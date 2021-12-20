@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
+
 import com.opencsv.CSVWriter;
 
 import javafx.application.Application;
@@ -15,12 +19,14 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -38,6 +44,8 @@ public class VisualiseScreenController {
 	Button mainMenu;
 	@FXML
 	Button saveCoordinates;
+	@FXML
+	Button saveImage;
 	@FXML
 	Button clear;
 	@FXML
@@ -122,6 +130,18 @@ public class VisualiseScreenController {
 		}
 		
 		writer.close();
+	}
+	
+	public void saveAsPNG(ActionEvent event) {
+		WritableImage image = ValenceArousalPlot.snapshot(new SnapshotParameters(), null);
+		
+		File file = new File("emotions.png");
+		
+		try {
+			ImageIO.write(SwingFXUtils.fromFXImage(image,null), "png", file);
+		} catch (IOException e) {
+			System.out.println("Scatter plot cannot be converted.");
+		}
 	}
 
 	public void clearModel(ActionEvent event) {
