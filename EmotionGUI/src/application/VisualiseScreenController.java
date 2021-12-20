@@ -3,6 +3,8 @@ package application;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
@@ -28,11 +30,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class VisualiseScreenController {
+public class VisualiseScreenController implements Initializable{
 
 	@FXML
 	Button selectFile;
@@ -66,6 +70,22 @@ public class VisualiseScreenController {
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		XYChart.Series<Number, Number> circleSeries = new XYChart.Series<Number, Number>();
+		Circle circle = new Circle(0,0,265);
+		circle.setFill(new Color(0,0,0,0));
+		circle.setStroke(Color.BLACK);
+		Data<Number, Number> data = new Data<Number, Number>(0,0);
+		data.setNode(circle);
+		circleSeries.getData().addAll(data);
+		ValenceArousalPlot.getData().addAll(circleSeries);
+		
+		
+	}
 
 	public void selectAFile(ActionEvent event) {
 
@@ -104,10 +124,10 @@ public class VisualiseScreenController {
 			double valence = Double.parseDouble(valenceCoordinate.getText());
 			double arousal = Double.parseDouble(arousalCoordinate.getText());
 			emotionCoordinates.getData().add(new Data<Number, Number>(valence, arousal));
-			if (ValenceArousalPlot.getData().isEmpty()) {
+			if(!ValenceArousalPlot.getData().contains(emotionCoordinates)) {
 				ValenceArousalPlot.getData().addAll(emotionCoordinates);
 			} else {
-				ValenceArousalPlot.getData().remove((int) (Math.random() * (ValenceArousalPlot.getData().size() - 1)));
+				ValenceArousalPlot.getData().remove(1);
 				ValenceArousalPlot.getData().addAll(emotionCoordinates);
 			}
 		}
@@ -148,4 +168,6 @@ public class VisualiseScreenController {
 		emotionCoordinates.getData().clear();
 		ValenceArousalPlot.getData().remove((int) (Math.random() * (ValenceArousalPlot.getData().size() - 1)));
 	}
+
+
 }
