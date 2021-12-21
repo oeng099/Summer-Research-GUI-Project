@@ -26,6 +26,3 @@ Downloaded in the Opencsv project to help write to and read csv files. This allo
 
 #20 December 2021
 Added in a separate save button to be able to save the model as a png. Refactored the implementation of the circle so that it shows up on the saved png.
-
-#21 December 2021
-Implemented plot file functionality - csv files are now able to be plotted on the model. Implemented functionality for showing the details of a point when hovering over it.
