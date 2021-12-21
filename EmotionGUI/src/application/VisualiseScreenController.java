@@ -1,6 +1,8 @@
 package application;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -10,7 +12,10 @@ import javax.imageio.ImageIO;
 
 import javafx.embed.swing.SwingFXUtils;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvValidationException;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -95,6 +100,22 @@ public class VisualiseScreenController implements Initializable{
 		if (file != null) {
 			fileName.setText(file.toString());
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void plotCSVFile(ActionEvent event) throws CsvValidationException, IOException {
+	
+		File file = new File(fileName.getText());
+		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
+		String[] lineInFile;
+		while((lineInFile = reader.readNext()) != null) {
+			double valence = Double.parseDouble(lineInFile[0]);
+			double arousal = Double.parseDouble(lineInFile[1]);
+			emotionCoordinates.getData().add(new Data<Number, Number>(valence, arousal));
+		}
+		emotionCoordinates.setName("Emotion Points");
+		manualPlotError.setText(" ");
+		ValenceArousalPlot.getData().addAll(emotionCoordinates);
 	}
 
 	public void returnToMainMenu(ActionEvent event) {
