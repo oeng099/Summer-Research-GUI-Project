@@ -182,6 +182,14 @@
                   <Insets bottom="70.0" left="550.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </Button>
+            <Text fx:id="coordinateDetail" strokeType="OUTSIDE" strokeWidth="0.0" text="Point: " GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="65.0" left="100.0" />
+               </GridPane.margin>
+            </Text>
          </children>
       </GridPane>
    </center>

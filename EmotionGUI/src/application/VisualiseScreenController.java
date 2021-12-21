@@ -19,9 +19,11 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -32,9 +34,12 @@ import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -65,6 +70,8 @@ public class VisualiseScreenController implements Initializable{
 	TextField arousalCoordinate;
 	@FXML
 	Text manualPlotError;
+	@FXML
+	Text coordinateDetail;
 	@FXML
 	BorderPane borderPane;
 	@FXML
@@ -144,7 +151,9 @@ public class VisualiseScreenController implements Initializable{
 			manualPlotError.setText(" ");
 			double valence = Double.parseDouble(valenceCoordinate.getText());
 			double arousal = Double.parseDouble(arousalCoordinate.getText());
-			emotionCoordinates.getData().add(new Data<Number, Number>(valence, arousal));
+			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
+			data.setNode(new HoverNode(valenceCoordinate.getText(),arousalCoordinate.getText(),coordinateDetail));
+			emotionCoordinates.getData().add(data);
 			if(!ValenceArousalPlot.getData().contains(emotionCoordinates)) {
 				ValenceArousalPlot.getData().addAll(emotionCoordinates);
 			} else {
@@ -189,6 +198,5 @@ public class VisualiseScreenController implements Initializable{
 		emotionCoordinates.getData().clear();
 		ValenceArousalPlot.getData().remove((int) (Math.random() * (ValenceArousalPlot.getData().size() - 1)));
 	}
-
 
 }
