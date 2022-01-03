@@ -195,8 +195,10 @@ public class VisualiseScreenController implements Initializable{
 	}
 
 	public void clearModel(ActionEvent event) {
+		if(emotionCoordinates.getData().equals(null)) {
+		ValenceArousalPlot.getData().remove(1);
+		}
 		emotionCoordinates.getData().clear();
-		ValenceArousalPlot.getData().remove((int) (Math.random() * (ValenceArousalPlot.getData().size() - 1)));
 	}
 
 }
