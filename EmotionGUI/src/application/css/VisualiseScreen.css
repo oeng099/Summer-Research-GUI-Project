@@ -1,0 +1,42 @@
+@font-face {
+	font-family: Neoteric;
+    src: url('fonts/Neoteric-32A8.ttf');
+    font-weight: bold;
+}
+
+.root{
+	-fx-background-color: linear-gradient(to left,#33373C,#F4F2F3);
+}
+
+/*Text{
+	-fx-font-family: "Neoteric";
+}*/
+
+.button{
+	-fx-font-family: "Neoteric";
+}
+
+#valenceText{
+	-fx-font-family: "Neoteric";
+}
+
+#arousalText{
+	-fx-font-family: "Neoteric";
+}
+
+#manualPlotText{
+	-fx-font-family: "Neoteric";
+}
+
+#selectAFileText{
+	-fx-font-family: "Neoteric";
+}
+
+#coordinateDetail{
+	-fx-font-family: "Neoteric";
+}	
+
+.button:hover {
+	-fx-background-color: #33373C;
+	-fx-text-fill: white;
+}

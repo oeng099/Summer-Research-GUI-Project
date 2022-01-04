@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
@@ -18,6 +19,8 @@ public class HomeScreenController {
 	Button annotation;
 	@FXML
 	BorderPane borderPane;
+	@FXML
+	Text emotionGUI;
 	
 	private Stage stage;
 	private Scene scene;
@@ -28,6 +31,7 @@ public class HomeScreenController {
 			root = FXMLLoader.load(getClass().getResource("VisualiseScreen.fxml"));
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
+			scene.getStylesheets().add(getClass().getResource("css/VisualiseScreen.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();
 		} catch(Exception e) {

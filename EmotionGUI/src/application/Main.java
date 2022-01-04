@@ -13,7 +13,7 @@ public class Main extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("fxml/HomeScreen.fxml"));
 			Scene scene = new Scene(root);
 			
-			
+			scene.getStylesheets().add(getClass().getResource("css/HomeScreen.css").toExternalForm());
 			primaryStage.setTitle("EmotionGUI");
 			primaryStage.setScene(scene);
 			primaryStage.show();

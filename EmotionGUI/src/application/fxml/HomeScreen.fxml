@@ -35,7 +35,7 @@
       </MenuBar>
    </top>
    <center>
-      <GridPane prefHeight="696.0" prefWidth="942.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <GridPane prefHeight="696.0" prefWidth="942.0" BorderPane.alignment="CENTER">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
@@ -49,7 +49,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text fill="#111010" strokeType="OUTSIDE" strokeWidth="0.0" text="Emotion GUI" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Text fx:id="emotionGUI" fill="#111010" strokeType="OUTSIDE" strokeWidth="0.0" text="Emotion GUI" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
                   <Font name="Noto Sans Meetei Mayek" size="64.0" />
                </font>

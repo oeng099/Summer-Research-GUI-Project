@@ -54,7 +54,7 @@
         </rowConstraints>
          <children>
             <ImageView fitHeight="549.0" fitWidth="684.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowSpan="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select a file to visualise on the model:" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Text fx:id="selectAFileText" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a file to visualise on the model:" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font name="Noto Sans Meetei Mayek" size="18.0" />
                </font>
@@ -83,7 +83,7 @@
                   <Insets bottom="80.0" left="10.0" right="10.0" />
                </GridPane.margin>
             </TextField>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Or set co-ordinates and plot manually:" GridPane.rowIndex="2">
+            <Text fx:id="manualPlotText" strokeType="OUTSIDE" strokeWidth="0.0" text="Or set co-ordinates and plot manually:" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
@@ -107,7 +107,7 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Valence:" GridPane.rowIndex="3">
+            <Text fx:id="valenceText" strokeType="OUTSIDE" strokeWidth="0.0" text="Valence:" GridPane.rowIndex="3">
                <font>
                   <Font size="20.0" />
                </font>
@@ -115,7 +115,7 @@
                   <Insets bottom="65.0" left="10.0" />
                </GridPane.margin>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Arousal:" GridPane.rowIndex="3">
+            <Text fx:id="arousalText" strokeType="OUTSIDE" strokeWidth="0.0" text="Arousal:" GridPane.rowIndex="3">
                <font>
                   <Font size="20.0" />
                </font>

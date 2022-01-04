@@ -73,6 +73,14 @@ public class VisualiseScreenController implements Initializable{
 	@FXML
 	Text coordinateDetail;
 	@FXML
+	Text valenceText;
+	@FXML
+	Text arousalText;
+	@FXML
+	Text manualPlotText;
+	@FXML
+	Text selectAFileText;
+	@FXML
 	BorderPane borderPane;
 	@FXML
 	ScatterChart<Number, Number> ValenceArousalPlot;
