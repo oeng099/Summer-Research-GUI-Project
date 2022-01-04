@@ -118,7 +118,9 @@ public class VisualiseScreenController implements Initializable{
 		while((lineInFile = reader.readNext()) != null) {
 			double valence = Double.parseDouble(lineInFile[0]);
 			double arousal = Double.parseDouble(lineInFile[1]);
-			emotionCoordinates.getData().add(new Data<Number, Number>(valence, arousal));
+			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
+			data.setNode(new HoverNode(Double.toString(valence),Double.toString(arousal),coordinateDetail));
+			emotionCoordinates.getData().add(data);
 		}
 		emotionCoordinates.setName("Emotion Points");
 		manualPlotError.setText(" ");
