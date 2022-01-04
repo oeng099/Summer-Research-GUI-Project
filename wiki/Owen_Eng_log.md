@@ -29,3 +29,6 @@ Added in a separate save button to be able to save the model as a png. Refactore
 
 #21 December 2021
 Implemented plot file functionality - csv files are now able to be plotted on the model. Implemented functionality for showing the details of a point when hovering over it.
+
+#04 January 2022
+Added in the hover label function to points plotted from csv files. Landmark emotions were added in to the intialisation of the visualise screen. These emotions and coordinates were used from the paper 'What a neural net needs to know about emotion words' - acknowledgement of the paper needs to be added into the app later. Css files were created for the home and visualise screen to change the background and text to make them more visually appealing. 
