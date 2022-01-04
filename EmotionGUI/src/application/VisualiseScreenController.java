@@ -83,18 +83,28 @@ public class VisualiseScreenController implements Initializable{
 	private Scene scene;
 	private Parent root;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		XYChart.Series<Number, Number> circleSeries = new XYChart.Series<Number, Number>();
+		XYChart.Series<Number, Number> intialSeries  = new XYChart.Series<Number, Number>();
 		Circle circle = new Circle(0,0,265);
 		circle.setFill(new Color(0,0,0,0));
 		circle.setStroke(Color.BLACK);
 		Data<Number, Number> data = new Data<Number, Number>(0,0);
 		data.setNode(circle);
-		circleSeries.getData().addAll(data);
-		ValenceArousalPlot.getData().addAll(circleSeries);
+		intialSeries.getData().add(data);
+		
+		String[] landmarkEmotions = {"angry","afraid","sad","bored","excited","interested","happy","pleased","relaxed","content"};
+		String[] landmarkValence = {"-0.7", "-0.65", "-0.8","-0.1","0.37","0.2","0.5","0.35","0.6","0.5"};
+		String[] landmarkArousal = {"0.65", "0.5", "-0.15","-0.45","0.9","0.7","0.5","0.35","-0.3","-0.45"};
+		
+		for(int i = 0;i<landmarkEmotions.length;i++) {
+			Data<Number, Number> landmarkData = new Data<Number, Number>(Double.parseDouble(landmarkValence[i]),Double.parseDouble(landmarkArousal[i]));
+			landmarkData.setNode(new HoverNode(landmarkValence[i],landmarkArousal[i],coordinateDetail,landmarkEmotions[i]));
+			intialSeries.getData().add(landmarkData);
+		}
+		
+		ValenceArousalPlot.getData().add(intialSeries);
 		
 		
 	}

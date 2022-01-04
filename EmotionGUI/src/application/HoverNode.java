@@ -13,7 +13,27 @@ public class HoverNode extends StackPane {
 		setOnMouseEntered(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
-				coordinateDetail.setText("Point:" + valenceCoordinate + "," + arousalCoordinate);
+				coordinateDetail.setText("Point: " + valenceCoordinate + "," + arousalCoordinate);
+				setCursor(Cursor.NONE);
+				toFront();
+			}
+		});
+
+		setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				coordinateDetail.setText("Point:");
+				setCursor(Cursor.CROSSHAIR);
+			}
+		});
+	}
+	
+public HoverNode(String valenceCoordinate, String arousalCoordinate,Text coordinateDetail,String emotion) {
+		
+		setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+				coordinateDetail.setText("Point: " + valenceCoordinate + "," + arousalCoordinate + " (" + emotion + ")");
 				setCursor(Cursor.NONE);
 				toFront();
 			}
