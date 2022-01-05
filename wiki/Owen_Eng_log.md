@@ -32,3 +32,6 @@ Implemented plot file functionality - csv files are now able to be plotted on th
 
 #04 January 2022
 Added in the hover label function to points plotted from csv files. Landmark emotions were added in to the intialisation of the visualise screen. These emotions and coordinates were used from the paper 'What a neural net needs to know about emotion words' - acknowledgement of the paper needs to be added into the app later. Css files were created for the home and visualise screen to change the background and text to make them more visually appealing. 
+
+#05 January 2022
+Changed the font on all screens to make it more readable. Moved text on the left side of the visualise screen slightly to the right. 
