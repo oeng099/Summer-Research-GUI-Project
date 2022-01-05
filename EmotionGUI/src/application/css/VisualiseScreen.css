@@ -1,7 +1,5 @@
 @font-face {
-	font-family: Neoteric;
-    src: url('fonts/Neoteric-32A8.ttf');
-    font-weight: bold;
+    src: url('fonts/Montserrat-SemiBold.ttf');
 }
 
 .root{
@@ -9,27 +7,27 @@
 }
 
 .button{
-	-fx-font-family: "Neoteric";
+	-fx-font-family: "Montserrat SemiBold";
 }
 
 #valenceText{
-	-fx-font-family: "Neoteric";
+	-fx-font-family: "Montserrat SemiBold";
 }
 
 #arousalText{
-	-fx-font-family: "Neoteric";
+	-fx-font-family: "Montserrat SemiBold";
 }
 
 #manualPlotText{
-	-fx-font-family: "Neoteric";
+	-fx-font-family: "Montserrat SemiBold";
 }
 
 #selectAFileText{
-	-fx-font-family: "Neoteric";
+	-fx-font-family: "Montserrat SemiBold";
 }
 
 #coordinateDetail{
-	-fx-font-family: "Neoteric";
+	-fx-font-family: "Montserrat SemiBold";
 }	
 
 .button:hover {

@@ -59,7 +59,7 @@
                   <Font name="Noto Sans Meetei Mayek" size="18.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="70.0" />
                </GridPane.margin>
             </Text>
             <Button fx:id="selectFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectAFile" prefHeight="38.0" prefWidth="92.0" style="-fx-background-radius: 10;" text="Select File" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
@@ -93,7 +93,7 @@
             </Text>
             <TextField fx:id="valenceCoordinate" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="3">
                <GridPane.margin>
-                  <Insets bottom="80.0" left="100.0" right="130.0" top="20.0" />
+                  <Insets bottom="80.0" left="110.0" right="130.0" top="20.0" />
                </GridPane.margin>
                <font>
                   <Font size="18.0" />
@@ -101,7 +101,7 @@
             </TextField>
             <TextField fx:id="arousalCoordinate" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="3">
                <GridPane.margin>
-                  <Insets bottom="20.0" left="100.0" right="130.0" top="80.0" />
+                  <Insets bottom="20.0" left="110.0" right="130.0" top="80.0" />
                </GridPane.margin>
                <font>
                   <Font size="18.0" />
@@ -187,7 +187,7 @@
                   <Font size="18.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="65.0" left="70.0" />
+                  <Insets bottom="65.0" left="25.0" />
                </GridPane.margin>
             </Text>
          </children>

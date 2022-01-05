@@ -1,20 +1,18 @@
 @font-face {
-	font-family: Neoteric;
-    src: url('fonts/Neoteric-32A8.ttf');
-    font-weight: bold;
+    src: url('fonts/Montserrat-SemiBold.ttf');
 }
 
 .root{
 	-fx-background-color: linear-gradient(to left,#33373C,#F4F2F3);
-	-fx-font-family: "Neoteric";
+	-fx-font-family: "Montserrat SemiBold";
 }
 
 Text{
-	-fx-font-family: "Neoteric";
+	-fx-font-family: "Montserrat SemiBold";
 }
 
 .button{
-	-fx-font-family: "Neoteric";
+	-fx-font-family: "Montserrat SemiBold";
 	-fx-font-size: 40px;
 }
 
