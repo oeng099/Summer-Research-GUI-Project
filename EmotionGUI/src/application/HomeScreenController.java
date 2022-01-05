@@ -44,6 +44,7 @@ public class HomeScreenController {
 			root = FXMLLoader.load(getClass().getResource("fxml/AnnotationScreen.fxml"));
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
+			scene.getStylesheets().add(getClass().getResource("css/AnnotationScreen.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();
 		} catch(Exception e) {

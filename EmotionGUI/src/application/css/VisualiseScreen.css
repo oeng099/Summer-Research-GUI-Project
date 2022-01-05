@@ -8,10 +8,6 @@
 	-fx-background-color: linear-gradient(to left,#33373C,#F4F2F3);
 }
 
-/*Text{
-	-fx-font-family: "Neoteric";
-}*/
-
 .button{
 	-fx-font-family: "Neoteric";
 }

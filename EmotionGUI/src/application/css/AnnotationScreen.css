@@ -1,0 +1,9 @@
+@font-face {
+	font-family: Neoteric;
+    src: url('fonts/Neoteric-32A8.ttf');
+    font-weight: bold;
+}
+
+.root{
+	-fx-background-color: linear-gradient(to left,#33373C,#F4F2F3);
+}
