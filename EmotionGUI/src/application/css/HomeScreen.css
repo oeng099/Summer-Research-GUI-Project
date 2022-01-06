@@ -3,7 +3,7 @@
 }
 
 .root{
-	-fx-background-color: linear-gradient(to left,#33373C,#F4F2F3);
+	-fx-background-color: #F4F2F3;
 	-fx-font-family: "Montserrat SemiBold";
 }
 
