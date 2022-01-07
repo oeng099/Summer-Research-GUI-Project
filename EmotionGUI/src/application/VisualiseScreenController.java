@@ -46,6 +46,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class VisualiseScreenController implements Initializable{
@@ -242,8 +243,12 @@ public class VisualiseScreenController implements Initializable{
 		root = (Parent) loader.load();
 		scene = new Scene(root);
 		stage = new Stage();
+		stage.setTitle("CSV File Info");
 		stage.setResizable(false);
 		stage.setScene(scene);
+		
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.showAndWait();
 	}
 
 }
