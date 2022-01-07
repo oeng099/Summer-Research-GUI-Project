@@ -38,3 +38,6 @@ Changed the font on all screens to make it more readable. Moved text on the left
 
 #06 January 2022
 Changed the background to white for greater readability. Added in an additional button to differentiate between plotting a CSV or WAV file. Implemented functionality to show the details of a landmark emotion point when hovered over.
+
+#07 January 2022
+Added in an information button for the required format of the CSV file and implemented its functionality.
