@@ -36,6 +36,8 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -61,7 +63,9 @@ public class VisualiseScreenController implements Initializable{
 	@FXML
 	Button saveImage;
 	@FXML
-	Button clear;
+	Button clearChart;
+	@FXML
+	Button CSVInfo;
 	@FXML
 	TextField fileName;
 	@FXML
@@ -91,8 +95,20 @@ public class VisualiseScreenController implements Initializable{
 	private Scene scene;
 	private Parent root;
 	
+	private FXMLLoader loader;
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		URL imageURL = getClass().getResource("images/infoIcon.png");
+		Image image = new Image(imageURL.toExternalForm());
+		ImageView view = new ImageView(image);
+		view.setFitHeight(30);
+		view.setPreserveRatio(true);
+		
+		CSVInfo.setPrefSize(30,30);
+		CSVInfo.setGraphic(view);
 		
 		XYChart.Series<Number, Number> intialSeries  = new XYChart.Series<Number, Number>();
 		Circle circle = new Circle(0,0,265);
@@ -219,6 +235,15 @@ public class VisualiseScreenController implements Initializable{
 		ValenceArousalPlot.getData().remove(1);
 		}
 		emotionCoordinates.getData().clear();
+	}
+	
+	public void CSVHelp(ActionEvent event) throws IOException {
+		loader = new FXMLLoader(getClass().getResource("fxml/CSVHelpScreen.fxml"));
+		root = (Parent) loader.load();
+		scene = new Scene(root);
+		stage = new Stage();
+		stage.setResizable(false);
+		stage.setScene(scene);
 	}
 
 }

@@ -54,12 +54,12 @@
         </rowConstraints>
          <children>
             <ImageView fitHeight="549.0" fitWidth="684.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowSpan="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <Text fx:id="selectAFileText" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a file to visualise on the model:" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Text fx:id="selectAFileText" strokeType="OUTSIDE" strokeWidth="0.0" text="Select a file to visualise on the model:">
                <font>
                   <Font name="Noto Sans Meetei Mayek" size="18.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="70.0" />
+                  <Insets left="20.0" />
                </GridPane.margin>
             </Text>
             <Button fx:id="selectFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectAFile" prefHeight="38.0" prefWidth="92.0" style="-fx-background-radius: 10;" text="Select CSV File" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
@@ -72,7 +72,7 @@
             </Button>
             <Button fx:id="plotFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plotCSVFile" style="-fx-background-radius: 10;" text="Plot" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
-                  <Insets bottom="20.0" left="200.0" right="-10.0" top="80.0" />
+                  <Insets bottom="20.0" left="240.0" right="-50.0" top="80.0" />
                </GridPane.margin>
                <font>
                   <Font size="18.0" />
@@ -80,7 +80,7 @@
             </Button>
             <TextField fx:id="fileName" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets bottom="80.0" left="20.0" right="-5.0" />
+                  <Insets bottom="100.0" left="20.0" right="-20.0" />
                </GridPane.margin>
             </TextField>
             <Text fx:id="manualPlotText" strokeType="OUTSIDE" strokeWidth="0.0" text="Or set co-ordinates and plot manually:" GridPane.rowIndex="2">
@@ -196,6 +196,11 @@
                </font>
                <GridPane.margin>
                   <Insets bottom="100.0" left="15.0" right="110.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="CSVInfo" mnemonicParsing="false" onAction="#CSVHelp" prefHeight="31.0" prefWidth="30.0" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="190.0" right="70.0" top="80.0" />
                </GridPane.margin>
             </Button>
          </children>
