@@ -41,3 +41,7 @@ Changed the background to white for greater readability. Added in an additional 
 
 #07 January 2022
 Added in an information button for the required format of the CSV file and implemented its functionality.
+
+#10 January 2022
+Made minor changes to the visualise screen regarding the initial series that displays the 'Landmark Emotions'. Added to the README file for the project. Looked into the model that will be used to convert WAV files to CSV files - there is a slight issue in terms of testing the model out.
+
