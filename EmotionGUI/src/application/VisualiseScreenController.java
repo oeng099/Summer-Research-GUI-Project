@@ -111,13 +111,14 @@ public class VisualiseScreenController implements Initializable{
 		CSVInfo.setPrefSize(30,30);
 		CSVInfo.setGraphic(view);
 		
-		XYChart.Series<Number, Number> intialSeries  = new XYChart.Series<Number, Number>();
+		XYChart.Series<Number, Number> initialSeries  = new XYChart.Series<Number, Number>();
 		Circle circle = new Circle(0,0,265);
 		circle.setFill(new Color(0,0,0,0));
 		circle.setStroke(Color.BLACK);
 		Data<Number, Number> data = new Data<Number, Number>(0,0);
 		data.setNode(circle);
-		intialSeries.getData().add(data);
+		initialSeries.getData().add(data);
+		initialSeries.setName("Landmark Emotions");
 		
 		String[] landmarkEmotions = {"angry","afraid","sad","bored","excited","interested","happy","pleased","relaxed","content"};
 		String[] landmarkValence = {"-0.7", "-0.65", "-0.8","-0.1","0.37","0.2","0.5","0.35","0.6","0.5"};
@@ -126,10 +127,10 @@ public class VisualiseScreenController implements Initializable{
 		for(int i = 0;i<landmarkEmotions.length;i++) {
 			Data<Number, Number> landmarkData = new Data<Number, Number>(Double.parseDouble(landmarkValence[i]),Double.parseDouble(landmarkArousal[i]));
 			landmarkData.setNode(new HoverNode(landmarkValence[i],landmarkArousal[i],coordinateDetail,landmarkEmotions[i]));
-			intialSeries.getData().add(landmarkData);
+			initialSeries.getData().add(landmarkData);
 		}
 		
-		ValenceArousalPlot.getData().add(intialSeries);
+		ValenceArousalPlot.getData().add(initialSeries);
 		
 		
 	}
