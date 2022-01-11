@@ -243,6 +243,7 @@ public class VisualiseScreenController implements Initializable{
 		loader = new FXMLLoader(getClass().getResource("fxml/CSVHelpScreen.fxml"));
 		root = (Parent) loader.load();
 		scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("css/CSVHelpScreen.css").toExternalForm());
 		stage = new Stage();
 		stage.setTitle("CSV File Info");
 		stage.setResizable(false);
