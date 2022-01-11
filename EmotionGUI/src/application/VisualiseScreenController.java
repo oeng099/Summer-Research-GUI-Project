@@ -168,6 +168,7 @@ public class VisualiseScreenController implements Initializable{
 			root = FXMLLoader.load(getClass().getResource("fxml/HomeScreen.fxml"));
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root, borderPane.getWidth(), borderPane.getHeight());
+			scene.getStylesheets().add(getClass().getResource("css/HomeScreen.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
