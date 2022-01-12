@@ -45,3 +45,8 @@ Added in an information button for the required format of the CSV file and imple
 #10 January 2022
 Made minor changes to the visualise screen regarding the initial series that displays the 'Landmark Emotions'. Added to the README file for the project. Looked into the model that will be used to convert WAV files to CSV files - there is a slight issue in terms of testing the model out.
 
+#11 January 2022
+Added hover labels to nodes plotted either manually or through a CSV file. Css added to the help screen for CSV files. Fixed up minor errors when loading the home screen from the visualise screen. 
+
+#12 January 2022
+Enlarged the size of both the home screen and visualise screen to better accommodate potential media played on the annotation screen. Added the demo code for the model to a new ipynb file in colabs, access to files on a drive needed.
