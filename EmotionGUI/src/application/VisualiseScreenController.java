@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -96,8 +99,7 @@ public class VisualiseScreenController implements Initializable{
 	private Scene scene;
 	private Parent root;
 	
-	private FXMLLoader loader;
-	
+	private FXMLLoader loader;	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -120,20 +122,44 @@ public class VisualiseScreenController implements Initializable{
 		initialSeries.getData().add(data);
 		initialSeries.setName("Landmark Emotions");
 		
-		String[] landmarkEmotions = {"angry","afraid","sad","bored","excited","interested","happy","pleased","relaxed","content"};
+		
+		ArrayList<String> landmarkEmotions = new ArrayList<String>(Arrays.asList("angry","afraid","sad","bored","excited","interested","happy","pleased","relaxed","content"));
 		String[] landmarkValence = {"-0.7", "-0.65", "-0.8","-0.1","0.37","0.2","0.5","0.35","0.6","0.5"};
 		String[] landmarkArousal = {"0.65", "0.5", "-0.15","-0.45","0.9","0.7","0.5","0.35","-0.3","-0.45"};
 		
-		for(int i = 0;i<landmarkEmotions.length;i++) {
+		for(int i = 0;i<landmarkEmotions.size();i++) {
 			Data<Number, Number> landmarkData = new Data<Number, Number>(Double.parseDouble(landmarkValence[i]),Double.parseDouble(landmarkArousal[i]));
-			landmarkData.setNode(new HoverNode(landmarkValence[i],landmarkArousal[i],coordinateDetail,landmarkEmotions[i]));
+			//landmarkData.setNode(new HoverNode(landmarkValence[i],landmarkArousal[i],coordinateDetail,landmarkEmotions[i]));
+			
+			Label label = new Label(landmarkEmotions.get(i));
+			
+			landmarkData.setNode(label);
+			
+			label.setOnMouseEntered(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					int emotionIndexNumber = landmarkEmotions.indexOf(label.getText());
+					coordinateDetail.setText("Point: " + landmarkValence[emotionIndexNumber] + "," + landmarkArousal[emotionIndexNumber] + " (" + landmarkEmotions.get(emotionIndexNumber) + ")");
+				}
+			});
+
+			label.setOnMouseExited(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent mouseEvent) {
+					coordinateDetail.setText("Point:");
+				}
+			});
+			
 			initialSeries.getData().add(landmarkData);
 		}
+		
 		
 		ValenceArousalPlot.getData().add(initialSeries);
 		
 		
 	}
+	
+	
 
 	public void selectAFile(ActionEvent event) {
 
