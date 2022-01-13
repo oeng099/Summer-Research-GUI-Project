@@ -50,3 +50,6 @@ Added hover labels to nodes plotted either manually or through a CSV file. Css a
 
 #12 January 2022
 Enlarged the size of both the home screen and visualise screen to better accommodate potential media played on the annotation screen. Added the demo code for the model to a new ipynb file in colabs, access to files on a drive needed.
+
+#13 January 2022
+Working on getting the model to work. The demo model works on colabs after some modifications to the code however not offline yet. Looked into adding permanent labels to nodes in the visualise screen while still having them show specific coordinates when hovered over.
