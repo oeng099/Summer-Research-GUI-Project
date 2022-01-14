@@ -53,3 +53,6 @@ Enlarged the size of both the home screen and visualise screen to better accommo
 
 #13 January 2022
 Working on getting the model to work. The demo model works on colabs after some modifications to the code however not offline yet. Looked into adding permanent labels to nodes in the visualise screen while still having them show specific coordinates when hovered over.
+
+#14 Janury 2022
+Continued to try to get the group108aRsLSTM.py script to run, however the script may be too memory-intensive. Currently unclear on how to transfer this previously written software into my project. The specific file that will actually convert a WAV file to CSV file using the model is also unclear as there isn't much direction from the README file they provided. 
