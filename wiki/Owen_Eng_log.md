@@ -56,3 +56,6 @@ Working on getting the model to work. The demo model works on colabs after some 
 
 #14 Janury 2022
 Continued to try to get the group108aRsLSTM.py script to run, however the script may be too memory-intensive. Currently unclear on how to transfer this previously written software into my project. The specific file that will actually convert a WAV file to CSV file using the model is also unclear as there isn't much direction from the README file they provided. 
+
+#17 January 2022
+Changed the axis of the to change the negative zero value. Modifided the demo code in the model project so that it now creates a CSV file with valence and arousal values. 
