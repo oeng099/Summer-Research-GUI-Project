@@ -141,10 +141,10 @@
             </Button>
             <ScatterChart fx:id="ValenceArousalPlot" alternativeColumnFillVisible="true" animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.rowSpan="5">
               <xAxis>
-                <NumberAxis autoRanging="false" label="Valence" lowerBound="-1.0" side="BOTTOM" tickUnit="0.1" upperBound="1.0" />
+                <NumberAxis animated="false" autoRanging="false" label="Valence" lowerBound="-1.0" side="BOTTOM" tickUnit="0.25" upperBound="1.0" />
               </xAxis>
               <yAxis>
-                <NumberAxis autoRanging="false" label="Arousal" lowerBound="-1.0" side="LEFT" tickLabelGap="0.1" tickUnit="0.1" upperBound="1.0" />
+                <NumberAxis autoRanging="false" label="Arousal" lowerBound="-1.0" side="LEFT" tickLabelGap="0.1" tickUnit="0.25" upperBound="1.0" />
               </yAxis>
                <GridPane.margin>
                   <Insets bottom="-9.0" left="80.0" />
