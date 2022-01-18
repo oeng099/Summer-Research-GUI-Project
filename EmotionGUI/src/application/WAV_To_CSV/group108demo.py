@@ -25,6 +25,9 @@ from sklearn.preprocessing import MinMaxScaler
 from IPython.display import Audio
 # from google.colab import drive
 
+arousalModelPath = /home/student/Summer-Research-GUI-Project/EmotionGUI/src/application/WAV_To_CSV/models/mArousal.hdf5
+valenceModelPath = /home/student/Summer-Research-GUI-Project/EmotionGUI/src/application/WAV_To_CSV/models/mValence.hdf5
+
 
 # In[ ]:
 
@@ -44,6 +47,7 @@ version: %s
 ''' % (sys.version.split('\n'), platform.platform(), platform.uname(), platform.version()))
 
 # tf.test.gpu_device_name()
+# !/opt/bin/nvidia-smi
 # !/opt/bin/nvidia-smi
 
 # os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -221,11 +225,6 @@ test_X = test_X.reshape((test_X.shape[0], n_steps + 1, n_features))
 
 
 # In[ ]:
-
-
-arousalModelPath = 'models/mArousal.hdf5' # 'models/mArousal.hdf5'
-valenceModelPath = 'models/mValence.hdf5' # 'models/mValence.hdf5'
-
 
 # In[ ]:
 

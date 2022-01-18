@@ -329,5 +329,15 @@ public class VisualiseScreenController implements Initializable{
 		String CSVFile = WAVFileArray[WAVFileArray.length-1].replace("wav", "csv");
 		plotCSVFile("src/application/WAV_To_CSV/CSV_Outputs/" + CSVFile);
 	}
+	
+	public void changeModel(ActionEvent event) throws IOException {
+		root = FXMLLoader.load(getClass().getResource("ModelChooseScreen.fxml"));
+		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
+		//scene.getStylesheets().add(getClass().getResource().toExternalForm());
+		stage.setTitle("Change the Valence and arousal models");
+		stage.setScene(scene);
+		stage.show();
+	}
 
 }

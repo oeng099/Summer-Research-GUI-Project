@@ -224,7 +224,7 @@
                   <Insets left="20.0" top="20.0" />
                </GridPane.margin>
             </Text>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="92.0" style="-fx-background-radius: 10;" text="Change Model" GridPane.rowIndex="3">
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#changeModel" prefHeight="38.0" prefWidth="92.0" style="-fx-background-radius: 10;" text="Change Model" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
