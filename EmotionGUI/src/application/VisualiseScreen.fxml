@@ -190,7 +190,7 @@
                   <Insets bottom="70.0" left="90.0" />
                </GridPane.margin>
             </Text>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#runModelScript" prefHeight="38.0" prefWidth="92.0" style="-fx-background-radius: 10;" text="Select WAV File" GridPane.rowIndex="3">
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="92.0" style="-fx-background-radius: 10;" text="Select WAV File" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>

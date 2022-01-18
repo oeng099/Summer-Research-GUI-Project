@@ -1,12 +1,10 @@
 package application;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -154,7 +152,11 @@ public class VisualiseScreenController implements Initializable{
 			
 			initialSeries.getData().add(landmarkData);
 		}
+		
+		
 		ValenceArousalPlot.getData().add(initialSeries);
+		
+		
 	}
 	
 	
@@ -276,16 +278,6 @@ public class VisualiseScreenController implements Initializable{
 		
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.showAndWait();
-	}
-	
-	public void runModelScript(ActionEvent event) throws IOException, InterruptedException {
-		ProcessBuilder builder = new ProcessBuilder("python3","/home/student/Summer-Research-GUI-Project/EmotionGUI/src/application/ECSE-Part-IV-700-108/group108demo.py", "/home/student/Summer-Research-GUI-Project/EmotionGUI/src/application/ECSE-Part-IV-700-108/demo/audioInput/JLCO_female1_angry_1a_1.wav");
-		builder.directory(new File("src/application/ECSE-Part-IV-700-108"));
-		Process runModel = builder.start();
-		runModel.waitFor();
-		BufferedReader modelOutput = new BufferedReader(new InputStreamReader(runModel.getInputStream()));
-		modelOutput.lines().forEach(System.out::println);
-		System.out.println("Finished");
 	}
 
 }
