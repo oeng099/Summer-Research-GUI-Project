@@ -73,7 +73,9 @@ public class VisualiseScreenController implements Initializable{
 	@FXML
 	Button CSVInfo;
 	@FXML
-	TextField fileName;
+	TextField CSVFilename;
+	@FXML
+	TextField WAVFilename;
 	@FXML
 	TextField valenceCoordinate;
 	@FXML
@@ -169,14 +171,33 @@ public class VisualiseScreenController implements Initializable{
 
 		File file = fileChooser.showOpenDialog(stage);
 		if (file != null) {
-			fileName.setText(file.toString());
+			//REMEMBER TO ADD CSV ERROR HANDLING
+			CSVFilename.setText(file.toString());
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void plotCSVFile(ActionEvent event) throws CsvValidationException, IOException {
 	
-		File file = new File(fileName.getText());
+		File file = new File(CSVFilename.getText());
+		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
+		String[] lineInFile;
+		while((lineInFile = reader.readNext()) != null) {
+			double valence = Double.parseDouble(lineInFile[0]);
+			double arousal = Double.parseDouble(lineInFile[1]);
+			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
+			data.setNode(new HoverNode(Double.toString(valence),Double.toString(arousal),coordinateDetail));
+			emotionCoordinates.getData().add(data);
+		}
+		emotionCoordinates.setName("Emotion Points");
+		manualPlotError.setText(" ");
+		ValenceArousalPlot.getData().addAll(emotionCoordinates);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void plotCSVFile(String CSVFile) throws CsvValidationException, IOException {
+		
+		File file = new File(CSVFile);
 		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
 		String[] lineInFile;
 		while((lineInFile = reader.readNext()) != null) {
@@ -282,15 +303,31 @@ public class VisualiseScreenController implements Initializable{
 		stage.showAndWait();
 	}
 	
-	public void WAV_TO_CSV(ActionEvent event) throws IOException {
-		String[] command = new String[] {"python3","group108demo.py","test/JLCO_female1_angry_1a_1.wav"};
+	public void WAV_TO_CSV(String WAVFile) throws IOException, InterruptedException {
+		String[] command = new String[] {"python3","group108demo.py",WAVFile};
 		ProcessBuilder builder = new ProcessBuilder(command);
 		builder.directory(new File("src/application/WAV_To_CSV"));
 		Process process = builder.start();
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		bufferedReader.lines().forEach(System.out:: println);
-		System.out.println("finished");
-		
+		process.waitFor();
+	}
+	
+	public void selectWAVFile(ActionEvent event) {
+
+		FileChooser fileChooser = new FileChooser();
+
+		File file = fileChooser.showOpenDialog(stage);
+		if (file != null) {
+			//REMEMBER TO ADD WAV ERROR HANDLING
+			WAVFilename.setText(file.toString());
+		}
+	}
+	
+	public void plotWAVFile(ActionEvent event) throws IOException, CsvValidationException, InterruptedException {
+		String WAVFile = WAVFilename.getText();
+		WAV_TO_CSV(WAVFile);
+		String[] WAVFileArray = WAVFile.split("/");
+		String CSVFile = WAVFileArray[WAVFileArray.length-1].replace("wav", "csv");
+		plotCSVFile("src/application/WAV_To_CSV/CSV_Outputs/" + CSVFile);
 	}
 
 }

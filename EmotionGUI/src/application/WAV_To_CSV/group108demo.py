@@ -299,42 +299,42 @@ np.savetxt(toCSV_Outputs + csvFilename, csvOutput, delimiter=',')
 # In[ ]:
 
 
-avResults = pd.DataFrame({'Arousal': a_pred_test_list, 'Valence': v_pred_test_list})[0:-1]
-avResults.loc[1:, ['Arousal', 'Valence']].plot(figsize=(15, 5), title='Arousal and Valence', fontsize=16)
-plt.show()
+# avResults = pd.DataFrame({'Arousal': a_pred_test_list, 'Valence': v_pred_test_list})[0:-1]
+# avResults.loc[1:, ['Arousal', 'Valence']].plot(figsize=(15, 5), title='Arousal and Valence', fontsize=16)
+# plt.show()
 
 
 # In[ ]:
 
 
-fig = plt.figure(figsize=[7, 7])
-ax = fig.add_subplot(1, 1, 1)
-ax.set_aspect('equal')
+# fig = plt.figure(figsize=[7, 7])
+# ax = fig.add_subplot(1, 1, 1)
+# ax.set_aspect('equal')
 
 # Move left y-axis and bottim x-axis to centre, passing through (0,0)
-ax.spines['left'].set_position('center')
-ax.spines['bottom'].set_position('center')
+# ax.spines['left'].set_position('center')
+# ax.spines['bottom'].set_position('center')
 
 # Eliminate upper and right axes
-ax.spines['right'].set_color('none')
-ax.spines['top'].set_color('none')
+# ax.spines['right'].set_color('none')
+# ax.spines['top'].set_color('none')
 
 # Show ticks in the left and lower axes only
-ax.xaxis.set_ticks_position('bottom')
-ax.yaxis.set_ticks_position('left')
+# ax.xaxis.set_ticks_position('bottom')
+# ax.yaxis.set_ticks_position('left')
 
-fig.suptitle('VA Scatter', fontsize=16)
-plt.xlim([-0.5, 0.5])
-plt.ylim([-0.5, 0.5])
+# fig.suptitle('VA Scatter', fontsize=16)
+# plt.xlim([-0.5, 0.5])
+# plt.ylim([-0.5, 0.5])
 # Because we moved the label position so the x,y should be on other way round
-ax.yaxis.set_label_position('right')
-ax.xaxis.set_label_position('top')
-plt.xlabel('Arousal')
-plt.ylabel('Valance')
+# ax.yaxis.set_label_position('right')
+# ax.xaxis.set_label_position('top')
+# plt.xlabel('Arousal')
+# plt.ylabel('Valance')
 # ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-unitCircle = plt.Circle((0, 0), 0.5, color='r', fill=False)
-ax.add_patch(unitCircle)
+# unitCircle = plt.Circle((0, 0), 0.5, color='r', fill=False)
+# ax.add_patch(unitCircle)
 
-plt.scatter(v_pred_test_list, a_pred_test_list, s=2)
-plt.show()
+# plt.scatter(v_pred_test_list, a_pred_test_list, s=2)
+# plt.show() #
 

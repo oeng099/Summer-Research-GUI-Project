@@ -78,7 +78,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <TextField fx:id="fileName" GridPane.rowIndex="1">
+            <TextField fx:id="CSVFilename" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="20.0" right="-20.0" top="110.0" />
                </GridPane.margin>
@@ -190,7 +190,7 @@
                   <Insets bottom="70.0" left="90.0" />
                </GridPane.margin>
             </Text>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="38.0" prefWidth="92.0" style="-fx-background-radius: 10;" text="Select WAV File" GridPane.rowIndex="3">
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectWAVFile" prefHeight="38.0" prefWidth="92.0" style="-fx-background-radius: 10;" text="Select WAV File" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
@@ -203,7 +203,7 @@
                   <Insets bottom="90.0" left="205.0" right="165.0" top="2.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="plotFile1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#WAV_TO_CSV" style="-fx-background-radius: 10;" text="Plot WAV File" GridPane.rowIndex="3">
+            <Button fx:id="plotFile1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plotWAVFile" style="-fx-background-radius: 10;" text="Plot WAV File" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
@@ -211,7 +211,7 @@
                   <Insets bottom="90.0" left="270.0" right="-20.0" top="2.0" />
                </GridPane.margin>
             </Button>
-            <TextField fx:id="fileName1" GridPane.rowIndex="2">
+            <TextField fx:id="WAVFilename" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="20.0" right="-20.0" top="100.0" />
                </GridPane.margin>
