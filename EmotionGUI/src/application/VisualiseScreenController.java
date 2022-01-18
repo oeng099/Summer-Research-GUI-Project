@@ -1,10 +1,12 @@
 package application;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -278,6 +280,17 @@ public class VisualiseScreenController implements Initializable{
 		
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.showAndWait();
+	}
+	
+	public void WAV_TO_CSV(ActionEvent event) throws IOException {
+		String[] command = new String[] {"python3","group108demo.py","test/JLCO_female1_angry_1a_1.wav"};
+		ProcessBuilder builder = new ProcessBuilder(command);
+		builder.directory(new File("src/application/WAV_To_CSV"));
+		Process process = builder.start();
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+		bufferedReader.lines().forEach(System.out:: println);
+		System.out.println("finished");
+		
 	}
 
 }
