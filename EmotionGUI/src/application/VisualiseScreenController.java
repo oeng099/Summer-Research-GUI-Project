@@ -7,7 +7,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -105,6 +108,8 @@ public class VisualiseScreenController implements Initializable{
 	
 	private FXMLLoader loader;	
 	
+	private static final DecimalFormat df = new DecimalFormat("0.00");
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -183,8 +188,12 @@ public class VisualiseScreenController implements Initializable{
 		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
 		String[] lineInFile;
 		while((lineInFile = reader.readNext()) != null) {
-			double valence = Double.parseDouble(lineInFile[0]);
-			double arousal = Double.parseDouble(lineInFile[1]);
+			double unroundedValence = Double.parseDouble(lineInFile[0]);
+			double unroundedArousal = Double.parseDouble(lineInFile[1]);
+			BigDecimal roundedValence = new BigDecimal(unroundedValence).setScale(2,RoundingMode.HALF_UP);
+			BigDecimal roundedArousal = new BigDecimal(unroundedArousal).setScale(2,RoundingMode.HALF_UP);
+			double valence = roundedValence.doubleValue();
+			double arousal = roundedArousal.doubleValue();
 			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
 			data.setNode(new HoverNode(Double.toString(valence),Double.toString(arousal),coordinateDetail));
 			emotionCoordinates.getData().add(data);
@@ -201,8 +210,12 @@ public class VisualiseScreenController implements Initializable{
 		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
 		String[] lineInFile;
 		while((lineInFile = reader.readNext()) != null) {
-			double valence = Double.parseDouble(lineInFile[0]);
-			double arousal = Double.parseDouble(lineInFile[1]);
+			double unroundedValence = Double.parseDouble(lineInFile[0]);
+			double unroundedArousal = Double.parseDouble(lineInFile[1]);
+			BigDecimal roundedValence = new BigDecimal(unroundedValence).setScale(2,RoundingMode.HALF_UP);
+			BigDecimal roundedArousal = new BigDecimal(unroundedArousal).setScale(2,RoundingMode.HALF_UP);
+			double valence = roundedValence.doubleValue();
+			double arousal = roundedArousal.doubleValue();
 			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
 			data.setNode(new HoverNode(Double.toString(valence),Double.toString(arousal),coordinateDetail));
 			emotionCoordinates.getData().add(data);

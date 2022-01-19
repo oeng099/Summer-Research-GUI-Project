@@ -25,10 +25,6 @@ from sklearn.preprocessing import MinMaxScaler
 from IPython.display import Audio
 # from google.colab import drive
 
-arousalModelPath = /home/student/Summer-Research-GUI-Project/EmotionGUI/src/application/WAV_To_CSV/models/mArousal.hdf5
-valenceModelPath = /home/student/Summer-Research-GUI-Project/EmotionGUI/src/application/WAV_To_CSV/models/mValence.hdf5
-
-
 # In[ ]:
 
 
@@ -225,6 +221,9 @@ test_X = test_X.reshape((test_X.shape[0], n_steps + 1, n_features))
 
 
 # In[ ]:
+
+arousalModelPath = '/home/student/Summer-Research-GUI-Project/EmotionGUI/src/application/WAV_To_CSV/models/mArousal.hdf5'
+valenceModelPath = '/home/student/Summer-Research-GUI-Project/EmotionGUI/src/application/WAV_To_CSV/models/mValence.hdf5'
 
 # In[ ]:
 

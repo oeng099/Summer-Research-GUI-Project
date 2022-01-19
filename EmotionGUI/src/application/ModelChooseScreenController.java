@@ -86,9 +86,9 @@ public class ModelChooseScreenController implements Initializable{
 		
 		while((line = pythonScriptReader.readLine()) != null) {
 			if(line.contains("arousalModelPath =") && !arousalModel.getText().isEmpty()) {
-				line = "arousalModelPath = " + arousalModel.getText();
+				line = "arousalModelPath = '" + arousalModel.getText() + "'";
 			} else if(line.contains("valenceModelPath =") && !valenceModel.getText().isEmpty()) {
-				line = "valenceModelPath = " + valenceModel.getText();
+				line = "valenceModelPath = '" + valenceModel.getText() + "'";
 			}
 			
 			inputBuffer.append(line);
