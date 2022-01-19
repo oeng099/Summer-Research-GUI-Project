@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -138,7 +139,7 @@ public class VisualiseScreenController implements Initializable{
 		
 		for(int i = 0;i<landmarkEmotions.size();i++) {
 			Data<Number, Number> landmarkData = new Data<Number, Number>(Double.parseDouble(landmarkValence[i]),Double.parseDouble(landmarkArousal[i]));
-			//landmarkData.setNode(new HoverNode(landmarkValence[i],landmarkArousal[i],coordinateDetail,landmarkEmotions[i]));
+			//landmarkData.setNode(new HoverNode(landmarkValence[i],landmarkArousal[i],coordinateDetail,landmarkEmotions.get(i)));
 			
 			Label label = new Label(landmarkEmotions.get(i));
 			
@@ -162,9 +163,12 @@ public class VisualiseScreenController implements Initializable{
 			initialSeries.getData().add(landmarkData);
 		}
 		
-		
 		ValenceArousalPlot.getData().add(initialSeries);
 		
+		//Set<Node> initialPoints = ValenceArousalPlot.lookupAll(".series" + 0);
+		//for(Node n : initialPoints) {
+			//n.setStyle();
+		//}
 		
 	}
 	
