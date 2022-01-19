@@ -40,7 +40,7 @@
 	-fx-text-fill: white;
 }
 
-.chart-symbol{
+.default-color0.chart-symbol{
 	-fx-background-color: transparent;
     -fx-background-insets: 0, 2;
     -fx-background-radius: 5px;

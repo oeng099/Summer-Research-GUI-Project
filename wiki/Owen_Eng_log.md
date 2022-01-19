@@ -61,4 +61,7 @@ Continued to try to get the group108aRsLSTM.py script to run, however the script
 Changed the axis of the to change the negative zero value. Modifided the demo code in the model project so that it now creates a CSV file with valence and arousal values. 
 
 #18 January 2022
-Got the demo code to now work with my GUI, thus the select and plot WAV file functionality is all completed. Added in the necessary files from the ESCE-Part-IV-700-108 folder to my project so the python script to convert WAV files to CSV files will run. Implemented changing models used, this was done through a new screen and controller, and rewrites the lines in the python script responsible for the model used. There is currently still an issue with the allFileCombineU.csv being too big to upload on Github, looking into possible solutions such as git lf. 
+Got the demo code to now work with my GUI, thus the select and plot WAV file functionality is all completed. Added in the necessary files from the ESCE-Part-IV-700-108 folder to my project so the python script to convert WAV files to CSV files will run. Implemented changing models used, this was done through a new screen and controller, and rewrites the lines in the python script responsible for the model used. There is currently still an issue with the allFileCombineU.csv being too big to upload on Github, looking into possible solutions such as git lf.
+
+#19 January 2022
+Changed points in scatter chart from orange to transparent so all that is left is the label. Fixed issues with changing the model in the python script causing issues in converting the WAV to CSV file.
