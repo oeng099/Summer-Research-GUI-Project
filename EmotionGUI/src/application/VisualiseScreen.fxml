@@ -139,15 +139,15 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <ScatterChart fx:id="ValenceArousalPlot" alternativeColumnFillVisible="true" animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.rowSpan="5">
+            <ScatterChart fx:id="ValenceArousalPlot" alternativeColumnFillVisible="true" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="724.0" prefWidth="680.0" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowSpan="5">
               <xAxis>
-                <NumberAxis animated="false" autoRanging="false" label="Valence" lowerBound="-1.0" side="BOTTOM" tickUnit="0.25" upperBound="1.0" />
+                <NumberAxis animated="false" autoRanging="false" label="Valence" lowerBound="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="598.0" side="BOTTOM" tickUnit="0.25" upperBound="1.0" />
               </xAxis>
               <yAxis>
-                <NumberAxis autoRanging="false" label="Arousal" lowerBound="-1.0" side="LEFT" tickLabelGap="0.1" tickUnit="0.25" upperBound="1.0" />
+                <NumberAxis autoRanging="false" label="Arousal" lowerBound="-1.0" prefHeight="630.0" prefWidth="52.0" side="LEFT" tickLabelGap="0.1" tickUnit="0.25" upperBound="1.0" />
               </yAxis>
                <GridPane.margin>
-                  <Insets bottom="-20.0" left="80.0" />
+                  <Insets bottom="-33.0" />
                </GridPane.margin>
             </ScatterChart>
             <Button fx:id="saveCoordinates" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveAsCSV" prefHeight="36.0" prefWidth="139.0" style="-fx-background-radius: 10;" text="Save as CSV" GridPane.columnIndex="1" GridPane.rowIndex="5">
@@ -232,7 +232,7 @@
                   <Insets bottom="20.0" left="20.0" right="230.0" top="72.0" />
                </GridPane.margin>
             </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="There are three different ways that this GUI allows you to plot emotional coordinates on the model. To plot a CSV or WAV file, click the button to select the corresponding file type and then click the plot button of the corresponding file type. To plot manually, type appropriate values in the text fields next to 'Valence:' and 'Arousal' and then click plot." wrappingWidth="405.015625">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="There are three different ways that this GUI allows you to plot emotional coordinates on the model. To plot a CSV or WAV file, click the button to select the corresponding file type and then click the plot button of the corresponding file type. To plot manually, type appropriate values in the text fields next to 'Valence:' and 'Arousal:' and then click plot." wrappingWidth="405.015625">
                <font>
                   <Font size="20.0" />
                </font>

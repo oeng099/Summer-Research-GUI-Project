@@ -124,7 +124,7 @@ public class VisualiseScreenController implements Initializable{
 		CSVInfo.setGraphic(view);
 		
 		XYChart.Series<Number, Number> initialSeries  = new XYChart.Series<Number, Number>();
-		Circle circle = new Circle(0,0,290);
+		Circle circle = new Circle(0,0,ValenceArousalPlot.getXAxis().getPrefWidth()/2);
 		circle.setFill(new Color(0,0,0,0));
 		circle.setStroke(Color.BLACK);
 		Data<Number, Number> data = new Data<Number, Number>(0,0);
