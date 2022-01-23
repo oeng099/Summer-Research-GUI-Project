@@ -54,7 +54,7 @@
         </rowConstraints>
          <children>
             <ImageView fitHeight="549.0" fitWidth="684.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowSpan="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-            <Text fx:id="selectAFileText" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Plot a CSV file:" GridPane.rowIndex="1">
+            <Text fx:id="CSVFileText" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Plot a CSV file:" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
@@ -216,7 +216,7 @@
                   <Insets left="20.0" right="-20.0" top="100.0" />
                </GridPane.margin>
             </TextField>
-            <Text fx:id="manualPlotText1" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Plot a WAV file with a model:" GridPane.rowIndex="2">
+            <Text fx:id="WAVFileText" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Plot a WAV file with a model:" GridPane.rowIndex="2">
                <font>
                   <Font size="20.0" />
                </font>
@@ -232,7 +232,7 @@
                   <Insets bottom="20.0" left="20.0" right="230.0" top="72.0" />
                </GridPane.margin>
             </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="There are three different ways that this GUI allows you to plot emotional coordinates on the model. To plot a CSV or WAV file, click the button to select the corresponding file type and then click the plot button of the corresponding file type. To plot manually, type appropriate values in the text fields next to 'Valence:' and 'Arousal:' and then click plot." wrappingWidth="405.015625">
+            <Text fx:id="instructionText" strokeType="OUTSIDE" strokeWidth="0.0" text="There are three different ways that this GUI allows you to plot emotional coordinates on the model. To plot a CSV or WAV file, click the button to select the corresponding file type and then click the plot button of the corresponding file type. To plot manually, type appropriate values in the text fields next to 'Valence:' and 'Arousal:' and then click plot." wrappingWidth="405.015625">
                <font>
                   <Font size="20.0" />
                </font>

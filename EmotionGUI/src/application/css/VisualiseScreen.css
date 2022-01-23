@@ -22,7 +22,11 @@
 	-fx-font-family: "Montserrat SemiBold";
 }
 
-#selectAFileText{
+#CSVFileText{
+	-fx-font-family: "Montserrat SemiBold";
+}
+
+#WAVFileText{
 	-fx-font-family: "Montserrat SemiBold";
 }
 

@@ -95,6 +95,12 @@ public class VisualiseScreenController implements Initializable{
 	@FXML
 	Text manualPlotText;
 	@FXML
+	Text CSVFileText;
+	@FXML
+	Text instructionText;
+	@FXML
+	Text WAVFileText;
+	@FXML
 	Text selectAFileText;
 	@FXML
 	BorderPane borderPane;

@@ -1,9 +1,14 @@
 @font-face {
-	font-family: Neoteric;
-    src: url('fonts/Neoteric-32A8.ttf');
-    font-weight: bold;
+    src: url('fonts/Montserrat-SemiBold.ttf');
 }
 
 .root{
-	-fx-background-color: linear-gradient(to left,#33373C,#F4F2F3);
+	-fx-background-color: #F4F2F3;
+}
+
+.default-color0.chart-symbol{
+	-fx-background-color: transparent;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
 }
