@@ -65,3 +65,12 @@ Got the demo code to now work with my GUI, thus the select and plot WAV file fun
 
 #19 January 2022
 Changed points in scatter chart from orange to transparent so all that is left is the label. Fixed issues with changing the model in the python script causing issues in converting the WAV to CSV file.
+
+#20 January 2022
+Changed scatter chart circle to fit properly. Changed initial point colour to transparent.
+
+#23 January 2022
+Added in mediaView for annotation screen so that media can be loaded into it. Select and play buttons implemented on annotation screen as well. Scatter chart of the model was also added in on a smaller scale on annotation screen.
+
+#24 January 2022
+Added in getting the mouse position when it is over the chart on visualise screen. Done for testing, will need to be changed back later.
