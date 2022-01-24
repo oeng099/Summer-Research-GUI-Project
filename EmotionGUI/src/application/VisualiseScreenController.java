@@ -178,6 +178,35 @@ public class VisualiseScreenController implements Initializable{
 		
 	}
 	
+	public void showMouseCoordinates() {
+		ValenceArousalPlot.setOnMouseMoved(new EventHandler<MouseEvent>(){
+			@Override 
+			public void handle(MouseEvent event) {
+				
+				if((69.0 <= event.getX() && event.getX() <= 666.0) && (39.0 <= event.getY() && event.getY() <= 639.0)) {
+				double valenceSlope = 2.0/597.0;
+				double valenceConstant = -245.0/199.0;
+				double arousalSlope = 1.0/300.0;
+				double arousalConstant = -113.0/100.0;
+				
+				double valenceConverted = event.getX()*valenceSlope + valenceConstant;
+				BigDecimal roundedValenceConverted = new BigDecimal(valenceConverted).setScale(2,RoundingMode.HALF_UP);
+				double roundedValence = roundedValenceConverted.doubleValue();
+				
+				double arousalConverted = event.getY()*arousalSlope + arousalConstant;
+				BigDecimal roundedArousalConverted = new BigDecimal(arousalConverted).setScale(2,RoundingMode.HALF_UP);
+				double roundedArousal = roundedArousalConverted.doubleValue();
+				
+				String coordinates = "Valence: " + roundedValence + " Arousal: " + roundedArousal;
+				coordinateDetail.setText(coordinates);
+				}
+				else {
+					coordinateDetail.setText("Point: ");
+				}
+			}
+		});
+	}
+	
 	
 
 	public void selectAFile(ActionEvent event) {

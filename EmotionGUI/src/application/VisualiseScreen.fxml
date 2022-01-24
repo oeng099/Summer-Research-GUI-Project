@@ -139,7 +139,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <ScatterChart fx:id="ValenceArousalPlot" alternativeColumnFillVisible="true" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="724.0" prefWidth="680.0" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowSpan="5">
+            <ScatterChart fx:id="ValenceArousalPlot" alternativeColumnFillVisible="true" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" onMouseMoved="#showMouseCoordinates" prefHeight="724.0" prefWidth="680.0" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowSpan="5">
               <xAxis>
                 <NumberAxis animated="false" autoRanging="false" label="Valence" lowerBound="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="43.0" prefWidth="598.0" side="BOTTOM" tickUnit="0.25" upperBound="1.0" />
               </xAxis>
