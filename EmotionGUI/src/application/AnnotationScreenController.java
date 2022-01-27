@@ -1,6 +1,8 @@
 package application;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +27,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -41,6 +44,8 @@ public class AnnotationScreenController implements Initializable{
 	MediaView audioVisual;
 	@FXML
 	Label timeLabel;
+	@FXML
+	Text coordinateDetail;
 	
 	private Stage stage;
 	private Scene scene;
@@ -123,4 +128,33 @@ public class AnnotationScreenController implements Initializable{
 				totalHours,totalMinutes,totalSeconds);	
 	}
 
+	public void showMouseCoordinates() {
+		ValenceArousalPlot.setOnMouseMoved(new EventHandler<MouseEvent>(){
+			@Override 
+			public void handle(MouseEvent event) {
+				
+				if((47.0 <= event.getX() && event.getX() <= 666.0) && (39.0 <= event.getY() && event.getY() <= 658.0)) {
+				double valenceSlope = 2.0/619.0;
+				double valenceConstant = -713.0/619.0;
+				double arousalSlope = -2.0/619.0;
+				double arousalConstant = 697.0/619.0;
+				
+				double valenceConverted = event.getX()*valenceSlope + valenceConstant;
+				BigDecimal roundedValenceConverted = new BigDecimal(valenceConverted).setScale(2,RoundingMode.HALF_UP);
+				double roundedValence = roundedValenceConverted.doubleValue();
+				
+				double arousalConverted = event.getY()*arousalSlope + arousalConstant;
+				BigDecimal roundedArousalConverted = new BigDecimal(arousalConverted).setScale(2,RoundingMode.HALF_UP);
+				double roundedArousal = roundedArousalConverted.doubleValue();
+				
+				String coordinates = "Valence: " + roundedValence + " Arousal: " + roundedArousal;
+				coordinateDetail.setText(coordinates);
+				}
+				else {
+					coordinateDetail.setText("Point: ");
+				}
+			}
+		});
+	}
+	
 }
