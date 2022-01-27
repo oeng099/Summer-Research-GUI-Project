@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.VisualiseScreenController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.VisualiseScreenController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -41,8 +41,8 @@
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="35.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="65.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="60.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" percentHeight="17.5" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -64,7 +64,7 @@
             </Text>
             <Button fx:id="selectFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectAFile" prefHeight="38.0" prefWidth="92.0" style="-fx-background-radius: 10;" text="Select CSV File" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
-                  <Insets bottom="90.0" left="20.0" right="230.0" top="2.0" />
+                  <Insets bottom="90.0" left="20.0" right="260.0" top="2.0" />
                </GridPane.margin>
                <font>
                   <Font size="18.0" />
@@ -72,7 +72,7 @@
             </Button>
             <Button fx:id="plotFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plotCSVFile" style="-fx-background-radius: 10;" text="Plot CSV File" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
-                  <Insets bottom="90.0" left="270.0" right="-20.0" top="2.0" />
+                  <Insets bottom="90.0" left="380.0" right="-100.0" top="2.0" />
                </GridPane.margin>
                <font>
                   <Font size="18.0" />
@@ -123,12 +123,12 @@
                   <Insets left="20.0" top="150.0" />
                </GridPane.margin>
             </Text>
-            <Button fx:id="plotCoordinates" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plotManual" prefHeight="48.0" prefWidth="100.0" style="-fx-background-radius: 10;" text="Plot" GridPane.rowIndex="4">
+            <Button fx:id="plotCoordinates" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plotManual" prefHeight="48.0" prefWidth="100.0" style="-fx-background-radius: 10;" text="Plot" GridPane.rowIndex="5">
                <font>
                   <Font size="20.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="-24.0" left="330.0" right="-20.0" top="133.0" />
+                  <Insets bottom="87.0" left="500.0" right="-90.0" top="-10.0" />
                </GridPane.margin>
             </Button>
             <Button fx:id="mainMenu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#returnToMainMenu" style="-fx-background-radius: 10;" text="Main Menu" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
@@ -155,7 +155,7 @@
                   <Font size="20.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="10.0" left="330.0" right="250.0" top="62.0" />
+                  <Insets bottom="10.0" left="440.0" right="250.0" top="62.0" />
                </GridPane.margin>
             </Button>
             <Button fx:id="clearChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearModel" style="-fx-background-radius: 10;" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="5">
@@ -163,7 +163,7 @@
                   <Font size="20.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="10.0" left="90.0" right="490.0" top="62.0" />
+                  <Insets bottom="10.0" left="200.0" right="490.0" top="62.0" />
                </GridPane.margin>
             </Button>
             <Text fx:id="manualPlotError" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
@@ -179,7 +179,7 @@
                   <Font size="20.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="10.0" left="570.0" right="10.0" top="62.0" />
+                  <Insets bottom="10.0" left="680.0" right="10.0" top="62.0" />
                </GridPane.margin>
             </Button>
             <Text fx:id="coordinateDetail" strokeType="OUTSIDE" strokeWidth="0.0" text="Point: " GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
@@ -187,7 +187,7 @@
                   <Font size="20.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="70.0" left="90.0" />
+                  <Insets bottom="70.0" left="200.0" />
                </GridPane.margin>
             </Text>
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#selectWAVFile" prefHeight="38.0" prefWidth="92.0" style="-fx-background-radius: 10;" text="Select WAV File" GridPane.rowIndex="3">
@@ -195,12 +195,12 @@
                   <Font size="18.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="90.0" left="20.0" right="220.0" top="2.0" />
+                  <Insets bottom="90.0" left="20.0" right="230.0" top="2.0" />
                </GridPane.margin>
             </Button>
             <Button fx:id="CSVInfo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#CSVHelp" prefHeight="30.0" prefWidth="30.0" GridPane.rowIndex="2">
                <GridPane.margin>
-                  <Insets bottom="90.0" left="205.0" right="165.0" top="2.0" />
+                  <Insets bottom="90.0" left="315.0" right="195.0" top="2.0" />
                </GridPane.margin>
             </Button>
             <Button fx:id="plotFile1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plotWAVFile" style="-fx-background-radius: 10;" text="Plot WAV File" GridPane.rowIndex="3">
@@ -208,7 +208,7 @@
                   <Font size="18.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="90.0" left="270.0" right="-20.0" top="2.0" />
+                  <Insets bottom="90.0" left="350.0" right="-100.0" top="2.0" />
                </GridPane.margin>
             </Button>
             <TextField fx:id="WAVFilename" GridPane.rowIndex="2">
@@ -232,7 +232,7 @@
                   <Insets bottom="20.0" left="20.0" right="230.0" top="72.0" />
                </GridPane.margin>
             </Button>
-            <Text fx:id="instructionText" strokeType="OUTSIDE" strokeWidth="0.0" text="There are three different ways that this GUI allows you to plot emotional coordinates on the model. To plot a CSV or WAV file, click the button to select the corresponding file type and then click the plot button of the corresponding file type. To plot manually, type appropriate values in the text fields next to 'Valence:' and 'Arousal:' and then click plot." wrappingWidth="405.015625">
+            <Text fx:id="instructionText" strokeType="OUTSIDE" strokeWidth="0.0" text="There are three different ways that this GUI allows you to plot emotional coordinates on the model. To plot a CSV or WAV file, click the button to select the corresponding file type and then click the plot button of the corresponding file type. To plot manually, type appropriate values in the text fields next to 'Valence:' and 'Arousal:' and then click plot." wrappingWidth="535.015625">
                <font>
                   <Font size="20.0" />
                </font>

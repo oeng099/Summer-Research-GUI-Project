@@ -15,7 +15,7 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AnnotationScreenController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AnnotationScreenController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -40,8 +40,8 @@
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="66.67" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.33" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -49,27 +49,33 @@
           <RowConstraints minHeight="10.0" percentHeight="56.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ScatterChart fx:id="ValenceArousalPlot" alternativeColumnFillVisible="true" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="455.0" prefWidth="400.0" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <ScatterChart fx:id="ValenceArousalPlot" alternativeColumnFillVisible="true" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="724.0" prefWidth="700.0" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.rowSpan="3" GridPane.valignment="TOP">
                <xAxis>
                   <NumberAxis animated="false" autoRanging="false" label="Valence" lowerBound="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="340.0" side="BOTTOM" tickUnit="0.25" upperBound="1.0" />
                </xAxis>
                <yAxis>
                   <NumberAxis autoRanging="false" label="Arousal" lowerBound="-1.0" prefHeight="357.0" prefWidth="30.0" side="LEFT" tickLabelGap="0.1" tickUnit="0.25" upperBound="1.0" />
                </yAxis>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
             </ScatterChart>
-            <MediaView fx:id="audioVisual" fitHeight="750.0" fitWidth="800.0" GridPane.halignment="LEFT" GridPane.rowSpan="2" GridPane.valignment="TOP">
+            <MediaView fx:id="audioVisual" fitHeight="700.0" fitWidth="700.0" GridPane.halignment="LEFT" GridPane.rowSpan="2" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </MediaView>
-            <Button fx:id="selectMedia" mnemonicParsing="false" onAction="#selectMediaFile" style="-fx-background-radius: 5;" text="Select File" GridPane.columnIndex="1">
+            <Button fx:id="selectMedia" mnemonicParsing="false" onAction="#selectMediaFile" style="-fx-background-radius: 5;" text="Select File" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="20.0" />
                </font>
-            </Button>
-            <Button fx:id="playMedia" mnemonicParsing="false" onAction="#playMediaFile" style="-fx-background-radius: 5;" text="Play" GridPane.columnIndex="1">
                <GridPane.margin>
-                  <Insets left="200.0" />
+                  <Insets left="60.0" top="300.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="playMedia" mnemonicParsing="false" onAction="#playMediaFile" style="-fx-background-radius: 5;" text="Play" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="200.0" top="300.0" />
                </GridPane.margin>
                <font>
                   <Font size="20.0" />
