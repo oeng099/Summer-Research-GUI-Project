@@ -74,3 +74,6 @@ Added in mediaView for annotation screen so that media can be loaded into it. Se
 
 #24 January 2022
 Added in getting the mouse position when it is over the chart on visualise screen. Done for testing, will need to be changed back later.
+
+#27 January 2022
+Changed size for all screens. Added in getting coordianate when over the scatter chart using mouse position on the model in the annotation screen.
