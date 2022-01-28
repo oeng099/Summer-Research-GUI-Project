@@ -77,3 +77,6 @@ Added in getting the mouse position when it is over the chart on visualise scree
 
 #27 January 2022
 Changed size for all screens. Added in getting coordianate when over the scatter chart using mouse position on the model in the annotation screen.
+
+#28 January 2022
+Implemented fuctionality for plotting points by clicking on the model in annoation screen. Added in media control buttons in annotation screen, still need to add their functionality.
