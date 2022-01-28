@@ -54,6 +54,9 @@ public class AnnotationScreenController implements Initializable{
 	private Media media;
 	private MediaPlayer player;
 	
+	
+	XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -153,6 +156,38 @@ public class AnnotationScreenController implements Initializable{
 				else {
 					coordinateDetail.setText("Point: ");
 				}
+			}
+		});
+	}
+	
+	public void createPointByClick() {
+		ValenceArousalPlot.setOnMouseClicked(new EventHandler<MouseEvent>(){
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handle(MouseEvent event) {
+				
+				if((47.0 <= event.getX() && event.getX() <= 666.0) && (39.0 <= event.getY() && event.getY() <= 658.0)) {
+					double valenceSlope = 2.0/619.0;
+					double valenceConstant = -713.0/619.0;
+					double arousalSlope = -2.0/619.0;
+					double arousalConstant = 697.0/619.0;
+					
+					double valenceConverted = event.getX()*valenceSlope + valenceConstant;
+					BigDecimal roundedValenceConverted = new BigDecimal(valenceConverted).setScale(2,RoundingMode.HALF_UP);
+					double roundedValence = roundedValenceConverted.doubleValue();
+					
+					double arousalConverted = event.getY()*arousalSlope + arousalConstant;
+					BigDecimal roundedArousalConverted = new BigDecimal(arousalConverted).setScale(2,RoundingMode.HALF_UP);
+					double roundedArousal = roundedArousalConverted.doubleValue();
+
+					emotionCoordinates.getData().add(new Data<Number, Number>(roundedValence,roundedArousal));
+					if(ValenceArousalPlot.getData().contains(emotionCoordinates)) {
+						ValenceArousalPlot.getData().remove(1);
+					}
+					ValenceArousalPlot.getData().add(emotionCoordinates);
+					
+				}
+				
 			}
 		});
 	}

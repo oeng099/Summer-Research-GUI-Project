@@ -50,7 +50,7 @@
           <RowConstraints minHeight="10.0" percentHeight="56.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ScatterChart fx:id="ValenceArousalPlot" alternativeColumnFillVisible="true" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" onMouseMoved="#showMouseCoordinates" prefHeight="734.0" prefWidth="680.0" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.rowSpan="3" GridPane.valignment="TOP">
+            <ScatterChart fx:id="ValenceArousalPlot" alternativeColumnFillVisible="true" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#createPointByClick" onMouseMoved="#showMouseCoordinates" prefHeight="734.0" prefWidth="680.0" title="Valence-Arousal Plot" GridPane.columnIndex="1" GridPane.rowSpan="3" GridPane.valignment="TOP">
                <xAxis>
                   <NumberAxis animated="false" autoRanging="false" label="Valence" lowerBound="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="620.0" side="BOTTOM" tickUnit="0.25" upperBound="1.0" />
                </xAxis>
