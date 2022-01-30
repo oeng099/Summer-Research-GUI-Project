@@ -179,8 +179,10 @@ public class AnnotationScreenController implements Initializable{
 					double arousalConverted = event.getY()*arousalSlope + arousalConstant;
 					BigDecimal roundedArousalConverted = new BigDecimal(arousalConverted).setScale(2,RoundingMode.HALF_UP);
 					double roundedArousal = roundedArousalConverted.doubleValue();
-
-					emotionCoordinates.getData().add(new Data<Number, Number>(roundedValence,roundedArousal));
+					
+					XYChart.Data<Number, Number> data = new XYChart.Data<Number,Number>(roundedValence,roundedArousal);
+					data.setNode(new HoverNode(Double.toString(roundedValence),Double.toString(roundedArousal),coordinateDetail));
+					emotionCoordinates.getData().add(data);
 					if(ValenceArousalPlot.getData().contains(emotionCoordinates)) {
 						ValenceArousalPlot.getData().remove(1);
 					}
