@@ -80,3 +80,6 @@ Changed size for all screens. Added in getting coordianate when over the scatter
 
 #28 January 2022
 Implemented fuctionality for plotting points by clicking on the model in annoation screen. Added in media control buttons in annotation screen, still need to add their functionality.
+
+#30 January 2022
+Added hover labels to the points added onto the annotation screen by clicking. Added in functionality of auto clicking on the annotation screen.
