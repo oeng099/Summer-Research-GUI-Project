@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.event.InputEvent;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -104,6 +105,13 @@ public class AnnotationScreenController implements Initializable{
 	public void playMediaFile(ActionEvent event) {
 		player.play();
 		player.currentTimeProperty().addListener((observable,oldTime,newTime) -> timeLabel.setText(formatTime(newTime,player.getTotalDuration())));
+		startAutoClicker();
+	}
+	
+	public void startAutoClicker() {
+		AutoClicker autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK);
+		Thread runner = new Thread(autoclicker);
+		runner.start();
 	}
 	
 	public String formatTime(Duration currentTime, Duration totalTime) {
