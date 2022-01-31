@@ -59,6 +59,7 @@ public class AnnotationScreenController implements Initializable{
 	private Media media;
 	private MediaPlayer player;
 	private AutoClicker autoclicker;
+	private Thread runner;
 	
 	private boolean play = false;
 	
@@ -118,6 +119,14 @@ public class AnnotationScreenController implements Initializable{
 		});;
 	}
 	
+	public void playPause(ActionEvent event) {
+		if(player.getStatus() == MediaPlayer.Status.PLAYING) {
+			player.pause();
+		} else {
+			player.play();
+		}
+	}
+	
 	public void goBackFiveSeconds(ActionEvent event) {
 		player.seek(player.getCurrentTime().subtract(Duration.seconds(5)));
 	}
@@ -127,8 +136,8 @@ public class AnnotationScreenController implements Initializable{
 	}
 	
 	public void startAutoClicker() {
-		autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK);
-		Thread runner = new Thread(autoclicker);
+		this.autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK,player);
+		runner = new Thread(autoclicker);
 		runner.start();
 	}
 	

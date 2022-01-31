@@ -111,7 +111,7 @@
                   <Insets bottom="35.0" left="140.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="130.0" style="-fx-background-radius: 5;" text="Play/Pause" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button mnemonicParsing="false" onAction="#playPause" prefHeight="70.0" prefWidth="130.0" style="-fx-background-radius: 5;" text="Play/Pause" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="35.0" />
                </GridPane.margin>

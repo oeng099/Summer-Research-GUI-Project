@@ -7,6 +7,7 @@ module EmotionGUI {
 	requires com.opencsv;
 	requires javafx.swing;
 	requires javafx.media;
+	requires java.base;
 	
 	opens application to javafx.graphics, javafx.fxml;
 }
