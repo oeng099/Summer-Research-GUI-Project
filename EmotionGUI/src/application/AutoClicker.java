@@ -7,6 +7,7 @@ public class AutoClicker implements Runnable {
 	
 	private Robot robot;
 	private int button;
+	private volatile boolean alive = true;
 	
 	public AutoClicker(int button) {
 		this.button = button;
@@ -17,15 +18,18 @@ public class AutoClicker implements Runnable {
 		}
 	}
 	
+	public void stopClicking() {
+		this.alive = false;
+	}
+	
 	@Override
 	public void run() {
 		
-	while(true) {
+	while(alive) {
 		robot.mousePress(button);
 		robot.mouseRelease(button);
 		robot.delay(500);
 	}
-		
 	}
 
 }

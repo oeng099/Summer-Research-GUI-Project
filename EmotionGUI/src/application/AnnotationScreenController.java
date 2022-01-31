@@ -54,6 +54,7 @@ public class AnnotationScreenController implements Initializable{
 	
 	private Media media;
 	private MediaPlayer player;
+	private AutoClicker autoclicker;
 	
 	
 	XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
@@ -106,10 +107,13 @@ public class AnnotationScreenController implements Initializable{
 		player.play();
 		player.currentTimeProperty().addListener((observable,oldTime,newTime) -> timeLabel.setText(formatTime(newTime,player.getTotalDuration())));
 		startAutoClicker();
+		player.setOnEndOfMedia(() -> {
+			autoclicker.stopClicking();
+		});;
 	}
 	
 	public void startAutoClicker() {
-		AutoClicker autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK);
+		autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK);
 		Thread runner = new Thread(autoclicker);
 		runner.start();
 	}
