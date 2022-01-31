@@ -95,7 +95,7 @@
                   <Insets left="300.0" top="340.0" />
                </GridPane.margin>
             </Text>
-            <Button mnemonicParsing="false" prefHeight="70.0" style="-fx-background-radius: 5;" text="Forward" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button fx:id="forward" mnemonicParsing="false" onAction="#goForwardFiveSeconds" prefHeight="70.0" style="-fx-background-radius: 5;" text="Forward" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="35.0" left="430.0" />
                </GridPane.margin>
@@ -103,7 +103,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="130.0" style="-fx-background-radius: 5;" text="Backwards" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button fx:id="backward" mnemonicParsing="false" onAction="#goBackFiveSeconds" prefHeight="70.0" prefWidth="130.0" style="-fx-background-radius: 5;" text="Backward" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <font>
                   <Font size="20.0" />
                </font>

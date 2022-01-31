@@ -47,6 +47,10 @@ public class AnnotationScreenController implements Initializable{
 	Label timeLabel;
 	@FXML
 	Text coordinateDetail;
+	@FXML
+	Button forward;
+	@FXML
+	Button backward;
 	
 	private Stage stage;
 	private Scene scene;
@@ -55,6 +59,8 @@ public class AnnotationScreenController implements Initializable{
 	private Media media;
 	private MediaPlayer player;
 	private AutoClicker autoclicker;
+	
+	private boolean play = false;
 	
 	
 	XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
@@ -110,6 +116,14 @@ public class AnnotationScreenController implements Initializable{
 		player.setOnEndOfMedia(() -> {
 			autoclicker.stopClicking();
 		});;
+	}
+	
+	public void goBackFiveSeconds(ActionEvent event) {
+		player.seek(player.getCurrentTime().subtract(Duration.seconds(5)));
+	}
+	
+	public void goForwardFiveSeconds(ActionEvent event) {
+		player.seek(player.getCurrentTime().add(Duration.seconds(5)));
 	}
 	
 	public void startAutoClicker() {
