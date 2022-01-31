@@ -83,3 +83,6 @@ Implemented fuctionality for plotting points by clicking on the model in annoati
 
 #30 January 2022
 Added hover labels to the points added onto the annotation screen by clicking. Added in functionality of auto clicking on the annotation screen.
+
+#31 January 2022
+Implemented the play/pause button onto the annotation screen. Added in a way for the annotation to end when the media is finished playing. Added in forward and backward functionality for those buttons on the annotation screen. The auto clicking needs to be further improved as there are issues when any media control button is pressed. 
