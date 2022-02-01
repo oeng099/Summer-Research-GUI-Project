@@ -127,6 +127,14 @@
                   <Font size="19.0" />
                </font>
             </Button>
+            <Button mnemonicParsing="false" onAction="#saveAsPNG" prefHeight="36.0" style="-fx-background-radius: 5;" text="Save As PNG" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets left="60.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
          </children>
       </GridPane>
    </center>

@@ -1,7 +1,9 @@
 package application;
 
 import java.awt.event.InputEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
@@ -9,12 +11,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
@@ -22,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -147,8 +154,7 @@ public class AnnotationScreenController implements Initializable{
 	
 	public void startAutoClicker() {
 		this.autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK,player);
-		runner = new Thread(autoclicker);
-		runner.start();
+		autoclicker.startClicking();
 	}
 	
 	public String formatTime(Duration currentTime, Duration totalTime) {
@@ -237,6 +243,23 @@ public class AnnotationScreenController implements Initializable{
 				
 			}
 		});
+	}
+	
+	public void saveAsPNG(ActionEvent event) {
+		WritableImage image = ValenceArousalPlot.snapshot(new SnapshotParameters(), null);
+		
+		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png","*.png");
+		fileChooser.getExtensionFilters().add(extFilter);
+		
+		File file = fileChooser.showSaveDialog(stage);
+		
+		try {
+			BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+			ImageIO.write(bufferedImage,"png",file);
+		} catch (IOException e) {
+			System.out.println("Scatter plot cannot be converted.");
+		}
 	}
 	
 }
