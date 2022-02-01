@@ -3,6 +3,7 @@ package application;
 import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,6 +13,8 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
+
+import com.opencsv.CSVWriter;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -137,6 +140,7 @@ public class AnnotationScreenController implements Initializable{
 			}
 		} else {
 			player.play();
+			autoclicker.resumeClicking();
 		}
 	}
 	
@@ -260,6 +264,24 @@ public class AnnotationScreenController implements Initializable{
 		} catch (IOException e) {
 			System.out.println("Scatter plot cannot be converted.");
 		}
+	}
+	
+	public void saveAsCSV(ActionEvent event) throws IOException {
+		String csv = "annotation.csv";
+		CSVWriter writer = new CSVWriter(new FileWriter(csv));
+		
+		String [] record = "Valence,Arousal".split(",");
+		writer.writeNext(record);
+		
+		for(int i = 0; i < emotionCoordinates.getData().size(); i++) {
+			Number valence = emotionCoordinates.getData().get(i).getXValue();
+			Number  arousal = emotionCoordinates.getData().get(i).getYValue();
+			String[] coordinates = new String[2];
+			coordinates[0] = valence.toString();
+			coordinates[1] = arousal.toString();
+			writer.writeNext(coordinates);
+		}
+		writer.close();
 	}
 	
 }

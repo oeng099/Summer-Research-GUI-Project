@@ -32,7 +32,12 @@ public class AutoClicker implements Runnable {
 	
 	public void startClicking() {
 		clicker = new Thread(this);
+		clicker.setName("Clicker");
 		clicker.start();
+	}
+	
+	public void resumeClicking() {
+		running.set(true);
 	}
 	
 	@Override
