@@ -122,9 +122,19 @@ public class AnnotationScreenController implements Initializable{
 	public void playPause(ActionEvent event) {
 		if(player.getStatus() == MediaPlayer.Status.PLAYING) {
 			player.pause();
+			autoclicker.stopClicking();
+			try {
+				runner.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		} else {
 			player.play();
 		}
+	}
+	
+	public void playfromStart(ActionEvent event) {
+		player.seek(player.getStartTime());
 	}
 	
 	public void goBackFiveSeconds(ActionEvent event) {

@@ -95,28 +95,36 @@
                   <Insets left="300.0" top="340.0" />
                </GridPane.margin>
             </Text>
-            <Button fx:id="forward" mnemonicParsing="false" onAction="#goForwardFiveSeconds" prefHeight="70.0" style="-fx-background-radius: 5;" text="Forward" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button fx:id="forward" mnemonicParsing="false" onAction="#goForwardFiveSeconds" prefHeight="70.0" prefWidth="100.0" style="-fx-background-radius: 5;" text="Forward" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <GridPane.margin>
-                  <Insets bottom="35.0" left="430.0" />
+                  <Insets bottom="35.0" left="460.0" />
                </GridPane.margin>
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="backward" mnemonicParsing="false" onAction="#goBackFiveSeconds" prefHeight="70.0" prefWidth="130.0" style="-fx-background-radius: 5;" text="Backward" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+            <Button fx:id="backward" mnemonicParsing="false" onAction="#goBackFiveSeconds" prefHeight="70.0" prefWidth="120.0" style="-fx-background-radius: 5;" text="Backward" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <font>
                   <Font size="20.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="35.0" left="140.0" />
+                  <Insets bottom="35.0" left="185.0" />
                </GridPane.margin>
             </Button>
             <Button mnemonicParsing="false" onAction="#playPause" prefHeight="70.0" prefWidth="130.0" style="-fx-background-radius: 5;" text="Play/Pause" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <GridPane.margin>
-                  <Insets bottom="35.0" />
+                  <Insets bottom="35.0" left="60.0" />
                </GridPane.margin>
                <font>
                   <Font size="20.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#playfromStart" prefHeight="70.0" prefWidth="164.0" style="-fx-background-radius: 5;" text="Play from Start" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets bottom="35.0" left="5.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="19.0" />
                </font>
             </Button>
          </children>
