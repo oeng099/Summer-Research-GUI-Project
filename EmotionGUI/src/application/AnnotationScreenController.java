@@ -93,7 +93,6 @@ public class AnnotationScreenController implements Initializable{
 		Data<Number, Number> data = new Data<Number, Number>(0,0);
 		data.setNode(circle);
 		initialSeries.getData().add(data);
-		initialSeries.setName("Landmark Emotions");
 		
 		
 		ArrayList<String> landmarkEmotions = new ArrayList<String>(Arrays.asList("angry","afraid","sad","bored","excited","interested","happy","pleased","relaxed","content"));
@@ -245,6 +244,7 @@ public class AnnotationScreenController implements Initializable{
 					XYChart.Data<Number, Number> data = new XYChart.Data<Number,Number>(roundedValence,roundedArousal);
 					data.setNode(new HoverNode(Double.toString(roundedValence),Double.toString(roundedArousal),coordinateDetail));
 					emotionCoordinates.getData().add(data);
+					emotionCoordinates.setName("Emotion Coordinates");
 					if(ValenceArousalPlot.getData().contains(emotionCoordinates)) {
 						ValenceArousalPlot.getData().remove(1);
 					}
