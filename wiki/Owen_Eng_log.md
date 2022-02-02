@@ -89,3 +89,6 @@ Implemented the play/pause button onto the annotation screen. Added in a way for
 
 #1 Feburary 2022
 Implemented saving as CSV and PNG files on the annotation screen. Tried new implementation of the autoclicker which now works in stopping but does not resume. 
+
+#2 Feburary 2022
+Added in a main menu button on the annotation screen and removed the 'landmark emotion'  title on the legend and added the 'emotion coordinates' title. Also moved the MediaView to show a border around it. 
