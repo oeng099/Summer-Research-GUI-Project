@@ -92,3 +92,6 @@ Implemented saving as CSV and PNG files on the annotation screen. Tried new impl
 
 #2 Feburary 2022
 Added in a main menu button on the annotation screen and removed the 'landmark emotion'  title on the legend and added the 'emotion coordinates' title. Also moved the MediaView to show a border around it. 
+
+#3 Feburary 2022
+Implemented play/pause for 'p' key. This same functionality was attempted with the 'space' key, however it seems to act as a press for focused button on the GUI. 
