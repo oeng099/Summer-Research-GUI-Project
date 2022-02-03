@@ -1,6 +1,7 @@
 package application;
 
 import java.awt.event.InputEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
@@ -34,6 +35,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
@@ -77,9 +80,9 @@ public class AnnotationScreenController implements Initializable{
 	private MediaPlayer player;
 	private AutoClicker autoclicker;
 	private Thread runner;
+
 	
 	private boolean play = false;
-	
 	
 	XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
 	
@@ -112,6 +115,17 @@ public class AnnotationScreenController implements Initializable{
 		ValenceArousalPlot.getData().add(initialSeries);
 		
 	}
+	
+	public void spacePressed() {
+				if(player.getStatus() == MediaPlayer.Status.PLAYING) {
+					player.pause();
+					autoclicker.stopClicking();
+				} else {
+					player.play();
+					autoclicker.startClicking();
+				}
+			}
+	
 	
 	public void selectMediaFile(ActionEvent event) {
 
@@ -146,9 +160,10 @@ public class AnnotationScreenController implements Initializable{
 			}
 		} else {
 			player.play();
-			autoclicker.resumeClicking();
+			autoclicker.startClicking();
 		}
 	}
+	
 	
 	public void playfromStart(ActionEvent event) {
 		player.seek(player.getStartTime());
@@ -303,5 +318,4 @@ public class AnnotationScreenController implements Initializable{
 			e.printStackTrace();
 		}
 	}
-	
 }

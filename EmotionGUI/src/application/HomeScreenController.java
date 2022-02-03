@@ -1,11 +1,14 @@
 package application;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -41,10 +44,28 @@ public class HomeScreenController {
 	
 	public void changeToAnnotation(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(getClass().getResource("AnnotationScreen.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("AnnotationScreen.fxml"));
+			root = loader.load();
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			//stage.addEventFilter(KeyEvent.KEY_PRESSED,KeyEvent -> {
+			//	if(KeyEvent.getCode() == KeyCode.SPACE) {
+				//	KeyEvent.consume();
+			//	}
+			//});
 			scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
 			scene.getStylesheets().add(getClass().getResource("css/AnnotationScreen.css").toExternalForm());
+			AnnotationScreenController annotationController = loader.getController();
+			
+			scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+				@Override
+				public void handle(KeyEvent event) {
+					if(event.getCode() == KeyCode.P) {
+					annotationController.spacePressed();
+					}
+				}
+			}); 
+			
 			stage.setScene(scene);
 			stage.show();
 		} catch(Exception e) {
