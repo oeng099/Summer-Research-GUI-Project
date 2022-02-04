@@ -27,6 +27,8 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -44,6 +46,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -106,6 +109,7 @@ public class VisualiseScreenController implements Initializable{
 	BorderPane borderPane;
 	@FXML
 	ScatterChart<Number, Number> ValenceArousalPlot;
+
 
 	XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
 
@@ -175,6 +179,8 @@ public class VisualiseScreenController implements Initializable{
 		//for(Node n : initialPoints) {
 			//n.setStyle();
 		//}
+		
+
 		
 	}
 	

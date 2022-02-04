@@ -17,6 +17,8 @@ import javax.imageio.ImageIO;
 
 import com.opencsv.CSVWriter;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -32,6 +34,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -71,6 +74,10 @@ public class AnnotationScreenController implements Initializable{
 	Button mainMenu;
 	@FXML
 	BorderPane borderPane;
+	@FXML 
+	Slider speedSlider;
+	@FXML 
+	Text currentSpeed;
 	
 	private Stage stage;
 	private Scene scene;
@@ -114,6 +121,15 @@ public class AnnotationScreenController implements Initializable{
 		
 		ValenceArousalPlot.getData().add(initialSeries);
 		
+		speedSlider.setMaxWidth(500.0);
+		speedSlider.valueProperty().addListener(new ChangeListener<Number>(){
+			public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+				currentSpeed.setText(String.format("Current Speed: %.2f ", newValue));
+				player.setRate(newValue.doubleValue());
+			}
+			
+		});
+		
 	}
 	
 	public void spacePressed() {
@@ -143,7 +159,7 @@ public class AnnotationScreenController implements Initializable{
 	public void playMediaFile(ActionEvent event) {
 		player.play();
 		player.currentTimeProperty().addListener((observable,oldTime,newTime) -> timeLabel.setText(formatTime(newTime,player.getTotalDuration())));
-		startAutoClicker();
+		//startAutoClicker();
 		player.setOnEndOfMedia(() -> {
 			autoclicker.stopClicking();
 		});;
