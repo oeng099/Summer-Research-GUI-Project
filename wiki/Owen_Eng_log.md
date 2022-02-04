@@ -95,3 +95,6 @@ Added in a main menu button on the annotation screen and removed the 'landmark e
 
 #3 Feburary 2022
 Implemented play/pause for 'p' key. This same functionality was attempted with the 'space' key, however it seems to act as a press for focused button on the GUI. 
+
+#4 Feburary 2022
+Implemented a slider for the speed of the media playing for between 0.5 to 1.5 times the normal speed. Need to figure out ways to resize it.
