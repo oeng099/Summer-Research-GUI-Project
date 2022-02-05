@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -233,8 +235,8 @@ public class VisualiseScreenController implements Initializable{
 		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
 		String[] lineInFile;
 		while((lineInFile = reader.readNext()) != null) {
-			double unroundedValence = Double.parseDouble(lineInFile[0]);
-			double unroundedArousal = Double.parseDouble(lineInFile[1]);
+			double unroundedValence = Double.parseDouble(lineInFile[1]);
+			double unroundedArousal = Double.parseDouble(lineInFile[2]);
 			BigDecimal roundedValence = new BigDecimal(unroundedValence).setScale(2,RoundingMode.HALF_UP);
 			BigDecimal roundedArousal = new BigDecimal(unroundedArousal).setScale(2,RoundingMode.HALF_UP);
 			double valence = roundedValence.doubleValue();
@@ -382,10 +384,21 @@ public class VisualiseScreenController implements Initializable{
 	
 	public void plotWAVFile(ActionEvent event) throws IOException, CsvValidationException, InterruptedException {
 		String WAVFile = WAVFilename.getText();
+		if(checkCorrectFileType(WAVFile,"wav")){
 		WAV_TO_CSV(WAVFile);
 		String[] WAVFileArray = WAVFile.split("/");
 		String CSVFile = WAVFileArray[WAVFileArray.length-1].replace("wav", "csv");
 		plotCSVFile("src/application/WAV_To_CSV/CSV_Outputs/" + CSVFile);
+		}
+	}
+	
+	public boolean checkCorrectFileType(String filename, String extension) {
+		String filenameExtension = filename.substring(filename.lastIndexOf(".")+1,filename.length());
+		if(filenameExtension.equals(extension)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public void changeModel(ActionEvent event) throws IOException {

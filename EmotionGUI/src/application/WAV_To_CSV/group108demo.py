@@ -9,6 +9,7 @@
 
 # Import libraries
 import re
+import csv
 import os, sys, platform
 import tensorflow as tf
 from tensorflow import keras
@@ -279,16 +280,20 @@ v_pred_test_list = [i for i in yPredict]
 
 
 csvOutput = np.column_stack((v_pred_test_list,a_pred_test_list))
-csvOutputTitles = np.array([])
 
-print('**********************************************')
 fileNameSplit = sys.argv[1].split("/")
 highestIndexSplit = len(fileNameSplit) - 1
 csvFilename = fileNameSplit[highestIndexSplit].replace('.wav','.csv')
-print(csvFilename)
-toCSV_Outputs = "CSV_Outputs/"
 
-np.savetxt(toCSV_Outputs + csvFilename, csvOutput, delimiter=',')
+newPath = os.path.join(os.getcwd(),"CSV_Outputs")
+os.chdir(newPath)
+
+with open(csvFilename, 'w', newline ='') as file:
+    writer = csv.writer(file)
+    writer.writerow(["Valence","Arousal"])
+    
+    for coordinate in csvOutput:
+        writer.writerow(coordinate)
 
 # ## Result Plots
 # 
