@@ -87,6 +87,8 @@ public class AnnotationScreenController implements Initializable{
 	private MediaPlayer player;
 	private AutoClicker autoclicker;
 	private Thread runner;
+	
+	private ArrayList<Double> annotationTimes = new ArrayList<Double>();
 
 	
 	private boolean play = false;
@@ -159,7 +161,7 @@ public class AnnotationScreenController implements Initializable{
 	public void playMediaFile(ActionEvent event) {
 		player.play();
 		player.currentTimeProperty().addListener((observable,oldTime,newTime) -> timeLabel.setText(formatTime(newTime,player.getTotalDuration())));
-		//startAutoClicker();
+		startAutoClicker();
 		player.setOnEndOfMedia(() -> {
 			autoclicker.stopClicking();
 		});;
@@ -272,6 +274,10 @@ public class AnnotationScreenController implements Initializable{
 					BigDecimal roundedArousalConverted = new BigDecimal(arousalConverted).setScale(2,RoundingMode.HALF_UP);
 					double roundedArousal = roundedArousalConverted.doubleValue();
 					
+					double annotationTime = player.getCurrentTime().toSeconds();
+					double roundAT = Math.round(annotationTime*100.0)/100.0;
+					annotationTimes.add(roundAT);
+					
 					XYChart.Data<Number, Number> data = new XYChart.Data<Number,Number>(roundedValence,roundedArousal);
 					data.setNode(new HoverNode(Double.toString(roundedValence),Double.toString(roundedArousal),coordinateDetail));
 					emotionCoordinates.getData().add(data);
@@ -305,18 +311,25 @@ public class AnnotationScreenController implements Initializable{
 	}
 	
 	public void saveAsCSV(ActionEvent event) throws IOException {
-		String csv = "annotation.csv";
+		
+		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv","*.csv");
+		fileChooser.getExtensionFilters().add(extFilter);
+		
+		File file = fileChooser.showSaveDialog(stage);
+		String csv = file.toString();
 		CSVWriter writer = new CSVWriter(new FileWriter(csv));
 		
-		String [] record = "Valence,Arousal".split(",");
+		String [] record = "Time,Valence,Arousal".split(",");
 		writer.writeNext(record);
 		
 		for(int i = 0; i < emotionCoordinates.getData().size(); i++) {
 			Number valence = emotionCoordinates.getData().get(i).getXValue();
 			Number  arousal = emotionCoordinates.getData().get(i).getYValue();
-			String[] coordinates = new String[2];
-			coordinates[0] = valence.toString();
-			coordinates[1] = arousal.toString();
+			String[] coordinates = new String[3];
+			coordinates[0] = annotationTimes.get(i).toString();
+			coordinates[1] = valence.toString();
+			coordinates[2] = arousal.toString();
 			writer.writeNext(coordinates);
 		}
 		writer.close();
