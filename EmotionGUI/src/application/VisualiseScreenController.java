@@ -119,6 +119,18 @@ public class VisualiseScreenController implements Initializable{
 	private Scene scene;
 	private Parent root;
 	
+	private double endR = 251;
+	private double endG = 20;
+	private double endB = 20;
+	
+	private double startR = 23;
+	private double startG = 255;
+	private double startB = 101;
+	
+	double differenceR;
+	double differenceG;
+	double differenceB;
+	
 	private FXMLLoader loader;	
 	
 	private static final DecimalFormat df = new DecimalFormat("0.00");
@@ -229,6 +241,8 @@ public class VisualiseScreenController implements Initializable{
 		File file = new File(CSVFilename.getText());
 		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
 		String[] lineInFile;
+		int numNodes = 0;
+		
 		while((lineInFile = reader.readNext()) != null) {
 			double unroundedValence = Double.parseDouble(lineInFile[1]);
 			double unroundedArousal = Double.parseDouble(lineInFile[2]);
@@ -239,10 +253,13 @@ public class VisualiseScreenController implements Initializable{
 			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
 			data.setNode(new HoverNode(Double.toString(valence),Double.toString(arousal),coordinateDetail));
 			emotionCoordinates.getData().add(data);
+			numNodes++;
 		}
+		calculateDifferences(numNodes);
 		emotionCoordinates.setName("Emotion Points");
 		manualPlotError.setText(" ");
 		ValenceArousalPlot.getData().addAll(emotionCoordinates);
+		colourNodes(ValenceArousalPlot);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -265,6 +282,27 @@ public class VisualiseScreenController implements Initializable{
 		emotionCoordinates.setName("Emotion Points");
 		manualPlotError.setText(" ");
 		ValenceArousalPlot.getData().addAll(emotionCoordinates);
+	}
+	
+	public void calculateDifferences(int numNodes) {
+		this.differenceR = (endR-startR)/numNodes;
+		this.differenceG = (endG-startG)/numNodes;
+		this.differenceB = (endB-startB)/numNodes;
+	}
+	
+	public void colourNodes(XYChart<Number,Number> ValenceArousalPlot) {
+		Set<Node> nodes = ValenceArousalPlot.lookupAll(".series" + 1);
+		
+		double currentR = startR;
+		double currentG = startG;
+		double currentB = startB;
+		
+		for(Node n : nodes) {
+			n.setStyle("-fx-background-color: rgb(" + currentR + "," + currentG + "," + currentB + ")");
+			currentR += differenceR;
+			currentG += differenceG;
+			currentB += differenceB;
+		}
 	}
 
 	public void returnToMainMenu(ActionEvent event) {
