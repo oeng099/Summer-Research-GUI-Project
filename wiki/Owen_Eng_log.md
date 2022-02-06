@@ -98,3 +98,9 @@ Implemented play/pause for 'p' key. This same functionality was attempted with t
 
 #4 Feburary 2022
 Implemented a slider for the speed of the media playing for between 0.5 to 1.5 times the normal speed. Need to figure out ways to resize it.
+
+#5 Feburary 2022
+Added a time column for CSV files saved from annotation and changed visualise screen code so that CSV files can still be plotted correctly.
+
+#6 Feburary 2022
+Implemented colour gradation on both visualise and annotation screens. On visualise, gradation only shown if CSV file plotted contains a time column. On annotation, colour changes are more of it is plotted.
