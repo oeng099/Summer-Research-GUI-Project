@@ -14,5 +14,9 @@
 }
 
 .default-color1.chart-symbol{
-	-fx-background-color: rgb(128,53,184);
+	-fx-background-color: rgb(23,255,101);
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
 }
+

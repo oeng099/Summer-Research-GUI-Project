@@ -176,12 +176,7 @@ public class VisualiseScreenController implements Initializable{
 		}
 		
 		ValenceArousalPlot.getData().add(initialSeries);
-		
-		//Set<Node> initialPoints = ValenceArousalPlot.lookupAll(".series" + 0);
-		//for(Node n : initialPoints) {
-			//n.setStyle();
-		//}
-		
+	
 
 		
 	}
@@ -377,7 +372,6 @@ public class VisualiseScreenController implements Initializable{
 
 		File file = fileChooser.showOpenDialog(stage);
 		if (file != null) {
-			//REMEMBER TO ADD WAV ERROR HANDLING
 			WAVFilename.setText(file.toString());
 		}
 	}

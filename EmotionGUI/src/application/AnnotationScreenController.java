@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -90,13 +91,26 @@ public class AnnotationScreenController implements Initializable{
 	
 	private ArrayList<Double> annotationTimes = new ArrayList<Double>();
 
+	private double endR = 251;
+	private double endG = 20;
+	private double endB = 20;
 	
-	private boolean play = false;
+	private double startR = 23;
+	private double startG = 255;
+	private double startB = 101;
+	
+	double differenceR;
+	double differenceG;
+	double differenceB;
+	
+	private int numNodes;
 	
 	XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		currentSpeed.setText("Curret Speed:: 1.00");
 		
 		XYChart.Series<Number, Number> initialSeries  = new XYChart.Series<Number, Number>();
 		Circle circle = new Circle(0,0,ValenceArousalPlot.getXAxis().getPrefWidth()/2);
@@ -159,9 +173,20 @@ public class AnnotationScreenController implements Initializable{
 	}
 	
 	public void playMediaFile(ActionEvent event) {
-		player.play();
+		
+		this.numNodes = (int) Math.floor(player.getStopTime().toMillis()/500);
+		this.differenceR = (endR - startR)/numNodes;
+		this.differenceG = (endG - startG)/numNodes;
+		this.differenceB = (endB - startB)/numNodes;
+		
 		player.currentTimeProperty().addListener((observable,oldTime,newTime) -> timeLabel.setText(formatTime(newTime,player.getTotalDuration())));
 		startAutoClicker();
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		player.play();
 		player.setOnEndOfMedia(() -> {
 			autoclicker.stopClicking();
 		});;
@@ -280,17 +305,33 @@ public class AnnotationScreenController implements Initializable{
 					
 					XYChart.Data<Number, Number> data = new XYChart.Data<Number,Number>(roundedValence,roundedArousal);
 					data.setNode(new HoverNode(Double.toString(roundedValence),Double.toString(roundedArousal),coordinateDetail));
+					
 					emotionCoordinates.getData().add(data);
 					emotionCoordinates.setName("Emotion Coordinates");
 					if(ValenceArousalPlot.getData().contains(emotionCoordinates)) {
 						ValenceArousalPlot.getData().remove(1);
 					}
 					ValenceArousalPlot.getData().add(emotionCoordinates);
-					
+					colourNodes(ValenceArousalPlot);
 				}
 				
 			}
 		});
+	}
+	
+	public void colourNodes(XYChart<Number,Number> ValenceArousalPlot) {
+		Set<Node> nodes = ValenceArousalPlot.lookupAll(".series" + 1);
+		
+		double currentR = startR;
+		double currentG = startG;
+		double currentB = startB;
+		
+		for(Node n : nodes) {
+			n.setStyle("-fx-background-color: rgb(" + currentR + "," + currentG + "," + currentB + ")");
+			currentR += differenceR;
+			currentG += differenceG;
+			currentB += differenceB;
+		}
 	}
 	
 	public void saveAsPNG(ActionEvent event) {

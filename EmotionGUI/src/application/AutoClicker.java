@@ -44,13 +44,13 @@ public class AutoClicker implements Runnable {
 	public void run() {
 		
 		running.set(true);
-		
-	while(running.get()) {
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			System.out.println("Thread interrupted");
 		}
+		
+	while(running.get()) {
 		robot.mousePress(button);
 		robot.mouseRelease(button);
 		robot.delay(500);
