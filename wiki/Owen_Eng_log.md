@@ -104,3 +104,6 @@ Added a time column for CSV files saved from annotation and changed visualise sc
 
 #6 Feburary 2022
 Implemented colour gradation on both visualise and annotation screens. On visualise, gradation only shown if CSV file plotted contains a time column. On annotation, colour changes are more of it is plotted.
+
+#7 Feburary 2022
+Implemeneted volume silder and progress bar for media in annotation screen. Layout of annotation screen was slightly changed with vbox and hboxes to improve layout for now. Resized some of the visualisation screen buttons so that all text can be read on that screen.
