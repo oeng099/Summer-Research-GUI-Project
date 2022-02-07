@@ -18,6 +18,9 @@ import javax.imageio.ImageIO;
 
 import com.opencsv.CSVWriter;
 
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
@@ -43,6 +46,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -79,6 +83,16 @@ public class AnnotationScreenController implements Initializable{
 	Slider speedSlider;
 	@FXML 
 	Text currentSpeed;
+	@FXML
+	HBox mediaControlBar;
+	@FXML
+	Text time;
+	@FXML
+	Slider timeSlider;
+	@FXML
+	Text volume;
+	@FXML
+	Slider volumeSlider;
 	
 	private Stage stage;
 	private Scene scene;
@@ -104,13 +118,36 @@ public class AnnotationScreenController implements Initializable{
 	double differenceB;
 	
 	private int numNodes;
+	private Duration totalTime;
 	
 	XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		currentSpeed.setText("Curret Speed:: 1.00");
+		timeSlider.valueProperty().addListener(new InvalidationListener() {
+
+			@Override
+			public void invalidated(Observable ov) {
+				if(timeSlider.isValueChanging()) {
+					player.seek(player.getTotalDuration().multiply(timeSlider.getValue()/100.0));
+				}
+				
+			}
+			
+		});
+		
+		volumeSlider.valueProperty().addListener(new InvalidationListener() {
+
+			@Override
+			public void invalidated(Observable ov) {
+				if(volumeSlider.isValueChanging()) {
+					player.setVolume(volumeSlider.getValue()/100.0);
+				}
+				
+			}
+			
+		});
 		
 		XYChart.Series<Number, Number> initialSeries  = new XYChart.Series<Number, Number>();
 		Circle circle = new Circle(0,0,ValenceArousalPlot.getXAxis().getPrefWidth()/2);
@@ -137,7 +174,7 @@ public class AnnotationScreenController implements Initializable{
 		
 		ValenceArousalPlot.getData().add(initialSeries);
 		
-		speedSlider.setMaxWidth(500.0);
+		speedSlider.setMaxWidth(400.0);
 		speedSlider.valueProperty().addListener(new ChangeListener<Number>(){
 			public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
 				currentSpeed.setText(String.format("Current Speed: %.2f ", newValue));
@@ -179,14 +216,17 @@ public class AnnotationScreenController implements Initializable{
 		this.differenceG = (endG - startG)/numNodes;
 		this.differenceB = (endB - startB)/numNodes;
 		
+		this.totalTime = player.getTotalDuration();
+		player.setVolume(volumeSlider.getValue()/100.0);
 		player.currentTimeProperty().addListener((observable,oldTime,newTime) -> timeLabel.setText(formatTime(newTime,player.getTotalDuration())));
-		startAutoClicker();
+		//startAutoClicker();
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		player.play();
+		updateTime();
 		player.setOnEndOfMedia(() -> {
 			autoclicker.stopClicking();
 		});;
@@ -223,6 +263,17 @@ public class AnnotationScreenController implements Initializable{
 	public void startAutoClicker() {
 		this.autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK,player);
 		autoclicker.startClicking();
+	}
+	
+	public void updateTime() {
+		player.currentTimeProperty().addListener(new ChangeListener<Duration>(){
+
+			@Override
+			public void changed(ObservableValue<? extends Duration> ov, Duration oldTime, Duration currentTime) {
+				timeSlider.setValue(currentTime.toMillis()/totalTime.toMillis()*100.0);
+			}
+		
+		});
 	}
 	
 	public String formatTime(Duration currentTime, Duration totalTime) {
