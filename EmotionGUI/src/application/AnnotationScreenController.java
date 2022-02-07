@@ -219,7 +219,7 @@ public class AnnotationScreenController implements Initializable{
 		this.totalTime = player.getTotalDuration();
 		player.setVolume(volumeSlider.getValue()/100.0);
 		player.currentTimeProperty().addListener((observable,oldTime,newTime) -> timeLabel.setText(formatTime(newTime,player.getTotalDuration())));
-		//startAutoClicker();
+		startAutoClicker();
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
