@@ -107,3 +107,6 @@ Implemented colour gradation on both visualise and annotation screens. On visual
 
 #7 Feburary 2022
 Implemeneted volume silder and progress bar for media in annotation screen. Layout of annotation screen was slightly changed with vbox and hboxes to improve layout for now. Resized some of the visualisation screen buttons so that all text can be read on that screen.
+
+#8 Feburary 2022
+Implemented showing a waveform when a wav file is loaded into the annotation screen. Visualise screen reworked to allow for multiple series on the model. Clear button and functionality added on annotation screen.
