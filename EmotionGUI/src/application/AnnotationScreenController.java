@@ -4,6 +4,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -93,6 +94,8 @@ public class AnnotationScreenController implements Initializable{
 	Text volume;
 	@FXML
 	Slider volumeSlider;
+	@FXML
+	ImageView waveform;
 	
 	private Stage stage;
 	private Scene scene;
@@ -196,17 +199,36 @@ public class AnnotationScreenController implements Initializable{
 			}
 	
 	
-	public void selectMediaFile(ActionEvent event) {
+	public void selectMediaFile(ActionEvent event) throws IOException, InterruptedException {
 
 		FileChooser fileChooser = new FileChooser();
 
 		File file = fileChooser.showOpenDialog(stage);
 		if (file != null) {
-			media = new Media(file.toURI().toString());
-			player = new MediaPlayer(media);
-			audioVisual.setMediaPlayer(player);
-			
+
+			String fileName = file.getName();
+			String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1, file.getName().length());
+			String fileNameWithoutExtension = fileName.replace("." + fileExtension,"");
+			if (fileExtension.equals("mp4)") || fileExtension.equals("wav")) {
+				media = new Media(file.toURI().toString());
+				player = new MediaPlayer(media);
+				audioVisual.setMediaPlayer(player);
+			};
+			if (fileExtension.equals("wav")) {
+				audioVisual.setVisible(false);
+				loadWaveform(file.toString());
+				Image audioWaveform = new Image(new FileInputStream("src/application/images/audio_waveforms/" + fileNameWithoutExtension + "_Audio_Waveform.png")); 
+				waveform.setImage(audioWaveform);
+			}
 		}
+	}
+	
+	public void loadWaveform(String WAVFileName) throws IOException, InterruptedException {
+		String[] command = new String[] {"python3","plotWAV.py",WAVFileName};
+		ProcessBuilder builder = new ProcessBuilder(command);
+		builder.directory(new File("src/application"));
+		Process process = builder.start();
+		process.waitFor();
 	}
 	
 	public void playMediaFile(ActionEvent event) {
