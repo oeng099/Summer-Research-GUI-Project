@@ -112,9 +112,8 @@ public class VisualiseScreenController implements Initializable{
 	@FXML
 	ScatterChart<Number, Number> ValenceArousalPlot;
 
-
-	XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
-
+	private int numSeries = 0;
+	
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
@@ -127,9 +126,9 @@ public class VisualiseScreenController implements Initializable{
 	private double startG = 255;
 	private double startB = 101;
 	
-	double differenceR;
-	double differenceG;
-	double differenceB;
+	private double differenceR;
+	private double differenceG;
+	private double differenceB;
 	
 	private FXMLLoader loader;	
 	
@@ -188,7 +187,7 @@ public class VisualiseScreenController implements Initializable{
 		}
 		
 		ValenceArousalPlot.getData().add(initialSeries);
-	
+		numSeries++;
 
 		
 	}
@@ -243,6 +242,8 @@ public class VisualiseScreenController implements Initializable{
 		String[] lineInFile;
 		int numNodes = 0;
 		
+		XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
+		
 		while((lineInFile = reader.readNext()) != null) {
 			double unroundedValence = Double.parseDouble(lineInFile[1]);
 			double unroundedArousal = Double.parseDouble(lineInFile[2]);
@@ -256,10 +257,11 @@ public class VisualiseScreenController implements Initializable{
 			numNodes++;
 		}
 		calculateDifferences(numNodes);
-		emotionCoordinates.setName("Emotion Points");
+		emotionCoordinates.setName("Emotion Points" + numSeries);
 		manualPlotError.setText(" ");
 		ValenceArousalPlot.getData().addAll(emotionCoordinates);
 		colourNodes(ValenceArousalPlot);
+		numSeries++;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -268,6 +270,9 @@ public class VisualiseScreenController implements Initializable{
 		File file = new File(CSVFile);
 		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
 		String[] lineInFile;
+		
+		XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
+		
 		while((lineInFile = reader.readNext()) != null) {
 			double unroundedValence = Double.parseDouble(lineInFile[0]);
 			double unroundedArousal = Double.parseDouble(lineInFile[1]);
@@ -279,9 +284,10 @@ public class VisualiseScreenController implements Initializable{
 			data.setNode(new HoverNode(Double.toString(valence),Double.toString(arousal),coordinateDetail));
 			emotionCoordinates.getData().add(data);
 		}
-		emotionCoordinates.setName("Emotion Points");
+		emotionCoordinates.setName("Emotion Points" + numSeries);
 		manualPlotError.setText(" ");
 		ValenceArousalPlot.getData().addAll(emotionCoordinates);
+		numSeries++;
 	}
 	
 	public void calculateDifferences(int numNodes) {
@@ -320,6 +326,26 @@ public class VisualiseScreenController implements Initializable{
 
 	@SuppressWarnings("unchecked")
 	public void plotManual(ActionEvent event) throws IOException {
+		
+		boolean hasManual = false;
+		int hasManualIndex = -1;
+		int currentIndex = 0;
+		XYChart.Series<Number, Number> emotionCoordinates;
+		for(XYChart.Series<Number, Number> ValenceArousalSeries: ValenceArousalPlot.getData()) {
+			if(ValenceArousalSeries.getName().equals("Manual Points")) {
+				hasManual = true;
+				hasManualIndex = currentIndex;
+				break;
+			}
+			currentIndex++;
+		}
+		
+		if(hasManual) {
+			emotionCoordinates = ValenceArousalPlot.getData().get(currentIndex);
+		} else {
+			emotionCoordinates = new XYChart.Series<Number, Number>();
+		}
+		
 		if (valenceCoordinate.getText().isEmpty() || arousalCoordinate.getText().isEmpty()) {
 			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1 to 1");
 		} else if (!(Double.parseDouble(valenceCoordinate.getText()) < 1.0
@@ -328,18 +354,22 @@ public class VisualiseScreenController implements Initializable{
 						&& Double.parseDouble(arousalCoordinate.getText()) > -1.0)) {
 			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1 to 1");
 		} else {
-			emotionCoordinates.setName("Emotion Points");
+			emotionCoordinates.setName("Manual Points");
 			manualPlotError.setText(" ");
 			double valence = Double.parseDouble(valenceCoordinate.getText());
 			double arousal = Double.parseDouble(arousalCoordinate.getText());
 			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
 			data.setNode(new HoverNode(valenceCoordinate.getText(),arousalCoordinate.getText(),coordinateDetail));
 			emotionCoordinates.getData().add(data);
-			if(!ValenceArousalPlot.getData().contains(emotionCoordinates)) {
+			
+			
+			
+			if(hasManual) {
+				ValenceArousalPlot.getData().remove(hasManualIndex);
 				ValenceArousalPlot.getData().addAll(emotionCoordinates);
 			} else {
-				ValenceArousalPlot.getData().remove(1);
 				ValenceArousalPlot.getData().addAll(emotionCoordinates);
+				numSeries++;
 			}
 		}
 	}
@@ -351,6 +381,8 @@ public class VisualiseScreenController implements Initializable{
 		String [] record = "Valence,Arousal".split(",");
 		writer.writeNext(record);
 		
+		XYChart.Series<Number, Number> emotionCoordinates = ValenceArousalPlot.getData().get(1);
+				
 		for(int i = 0; i < emotionCoordinates.getData().size(); i++) {
 			Number valence = emotionCoordinates.getData().get(i).getXValue();
 			Number  arousal = emotionCoordinates.getData().get(i).getYValue();
@@ -376,10 +408,11 @@ public class VisualiseScreenController implements Initializable{
 	}
 
 	public void clearModel(ActionEvent event) {
-		if(emotionCoordinates.getData().equals(null)) {
-		ValenceArousalPlot.getData().remove(1);
+		if(ValenceArousalPlot.getData().size() > 1) {
+			ValenceArousalPlot.getData().remove(1,ValenceArousalPlot.getData().size());
+			numSeries = 1;
 		}
-		emotionCoordinates.getData().clear();
+		
 	}
 	
 	public void CSVHelp(ActionEvent event) throws IOException {
