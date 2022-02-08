@@ -96,6 +96,8 @@ public class AnnotationScreenController implements Initializable{
 	Slider volumeSlider;
 	@FXML
 	ImageView waveform;
+	@FXML
+	Button clear;
 	
 	private Stage stage;
 	private Scene scene;
@@ -209,7 +211,7 @@ public class AnnotationScreenController implements Initializable{
 			String fileName = file.getName();
 			String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1, file.getName().length());
 			String fileNameWithoutExtension = fileName.replace("." + fileExtension,"");
-			if (fileExtension.equals("mp4)") || fileExtension.equals("wav")) {
+			if (fileExtension.equals("mp4") || fileExtension.equals("wav")) {
 				media = new Media(file.toURI().toString());
 				player = new MediaPlayer(media);
 				audioVisual.setMediaPlayer(player);
@@ -459,6 +461,12 @@ public class AnnotationScreenController implements Initializable{
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void clearModel(ActionEvent event) {
+		if(ValenceArousalPlot.getData().size() > 1) {
+			ValenceArousalPlot.getData().remove(1);
 		}
 	}
 }

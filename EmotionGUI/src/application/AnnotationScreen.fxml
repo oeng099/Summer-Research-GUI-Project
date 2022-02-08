@@ -204,6 +204,14 @@
                   <Insets left="25.0" top="10.0" />
                </GridPane.margin>
             </ImageView>
+            <Button fx:id="clear" maxWidth="80.0" mnemonicParsing="false" onAction="#clearModel" style="-fx-background-radius: 5;" text="Clear" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="550.0" />
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
    </center>

@@ -412,7 +412,6 @@ public class VisualiseScreenController implements Initializable{
 			ValenceArousalPlot.getData().remove(1,ValenceArousalPlot.getData().size());
 			numSeries = 1;
 		}
-		
 	}
 	
 	public void CSVHelp(ActionEvent event) throws IOException {
