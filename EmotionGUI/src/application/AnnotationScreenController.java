@@ -466,6 +466,7 @@ public class AnnotationScreenController implements Initializable{
 	
 	public void clearModel(ActionEvent event) {
 		if(ValenceArousalPlot.getData().size() > 1) {
+			emotionCoordinates.getData().clear();
 			ValenceArousalPlot.getData().remove(1);
 		}
 	}
