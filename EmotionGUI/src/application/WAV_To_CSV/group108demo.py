@@ -185,6 +185,7 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
     # drop rows with NaN values
     if dropnan:
         agg.dropna(inplace=True)
+    print(agg)
     return agg
 
 # Define scaler, feature number and number of step looking back
@@ -201,11 +202,11 @@ transformTarget = True
 
 testingDataset = currentDf
 
-
 # In[ ]:
 
 
 testingDataset = testingDataset[['RMS', 'F0', 'MFCC1', 'MFCC2', 'MFCC3', 'MFCC4', 'MFCC5']]
+
 
 # load and build testing dataset
 values = testingDataset.values
@@ -219,7 +220,6 @@ test = values
 test_X = test
 # reshape input to be 3D [samples, timesteps (n_steps before + 1 current step), features]
 test_X = test_X.reshape((test_X.shape[0], n_steps + 1, n_features))
-
 
 # In[ ]:
 
@@ -279,7 +279,10 @@ else:
 v_pred_test_list = [i for i in yPredict]
 
 
-csvOutput = np.column_stack((v_pred_test_list,a_pred_test_list))
+time_array = currentDf[['Time']].to_numpy()
+time_array = time_array[24:len(time_array)]
+
+csvOutput = np.column_stack((time_array,v_pred_test_list,a_pred_test_list))
 
 fileNameSplit = sys.argv[1].split("/")
 highestIndexSplit = len(fileNameSplit) - 1
@@ -290,7 +293,7 @@ os.chdir(newPath)
 
 with open(csvFilename, 'w', newline ='') as file:
     writer = csv.writer(file)
-    writer.writerow(["Valence","Arousal"])
+    writer.writerow(["Time","Valence","Arousal"])
     
     for coordinate in csvOutput:
         writer.writerow(coordinate)

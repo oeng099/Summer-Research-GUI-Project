@@ -270,12 +270,13 @@ public class VisualiseScreenController implements Initializable{
 		File file = new File(CSVFile);
 		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
 		String[] lineInFile;
+		int numNodes = 0;
 		
 		XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
 		
 		while((lineInFile = reader.readNext()) != null) {
-			double unroundedValence = Double.parseDouble(lineInFile[0]);
-			double unroundedArousal = Double.parseDouble(lineInFile[1]);
+			double unroundedValence = Double.parseDouble(lineInFile[1]);
+			double unroundedArousal = Double.parseDouble(lineInFile[2]);
 			BigDecimal roundedValence = new BigDecimal(unroundedValence).setScale(2,RoundingMode.HALF_UP);
 			BigDecimal roundedArousal = new BigDecimal(unroundedArousal).setScale(2,RoundingMode.HALF_UP);
 			double valence = roundedValence.doubleValue();
@@ -283,10 +284,13 @@ public class VisualiseScreenController implements Initializable{
 			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
 			data.setNode(new HoverNode(Double.toString(valence),Double.toString(arousal),coordinateDetail));
 			emotionCoordinates.getData().add(data);
+			numNodes++;
 		}
+		calculateDifferences(numNodes);
 		emotionCoordinates.setName("Emotion Points" + numSeries);
 		manualPlotError.setText(" ");
 		ValenceArousalPlot.getData().addAll(emotionCoordinates);
+		colourNodes(ValenceArousalPlot);
 		numSeries++;
 	}
 	
