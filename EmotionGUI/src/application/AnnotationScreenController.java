@@ -311,18 +311,18 @@ public class AnnotationScreenController implements Initializable{
 			secondsElapsed -= minutesElapsed*60;
 		}
 		
-		int totalmiliSeconds = (int) Math.floor(totalTime.toMillis());
-		int totalMin = totalmiliSeconds/60000;
-		if(totalMin > 0) {
-			totalmiliSeconds -= totalmiliSeconds*60000;
+		int totalSeconds = (int) Math.floor(totalTime.toSeconds());
+		int totalHours = totalSeconds/360;
+		if(totalHours > 0) {
+			totalSeconds -= totalSeconds*360;
 		}
-		int totalSeconds = totalmiliSeconds/1000;
-		if(totalSeconds > 0) {
-			totalmiliSeconds -= totalSeconds*1000;
+		int totalMinutes = totalSeconds/60;
+		if(totalMinutes > 0) {
+			totalSeconds -= totalMinutes*60;
 		}
 		
 		return String.format("%d:%02d:%02d/%d:%02d:%02d",hoursElapsed,minutesElapsed,secondsElapsed,
-				totalMin,totalSeconds,totalmiliSeconds);	
+				totalHours,totalMinutes,totalSeconds);	
 	}
 
 	public void showMouseCoordinates() {
@@ -356,7 +356,6 @@ public class AnnotationScreenController implements Initializable{
 	
 	public void createPointByClick() {
 		ValenceArousalPlot.setOnMouseClicked(new EventHandler<MouseEvent>(){
-			@SuppressWarnings("unchecked")
 			@Override
 			public void handle(MouseEvent event) {
 				
