@@ -70,9 +70,9 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="plotFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plotCSVFile" style="-fx-background-radius: 10;" text="Plot CSV File" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+            <Button fx:id="plotFile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plotCSVFile" style="-fx-background-radius: 10;" text="Plot Emotional Data of CSV File" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
-                  <Insets bottom="90.0" left="380.0" right="-100.0" top="2.0" />
+                  <Insets bottom="90.0" left="380.0" right="-140.0" top="2.0" />
                </GridPane.margin>
                <font>
                   <Font size="18.0" />
@@ -203,12 +203,12 @@
                   <Insets bottom="90.0" left="315.0" right="195.0" top="2.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="plotFile1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plotWAVFile" style="-fx-background-radius: 10;" text="Plot WAV File" GridPane.rowIndex="3">
+            <Button fx:id="plotFile1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#plotWAVFile" style="-fx-background-radius: 10;" text="Plot Emotional Data of WAV File" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
                <GridPane.margin>
-                  <Insets bottom="90.0" left="350.0" right="-100.0" top="2.0" />
+                  <Insets bottom="90.0" left="350.0" right="-140.0" top="2.0" />
                </GridPane.margin>
             </Button>
             <TextField fx:id="WAVFilename" GridPane.rowIndex="2">
