@@ -57,3 +57,27 @@
     -fx-background-radius: 5px;
     -fx-padding: 5px;
 }
+
+.default-color2.chart-symbol{
+	-fx-background-color: rgb(253,231,45);
+	-fx-background-insets: 0;
+    -fx-background-radius: 5px;
+    -fx-shape: "M5,0 L10,9 L5,18 L0,9 Z"
+}
+
+.default-color3.chart-symbol{
+	-fx-background-color: rgb(255,146,0);
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-shape: "M5,0 L10,8 L0,8 Z"
+}
+
+.default-color4.chart-symbol{
+	-fx-background-color: rgb(137,227,181);
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-shape: "M2,0 L5,4 L8,0 L10,0 L10,2 L6,5 L10,8 L10,10 L8,10 L5,6 L2,
+    10 L0,10 L0,8 L4,5 L0,2 L0,0 Z"
+}
