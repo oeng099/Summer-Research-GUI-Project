@@ -118,13 +118,13 @@ public class VisualiseScreenController implements Initializable{
 	private Scene scene;
 	private Parent root;
 	
-	private double endR = 251;
-	private double endG = 20;
-	private double endB = 20;
+	private double[] endR = new double[] {251,153,9,234};
+	private double[] endG = new double[] {20,34,18,115};
+	private double[] endB = new double[] {20,195,121,141};
 	
-	private double startR = 23;
-	private double startG = 255;
-	private double startB = 101;
+	private double[] startR = new double[] {23,253,255,137} ;
+	private double[] startG = new double[] {255,231,146,227};
+	private double[] startB = new double[] {101,45,0,181};
 	
 	private double differenceR;
 	private double differenceG;
@@ -256,11 +256,11 @@ public class VisualiseScreenController implements Initializable{
 			emotionCoordinates.getData().add(data);
 			numNodes++;
 		}
-		calculateDifferences(numNodes);
+		calculateDifferences(numNodes,numSeries);
 		emotionCoordinates.setName("Emotion Points" + numSeries);
 		manualPlotError.setText(" ");
 		ValenceArousalPlot.getData().addAll(emotionCoordinates);
-		colourNodes(ValenceArousalPlot);
+		colourNodes(ValenceArousalPlot,numSeries);
 		numSeries++;
 	}
 	
@@ -286,26 +286,28 @@ public class VisualiseScreenController implements Initializable{
 			emotionCoordinates.getData().add(data);
 			numNodes++;
 		}
-		calculateDifferences(numNodes);
+		calculateDifferences(numNodes,numSeries);
 		emotionCoordinates.setName("Emotion Points" + numSeries);
 		manualPlotError.setText(" ");
 		ValenceArousalPlot.getData().addAll(emotionCoordinates);
-		colourNodes(ValenceArousalPlot);
+		colourNodes(ValenceArousalPlot,numSeries);
 		numSeries++;
 	}
 	
-	public void calculateDifferences(int numNodes) {
-		this.differenceR = (endR-startR)/numNodes;
-		this.differenceG = (endG-startG)/numNodes;
-		this.differenceB = (endB-startB)/numNodes;
+	public void calculateDifferences(int numNodes,int numSeries) {
+		int currentSeries = numSeries-1;
+		this.differenceR = (endR[currentSeries]-startR[currentSeries])/numNodes;
+		this.differenceG = (endG[currentSeries]-startG[currentSeries])/numNodes;
+		this.differenceB = (endB[currentSeries]-startB[currentSeries])/numNodes;
 	}
 	
-	public void colourNodes(XYChart<Number,Number> ValenceArousalPlot) {
-		Set<Node> nodes = ValenceArousalPlot.lookupAll(".series" + 1);
+	public void colourNodes(XYChart<Number,Number> ValenceArousalPlot, int numSeries) {
+		Set<Node> nodes = ValenceArousalPlot.lookupAll(".series" + numSeries);
 		
-		double currentR = startR;
-		double currentG = startG;
-		double currentB = startB;
+		int currentSeries = numSeries-1;
+		double currentR = startR[currentSeries];
+		double currentG = startG[currentSeries];
+		double currentB = startB[currentSeries];
 		
 		for(Node n : nodes) {
 			n.setStyle("-fx-background-color: rgb(" + currentR + "," + currentG + "," + currentB + ")");
