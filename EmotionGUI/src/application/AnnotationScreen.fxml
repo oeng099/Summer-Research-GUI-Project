@@ -59,7 +59,7 @@
                   <NumberAxis animated="false" autoRanging="false" label="Valence" lowerBound="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="35.0" prefWidth="620.0" side="BOTTOM" tickUnit="0.25" upperBound="1.0" />
                </xAxis>
                <yAxis>
-                  <NumberAxis autoRanging="false" label="Arousal" lowerBound="-1.0" prefHeight="638.0" prefWidth="30.0" side="LEFT" tickLabelGap="0.1" tickUnit="0.25" upperBound="1.0" />
+                  <NumberAxis autoRanging="false" label="Arousal" lowerBound="-1.0" prefHeight="648.0" prefWidth="30.0" side="LEFT" tickLabelGap="0.1" tickUnit="0.25" upperBound="1.0" />
                </yAxis>
                <GridPane.margin>
                   <Insets left="20.0" />
