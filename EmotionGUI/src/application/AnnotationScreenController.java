@@ -211,18 +211,26 @@ public class AnnotationScreenController implements Initializable{
 			String fileName = file.getName();
 			String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1, file.getName().length());
 			String fileNameWithoutExtension = fileName.replace("." + fileExtension,"");
-			if (fileExtension.equals("mp4") || fileExtension.equals("wav")) {
-				media = new Media(file.toURI().toString());
-				player = new MediaPlayer(media);
-				audioVisual.setMediaPlayer(player);
+			if (fileExtension.equals("mp4")){
+				loadMedia(file);
+				audioVisual.setVisible(true);
+				waveform.setVisible(false);
 			};
 			if (fileExtension.equals("wav")) {
+				loadMedia(file);
 				audioVisual.setVisible(false);
+				waveform.setVisible(true);
 				loadWaveform(file.toString());
 				Image audioWaveform = new Image(new FileInputStream("src/application/images/audio_waveforms/" + fileNameWithoutExtension + "_Audio_Waveform.png")); 
 				waveform.setImage(audioWaveform);
 			}
 		}
+	}
+	
+	public void loadMedia(File file) {
+		media = new Media(file.toURI().toString());
+		player = new MediaPlayer(media);
+		audioVisual.setMediaPlayer(player);
 	}
 	
 	public void loadWaveform(String WAVFileName) throws IOException, InterruptedException {
