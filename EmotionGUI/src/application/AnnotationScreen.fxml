@@ -154,7 +154,7 @@
                               <Font size="20.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#playPause" prefHeight="50.0" prefWidth="130.0" style="-fx-background-radius: 5;" text="Play/Pause">
+                        <Button fx:id="playPause" mnemonicParsing="false" onAction="#changeMediaStatus" prefHeight="50.0" prefWidth="130.0" style="-fx-background-radius: 5;" text="Play/Pause">
                            <font>
                               <Font size="20.0" />
                            </font>

@@ -73,6 +73,8 @@ public class AnnotationScreenController implements Initializable{
 	@FXML
 	Text coordinateDetail;
 	@FXML
+	Button playPause;
+	@FXML
 	Button forward;
 	@FXML
 	Button backward;
@@ -191,14 +193,8 @@ public class AnnotationScreenController implements Initializable{
 	}
 	
 	public void spacePressed() {
-				if(player.getStatus() == MediaPlayer.Status.PLAYING) {
-					player.pause();
-					autoclicker.stopClicking();
-				} else {
-					player.play();
-					autoclicker.startClicking();
-				}
-			}
+		playPause.fire();
+	}
 	
 	
 	public void selectMediaFile(ActionEvent event) throws IOException, InterruptedException {
@@ -264,28 +260,36 @@ public class AnnotationScreenController implements Initializable{
 		});;
 	}
 	
-	public void playPause(ActionEvent event) {
+	public void changeMediaStatus(ActionEvent event) {
 		if(player.getStatus() == MediaPlayer.Status.PLAYING) {
 			player.pause();
-			autoclicker.stopClicking();
-			try {
-				runner.wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			autoclicker.pauseClicking();
 		} else {
 			player.play();
-			autoclicker.startClicking();
+			autoclicker.resumeClicking();
 		}
 	}
 	
 	
 	public void playfromStart(ActionEvent event) {
 		player.seek(player.getStartTime());
+		clear.fire();
+		playMedia.fire();
 	}
 	
 	public void goBackFiveSeconds(ActionEvent event) {
 		player.seek(player.getCurrentTime().subtract(Duration.seconds(5)));
+		double pointsInFiveSec = 5.0/(Double.valueOf(autoclicker.getDelayTime())/1000);
+		int pointsToRemove = (int)Math.round(pointsInFiveSec)+1;
+		int currentPointsLength = emotionCoordinates.getData().size();
+		for(int i = currentPointsLength-1; i > currentPointsLength-pointsToRemove;i--) {
+			emotionCoordinates.getData().remove(i);
+		}
+		if(ValenceArousalPlot.getData().contains(emotionCoordinates)) {
+			ValenceArousalPlot.getData().remove(1);
+		}
+		ValenceArousalPlot.getData().add(emotionCoordinates);
+		colourNodes(ValenceArousalPlot);
 	}
 	
 	public void goForwardFiveSeconds(ActionEvent event) {
@@ -387,18 +391,21 @@ public class AnnotationScreenController implements Initializable{
 					
 					XYChart.Data<Number, Number> data = new XYChart.Data<Number,Number>(roundedValence,roundedArousal);
 					data.setNode(new HoverNode(Double.toString(roundedValence),Double.toString(roundedArousal),coordinateDetail));
-					
-					emotionCoordinates.getData().add(data);
-					emotionCoordinates.setName("Emotion Coordinates");
-					if(ValenceArousalPlot.getData().contains(emotionCoordinates)) {
-						ValenceArousalPlot.getData().remove(1);
-					}
-					ValenceArousalPlot.getData().add(emotionCoordinates);
-					colourNodes(ValenceArousalPlot);
+					plotEmotionalCoordinates(data);					
 				}
 				
 			}
 		});
+	}
+	
+	public void plotEmotionalCoordinates(XYChart.Data<Number, Number> data) {
+		emotionCoordinates.getData().add(data);
+		emotionCoordinates.setName("Emotion Coordinates");
+		if(ValenceArousalPlot.getData().contains(emotionCoordinates)) {
+			ValenceArousalPlot.getData().remove(1);
+		}
+		ValenceArousalPlot.getData().add(emotionCoordinates);
+		colourNodes(ValenceArousalPlot);
 	}
 	
 	public void colourNodes(XYChart<Number,Number> ValenceArousalPlot) {

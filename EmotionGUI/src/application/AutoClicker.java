@@ -8,56 +8,70 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 
 public class AutoClicker implements Runnable {
-	
+
 	private Thread clicker;
 	private Robot robot;
 	private int button;
+	private int delayTime = 500;
 	private AtomicBoolean running = new AtomicBoolean(false);
-	private MediaPlayer player;
-	private Status status;
-	
+	private boolean threadPause = false;
+
 	public AutoClicker(int button, MediaPlayer player) {
 		this.button = button;
-		this.player = player;
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
+	public int getDelayTime() {
+		return delayTime;
+	}
+
 	public void stopClicking() {
 		running.set(false);
 	}
-	
+
 	public void startClicking() {
 		clicker = new Thread(this);
 		clicker.setName("Clicker");
 		clicker.start();
 	}
-	
-	public void resumeClicking() {
-		running.set(true);
+
+	public void pauseClicking() {
+		threadPause = true;
 	}
 	
+	public synchronized void resumeClicking() {
+		threadPause = false;
+		notify();
+	}
+
 	@Override
 	public void run() {
-		
+
 		running.set(true);
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			System.out.println("Thread interrupted");
 		}
-		
-	while(running.get()) {
+
+		while (running.get()) {
+			try {
+				synchronized (this) {
+					while (threadPause) {
+						wait();
+					}
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		robot.mousePress(button);
 		robot.mouseRelease(button);
-		robot.delay(500);
+		robot.delay(delayTime);
 	}
-	
-	System.out.println("Finsihed annotation");
-	
 	}
 
 }
