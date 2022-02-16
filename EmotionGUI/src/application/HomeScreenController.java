@@ -35,6 +35,7 @@ public class HomeScreenController {
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
 			scene.getStylesheets().add(getClass().getResource("css/VisualiseScreen.css").toExternalForm());
+			stage.setTitle("Visualise Screen");
 			stage.setScene(scene);
 			stage.show();
 		} catch(Exception e) {
@@ -47,11 +48,6 @@ public class HomeScreenController {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("AnnotationScreen.fxml"));
 			root = loader.load();
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			//stage.addEventFilter(KeyEvent.KEY_PRESSED,KeyEvent -> {
-			//	if(KeyEvent.getCode() == KeyCode.SPACE) {
-				//	KeyEvent.consume();
-			//	}
-			//});
 			scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
 			scene.getStylesheets().add(getClass().getResource("css/AnnotationScreen.css").toExternalForm());
 			AnnotationScreenController annotationController = loader.getController();
@@ -66,6 +62,7 @@ public class HomeScreenController {
 				}
 			}); 
 			
+			stage.setTitle("Annotation Screen");
 			stage.setScene(scene);
 			stage.show();
 		} catch(Exception e) {

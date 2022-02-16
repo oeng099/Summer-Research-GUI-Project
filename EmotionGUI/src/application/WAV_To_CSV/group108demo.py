@@ -185,7 +185,6 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
     # drop rows with NaN values
     if dropnan:
         agg.dropna(inplace=True)
-    print(agg)
     return agg
 
 # Define scaler, feature number and number of step looking back
@@ -223,8 +222,8 @@ test_X = test_X.reshape((test_X.shape[0], n_steps + 1, n_features))
 
 # In[ ]:
 
-arousalModelPath = '/home/student/Summer-Research-GUI-Project/EmotionGUI/src/application/WAV_To_CSV/models/mArousal.hdf5'
-valenceModelPath = '/home/student/Summer-Research-GUI-Project/EmotionGUI/src/application/WAV_To_CSV/models/mValence.hdf5'
+arousalModelPath = 'models/mArousal.hdf5'
+valenceModelPath = 'models/mValence.hdf5'
 
 # In[ ]:
 
@@ -284,7 +283,7 @@ time_array = time_array[24:len(time_array)]
 
 csvOutput = np.column_stack((time_array,v_pred_test_list,a_pred_test_list))
 
-fileNameSplit = sys.argv[1].split("/")
+fileNameSplit = sys.argv[1].split("\\")
 highestIndexSplit = len(fileNameSplit) - 1
 csvFilename = fileNameSplit[highestIndexSplit].replace('.wav','.csv')
 

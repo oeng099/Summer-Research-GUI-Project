@@ -470,6 +470,7 @@ public class AnnotationScreenController implements Initializable{
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root, borderPane.getWidth(), borderPane.getHeight());
 			scene.getStylesheets().add(getClass().getResource("css/HomeScreen.css").toExternalForm());
+			stage.setTitle("EmotionGUI");
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {

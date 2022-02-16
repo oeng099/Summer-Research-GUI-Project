@@ -106,6 +106,7 @@ public class ModelChooseScreenController implements Initializable{
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
 		scene.getStylesheets().add(getClass().getResource("css/VisualiseScreen.css").toExternalForm());
+		stage.setTitle("Visualise Screen");
 		stage.setScene(scene);
 		stage.show();
 	}

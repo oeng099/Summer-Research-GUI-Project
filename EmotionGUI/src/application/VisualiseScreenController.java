@@ -132,8 +132,6 @@ public class VisualiseScreenController implements Initializable{
 	
 	private FXMLLoader loader;	
 	
-	private static final DecimalFormat df = new DecimalFormat("0.00");
-	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -162,7 +160,6 @@ public class VisualiseScreenController implements Initializable{
 		
 		for(int i = 0;i<landmarkEmotions.size();i++) {
 			Data<Number, Number> landmarkData = new Data<Number, Number>(Double.parseDouble(landmarkValence[i]),Double.parseDouble(landmarkArousal[i]));
-			//landmarkData.setNode(new HoverNode(landmarkValence[i],landmarkArousal[i],coordinateDetail,landmarkEmotions.get(i)));
 			
 			Label label = new Label(landmarkEmotions.get(i));
 			
@@ -229,7 +226,6 @@ public class VisualiseScreenController implements Initializable{
 
 		File file = fileChooser.showOpenDialog(stage);
 		if (file != null) {
-			//REMEMBER TO ADD CSV ERROR HANDLING
 			CSVFilename.setText(file.toString());
 		}
 	}
@@ -323,6 +319,7 @@ public class VisualiseScreenController implements Initializable{
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root, borderPane.getWidth(), borderPane.getHeight());
 			scene.getStylesheets().add(getClass().getResource("css/HomeScreen.css").toExternalForm());
+			stage.setTitle("EmotionGUI");
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
@@ -456,9 +453,9 @@ public class VisualiseScreenController implements Initializable{
 		String WAVFile = WAVFilename.getText();
 		if(checkCorrectFileType(WAVFile,"wav")){
 		WAV_TO_CSV(WAVFile);
-		String[] WAVFileArray = WAVFile.split("/");
+		String[] WAVFileArray = WAVFile.split("\\\\");
 		String CSVFile = WAVFileArray[WAVFileArray.length-1].replace("wav", "csv");
-		plotCSVFile("src/application/WAV_To_CSV/CSV_Outputs/" + CSVFile);
+		plotCSVFile("src\\application\\WAV_To_CSV\\CSV_Outputs\\" + CSVFile);
 		}
 	}
 	
@@ -476,7 +473,7 @@ public class VisualiseScreenController implements Initializable{
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
 		//scene.getStylesheets().add(getClass().getResource().toExternalForm());
-		stage.setTitle("Change the Valence and arousal models");
+		stage.setTitle("Change the Valence and Arousal models");
 		stage.setScene(scene);
 		stage.show();
 	}
