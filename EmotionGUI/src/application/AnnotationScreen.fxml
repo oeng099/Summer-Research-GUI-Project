@@ -153,16 +153,25 @@
                            <font>
                               <Font size="20.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
                         </Button>
                         <Button fx:id="playPause" mnemonicParsing="false" onAction="#changeMediaStatus" prefHeight="50.0" prefWidth="130.0" style="-fx-background-radius: 5;" text="Play/Pause">
                            <font>
                               <Font size="20.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
                         </Button>
                         <Button fx:id="forward" mnemonicParsing="false" onAction="#goForwardFiveSeconds" prefHeight="50.0" prefWidth="110.0" style="-fx-background-radius: 5;" text="Forward">
                            <font>
                               <Font size="20.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
                         </Button>
                      </children>
                   </HBox>
@@ -189,6 +198,16 @@
                         </Slider>
                      </children>
                   </HBox>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Annotation Instructions:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To annotate, first click select file and select the media to annotate, then select play. There will be a five second delay for the annotator to move to the starting position before annotation and the media starts. The 'p' key can also be pressed to play and pause media. The forward and backward buttons will move the media by five seconds in their respective directions." wrappingWidth="700.5078125">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
                </children>
                <GridPane.margin>
                   <Insets left="25.0" top="200.0" />
