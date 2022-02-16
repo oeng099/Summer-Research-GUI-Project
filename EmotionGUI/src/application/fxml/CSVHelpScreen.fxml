@@ -36,7 +36,7 @@
                   <Insets left="89.0" />
                </BorderPane.margin>
             </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To plot a CSV file using this application, please make sure that the the first two columns have the titles 'valence' and 'arousal' respectively. The coordinates of the points to be plotted are then below the respective columns. An example of the correct format is to the right." wrappingWidth="378.896484375" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To plot a CSV file using this application, please make sure that the the first three columns have the titles 'Time', 'Valence' and 'Arousal' respectively. The coordinates of the points to be plotted are then below the respective columns. An example of the correct format is to the right." wrappingWidth="378.896484375" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
                <font>
                   <Font size="20.0" />
                </font>
@@ -44,12 +44,12 @@
                   <Insets left="20.0" right="20.0" />
                </GridPane.margin>
             </Text>
-            <ImageView fitHeight="184.0" fitWidth="183.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowSpan="2">
                <image>
-                  <Image url="@../images/CSVExample.png" />
+                  <Image url="@../images/csv_example.png" />
                </image>
                <GridPane.margin>
-                  <Insets left="10.0" right="50.0" />
+                  <Insets />
                </GridPane.margin>
             </ImageView>
          </children>
