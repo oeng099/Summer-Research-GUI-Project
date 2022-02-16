@@ -108,7 +108,6 @@ public class AnnotationScreenController implements Initializable{
 	private Media media;
 	private MediaPlayer player;
 	private AutoClicker autoclicker;
-	private Thread runner;
 	
 	private ArrayList<Double> annotationTimes = new ArrayList<Double>();
 
