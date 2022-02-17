@@ -1,4 +1,4 @@
-# Emotion GUI
+# EmotionGUI
 
 A GUI to visualise and annotate emotion coordiantes on a two-dimensional model.
 
@@ -9,6 +9,7 @@ A GUI to visualise and annotate emotion coordiantes on a two-dimensional model.
 ### Project Description:
 
 This project has two objects: plot emotional coordinates that are entered into the GUI onto a two-dimensional model and allow the user to annotate their emotions on a two-dimensional model while viewing a piece of media. 
+
 
 ### How to use:
 

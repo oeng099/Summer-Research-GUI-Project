@@ -3,10 +3,13 @@ package application;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
@@ -432,11 +435,32 @@ public class VisualiseScreenController implements Initializable{
 	}
 	
 	public void WAV_TO_CSV(String WAVFile) throws IOException, InterruptedException {
+		changeScriptInput(WAVFile);
 		String[] command = new String[] {"python3","group108demo.py",WAVFile};
 		ProcessBuilder builder = new ProcessBuilder(command);
-		builder.directory(new File("src/application/WAV_To_CSV"));
+		builder.directory(new File("src/application"));
 		Process process = builder.start();
 		process.waitFor();
+	}
+	
+	public void changeScriptInput(String WAVFile) throws IOException {
+		BufferedReader pythonScriptReader = new BufferedReader(new FileReader("src/application/group108demo.py"));
+		StringBuffer inputBuffer = new StringBuffer();
+		String line;
+		
+		while((line = pythonScriptReader.readLine()) != null) {
+			if(line.contains("scriptInput = ")) {
+				line = "scriptInput = r'" + WAVFile + "'";
+			} 
+			
+			inputBuffer.append(line);
+			inputBuffer.append('\n');
+		}
+		pythonScriptReader.close();
+		
+		FileOutputStream writeToModelFile = new FileOutputStream("src/application/group108demo.py");
+		writeToModelFile.write(inputBuffer.toString().getBytes());
+		writeToModelFile.close();
 	}
 	
 	public void selectWAVFile(ActionEvent event) {
@@ -472,7 +496,6 @@ public class VisualiseScreenController implements Initializable{
 		root = FXMLLoader.load(getClass().getResource("ModelChooseScreen.fxml"));
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
-		//scene.getStylesheets().add(getClass().getResource().toExternalForm());
 		stage.setTitle("Change the Valence and Arousal models");
 		stage.setScene(scene);
 		stage.show();

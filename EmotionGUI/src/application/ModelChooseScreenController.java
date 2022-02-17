@@ -80,7 +80,7 @@ public class ModelChooseScreenController implements Initializable{
 	}
 	
 	public void applyChanges(ActionEvent event) throws IOException {
-		BufferedReader pythonScriptReader = new BufferedReader(new FileReader("src/application/WAV_To_CSV/group108demo.py"));
+		BufferedReader pythonScriptReader = new BufferedReader(new FileReader("src/application/group108demo.py"));
 		StringBuffer inputBuffer = new StringBuffer();
 		String line;
 		
