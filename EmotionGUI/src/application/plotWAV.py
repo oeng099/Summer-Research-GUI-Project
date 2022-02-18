@@ -9,7 +9,7 @@ import os
 from matplotlib.pyplot import figure
 figure(figsize=(10,8))
 
-wavfile = r'C:\Users\owene\Desktop\Summer-Research-GUI-Project\EmotionGUI\testing\WAV files\JLCO_male1_angry_1b_1.wav'
+wavfile = r'C:\Users\owene\Desktop\Summer-Research-GUI-Project\EmotionGUI\testing\WAV files\JLCO_female1_angry_1a_1.wav'
 spf = wave.open(wavfile,"r")
 
 signal = spf.readframes(-1)
@@ -33,6 +33,6 @@ plt.xlabel("Time")
 plt.ylabel("Amplitude")
 plt.plot(Time,signal)
 
-newPath = os.path.join(os.getcwd(),"images/audio_waveforms")
+newPath = os.path.join(os.getcwd(),r"images/audio_waveforms")
 os.chdir(newPath)
 plt.savefig(waveformImageName)

@@ -16,7 +16,6 @@ from tensorflow import keras
 import numpy as np
 import pandas as pd
 import librosa as lbr
-#!pip install pydub
 from pydub import AudioSegment, silence
 import numpy as np
 import pandas as pd
@@ -70,7 +69,7 @@ audioInput = scriptInput
 Audio(audioInput)
 
 
-# ## Preprocessing & Fearure Extraction
+# ## Preprocessing & Feature Extraction
 # 
 
 # In[ ]:
@@ -289,7 +288,7 @@ fileNameSplit = scriptInput.split("\\")
 highestIndexSplit = len(fileNameSplit) - 1
 csvFilename = fileNameSplit[highestIndexSplit].replace('.wav','.csv')
 
-newPath = os.path.join(os.getcwd(),"WAV_To_CSV/CSV_Outputs")
+newPath = os.path.join(os.getcwd(),r"WAV_To_CSV/CSV_Outputs")
 os.chdir(newPath)
 
 with open(csvFilename, 'w', newline ='') as file:
