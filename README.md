@@ -18,6 +18,17 @@ EmotionGUI requires the following to run:
 - Javafx SDK (11.02 or later)
 - Python3
 
+To be able to plot the predicted emotional coordinates from WAV files, download all libraries required by the 'group108demo.py' file. These include:
+	- tensorflow
+	- numpy
+	- pandas
+	- librosa
+	- pydub
+	- matplotlib
+	-IPython
+
+To download, in the terminal type 'pip install' followed by the library to download.
+
 ### How to run:
 
 1. From the Summer-Research-GUI-Project folder, switch into EmotionGUI/src/application/WAV_To_CSV/models and extract the allFileCombineU.zip file into the same folder. This means that the allFileCombineU.csv file will be in the models folder.

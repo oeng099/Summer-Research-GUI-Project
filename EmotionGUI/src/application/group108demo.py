@@ -17,8 +17,6 @@ import numpy as np
 import pandas as pd
 import librosa as lbr
 from pydub import AudioSegment, silence
-import numpy as np
-import pandas as pd
 import random
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
