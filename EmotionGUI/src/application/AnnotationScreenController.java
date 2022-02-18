@@ -126,6 +126,8 @@ public class AnnotationScreenController implements Initializable{
 	double differenceG;
 	double differenceB;
 	
+	boolean pPause = false;
+	
 	private int numNodes;
 	private Duration totalTime;
 	
@@ -195,6 +197,7 @@ public class AnnotationScreenController implements Initializable{
 	}
 	
 	public void spacePressed() {
+		this.pPause = true;
 		playPause.fire();
 	}
 	
@@ -287,7 +290,16 @@ public class AnnotationScreenController implements Initializable{
 		if(player.getStatus() == MediaPlayer.Status.PLAYING) {
 			player.pause();
 			autoclicker.pauseClicking();
+		} else if(pPause = true){			
+			player.play();
+			autoclicker.resumeClicking();
+			pPause = false;
 		} else {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			player.play();
 			autoclicker.resumeClicking();
 		}
