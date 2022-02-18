@@ -435,7 +435,7 @@ public class VisualiseScreenController implements Initializable{
 	}
 	
 	public void WAV_TO_CSV(String WAVFile) throws IOException, InterruptedException {
-		changeScriptInput(WAVFile);
+		changeScriptInput(WAVFile, new String("src/application/group108demo.py"),new String("scriptInput = "));
 		String[] command = new String[] {"python3","group108demo.py",WAVFile};
 		ProcessBuilder builder = new ProcessBuilder(command);
 		builder.directory(new File("src/application"));
@@ -443,14 +443,14 @@ public class VisualiseScreenController implements Initializable{
 		process.waitFor();
 	}
 	
-	public void changeScriptInput(String WAVFile) throws IOException {
-		BufferedReader pythonScriptReader = new BufferedReader(new FileReader("src/application/group108demo.py"));
+	public void changeScriptInput(String WAVFile,String script, String lineToChange) throws IOException {
+		BufferedReader pythonScriptReader = new BufferedReader(new FileReader(script));
 		StringBuffer inputBuffer = new StringBuffer();
 		String line;
 		
 		while((line = pythonScriptReader.readLine()) != null) {
-			if(line.contains("scriptInput = ")) {
-				line = "scriptInput = r'" + WAVFile + "'";
+			if(line.contains(lineToChange)) {
+				line = lineToChange + "r'" + WAVFile + "'";
 			} 
 			
 			inputBuffer.append(line);
@@ -458,7 +458,7 @@ public class VisualiseScreenController implements Initializable{
 		}
 		pythonScriptReader.close();
 		
-		FileOutputStream writeToModelFile = new FileOutputStream("src/application/group108demo.py");
+		FileOutputStream writeToModelFile = new FileOutputStream(script);
 		writeToModelFile.write(inputBuffer.toString().getBytes());
 		writeToModelFile.close();
 	}

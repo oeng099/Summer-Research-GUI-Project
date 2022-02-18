@@ -3,8 +3,11 @@ package application;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -229,11 +232,32 @@ public class AnnotationScreenController implements Initializable{
 	}
 	
 	public void loadWaveform(String WAVFileName) throws IOException, InterruptedException {
+		changeScriptInput(WAVFileName,new String("src/application/plotWAV.py"),new String("wavefile = "));
 		String[] command = new String[] {"python3","plotWAV.py",WAVFileName};
 		ProcessBuilder builder = new ProcessBuilder(command);
 		builder.directory(new File("src/application"));
 		Process process = builder.start();
 		process.waitFor();
+	}
+	
+	public void changeScriptInput(String WAVFile,String script, String lineToChange) throws IOException {
+		BufferedReader pythonScriptReader = new BufferedReader(new FileReader(script));
+		StringBuffer inputBuffer = new StringBuffer();
+		String line;
+		
+		while((line = pythonScriptReader.readLine()) != null) {
+			if(line.contains(lineToChange)) {
+				line = lineToChange + "r'" + WAVFile + "'";
+			} 
+			
+			inputBuffer.append(line);
+			inputBuffer.append('\n');
+		}
+		pythonScriptReader.close();
+		
+		FileOutputStream writeToModelFile = new FileOutputStream(script);
+		writeToModelFile.write(inputBuffer.toString().getBytes());
+		writeToModelFile.close();
 	}
 	
 	public void playMediaFile(ActionEvent event) {

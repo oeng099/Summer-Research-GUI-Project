@@ -20,11 +20,13 @@ EmotionGUI requires the following to run:
 
 ### How to run:
 
-1. From the Summer-Research-GUI-Project folder, switch into EmotionGUI/src/application/WAV_To_CSV/models and extract the allFileCombineU.zip file into the same folder.
+1. From the Summer-Research-GUI-Project folder, switch into EmotionGUI/src/application/WAV_To_CSV/models and extract the allFileCombineU.zip file into the same folder. This means that the allFileCombineU.csv file will be in the models folder.
 
 2. Open terminal and change into the EmotionGUI folder.
 
 3. In terminal run "java -Djdk.gtk.version=2 --module-path copy/path/to/javafx/sdk/lib/folder --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml -jar EmotionGUI.jar"
+
+The section copy/path/to/javafx/sdk/lib/folder is the path to your javafx sdk library folder. Javafx sdk can be downloaded from https://gluonhq.com/products/javafx/.
 
 An example of the above java -Djdk.gtk.version=2 --module-path Downloads\javafx-sdk-11.0.2\lib --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml  -jar EmotionGUI.jar
 

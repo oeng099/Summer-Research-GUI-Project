@@ -13,16 +13,19 @@ wavfile = sys.argv[1]
 spf = wave.open(wavfile,"r")
 
 signal = spf.readframes(-1)
-signal = np.fromstring(signal, "Int16")
+signal = np.frombuffer(signal,"int16")
+print(signal)
 fs = spf.getframerate()
+print(fs)
 
 Time = np.linspace(0,len(signal)/fs,num = len(signal))
 
-fileNameSplit = sys.argv[1].split("/")
+fileNameSplit = wavfile.split("\\")
 highestIndexSplit = len(fileNameSplit) - 1
 wavfilename = fileNameSplit[highestIndexSplit].replace('.wav','')
 waveformTitle = wavfilename + " Audio Waveform"
 waveformImageName = wavfilename + "_Audio_Waveform.png"
+print(waveformImageName)
 
 plt.figure(1)
 plt.title(waveformTitle)
