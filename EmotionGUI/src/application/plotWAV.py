@@ -9,7 +9,7 @@ import os
 from matplotlib.pyplot import figure
 figure(figsize=(10,8))
 
-wavfile = sys.argv[1]
+wavfile = r'C:\Users\owene\Desktop\Summer-Research-GUI-Project\EmotionGUI\testing\WAV files\JLCO_female1_confident_4b_1.wav'
 spf = wave.open(wavfile,"r")
 
 signal = spf.readframes(-1)

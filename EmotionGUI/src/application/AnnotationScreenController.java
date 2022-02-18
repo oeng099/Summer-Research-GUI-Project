@@ -232,7 +232,7 @@ public class AnnotationScreenController implements Initializable{
 	}
 	
 	public void loadWaveform(String WAVFileName) throws IOException, InterruptedException {
-		changeScriptInput(WAVFileName,new String("src/application/plotWAV.py"),new String("wavefile = "));
+		changeScriptInput(WAVFileName,new String("src/application/plotWAV.py"),new String("wavfile = "));
 		String[] command = new String[] {"python3","plotWAV.py",WAVFileName};
 		ProcessBuilder builder = new ProcessBuilder(command);
 		builder.directory(new File("src/application"));
