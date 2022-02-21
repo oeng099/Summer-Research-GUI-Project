@@ -243,11 +243,6 @@ public class AnnotationScreenController implements Initializable{
 		builder.directory(new File("src/application"));
 		Process process = builder.start();
 		process.waitFor();
-		if(process.exitValue() == 0) {
-			System.out.println("Success!!");
-		} else {
-			System.out.println("Failure!!");
-		}
 	}
 	
 	public void changeScriptInput(String WAVFile,String script, String lineToChange) throws IOException {

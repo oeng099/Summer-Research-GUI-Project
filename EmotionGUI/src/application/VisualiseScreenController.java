@@ -459,7 +459,7 @@ public class VisualiseScreenController implements Initializable {
 
 	public void WAV_TO_CSV(String WAVFile) throws IOException, InterruptedException {
 		changeScriptInput(WAVFile, new String("src/application/group108demo.py"), new String("scriptInput = "));
-		String[] command = new String[] { "python3", "group108demo.py", WAVFile };
+		String[] command = new String[] {"python", "group108demo.py", WAVFile };
 		ProcessBuilder builder = new ProcessBuilder(command);
 		builder.directory(new File("src/application"));
 		Process process = builder.start();
