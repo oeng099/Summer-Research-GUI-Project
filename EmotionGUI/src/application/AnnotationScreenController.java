@@ -126,7 +126,7 @@ public class AnnotationScreenController implements Initializable{
 	double differenceG;
 	double differenceB;
 	
-	boolean pPause = false;
+	boolean pPlay = false;
 	
 	private int numNodes;
 	private Duration totalTime;
@@ -197,7 +197,9 @@ public class AnnotationScreenController implements Initializable{
 	}
 	
 	public void spacePressed() {
-		this.pPause = true;
+		if(player.getStatus() == MediaPlayer.Status.PAUSED) {
+			pPlay = true;
+		}
 		playPause.fire();
 	}
 	
@@ -241,6 +243,11 @@ public class AnnotationScreenController implements Initializable{
 		builder.directory(new File("src/application"));
 		Process process = builder.start();
 		process.waitFor();
+		if(process.exitValue() == 0) {
+			System.out.println("Sucess!!");
+		} else {
+			System.out.println("Failure!!");
+		}
 	}
 	
 	public void changeScriptInput(String WAVFile,String script, String lineToChange) throws IOException {
@@ -290,18 +297,10 @@ public class AnnotationScreenController implements Initializable{
 		if(player.getStatus() == MediaPlayer.Status.PLAYING) {
 			player.pause();
 			autoclicker.pauseClicking();
-		} else if(pPause = true){			
-			player.play();
-			autoclicker.resumeClicking();
-			pPause = false;
 		} else {
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			player.play();
-			autoclicker.resumeClicking();
+			autoclicker.resumeClicking(pPlay);
+			pPlay = false;
 		}
 	}
 	

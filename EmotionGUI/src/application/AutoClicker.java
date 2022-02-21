@@ -43,7 +43,15 @@ public class AutoClicker implements Runnable {
 		threadPause = true;
 	}
 	
-	public synchronized void resumeClicking() {
+	public synchronized void resumeClicking(boolean pPlay) {
+		if(!pPlay) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		threadPause = false;
 		notify();
 	}
