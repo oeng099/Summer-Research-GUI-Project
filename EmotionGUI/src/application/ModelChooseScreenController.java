@@ -1,18 +1,14 @@
 package application;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,7 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class ModelChooseScreenController implements Initializable{
+public class ModelChooseScreenController{
 
 	Stage stage;
 	Scene scene;
@@ -52,11 +48,6 @@ public class ModelChooseScreenController implements Initializable{
 	GridPane scenePane;
 	@FXML
 	BorderPane borderPane;
-	
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		System.out.println("Hello");
-	}
 	
 	public void changeValenceModel(ActionEvent event) {
 

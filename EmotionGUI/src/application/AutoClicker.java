@@ -5,7 +5,6 @@ import java.awt.Robot;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaPlayer.Status;
 
 public class AutoClicker implements Runnable {
 
