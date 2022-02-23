@@ -1,28 +1,18 @@
 package application;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-public class ModelChooseScreenController extends Controller{
-
-	Stage stage;
-	Scene scene;
-	Parent root;
+public class ModelChooseScreenController extends ScriptChangeController{
 	
 	@FXML
 	Text modelChangeInstructions;
@@ -47,49 +37,51 @@ public class ModelChooseScreenController extends Controller{
 	@FXML
 	BorderPane borderPane;
 	
+	//Method to change the valence machine-learning model
 	public void changeValenceModel(ActionEvent event) {
 
-		FileChooser fileChooser = new FileChooser();
-
-		File file = fileChooser.showOpenDialog(stage);
-		if (file != null) {
-			valenceModel.setText(file.toString());
+		File modelFile = chooseModelFile();
+		
+		if (modelFile != null) {
+			//Displays the file chosen as the new valence machine-learning model
+			valenceModel.setText(modelFile.toString());
 		}
 	}
 	
+	//Method to change the arousal machine-learning model
 	public void changeArousalModel(ActionEvent event) {
 
+		File modelFile = chooseModelFile();
+		
+		if (modelFile != null) {
+			//Displays the file chosen as the new valence machine-learning model
+			arousalModel.setText(modelFile.toString());
+		}
+	}
+	
+	//Method to choose a file through the file chooser
+	public File chooseModelFile() {
 		FileChooser fileChooser = new FileChooser();
 
-		File file = fileChooser.showOpenDialog(stage);
-		if (file != null) {
-			arousalModel.setText(file.toString());
-		}
+		File modelFile = fileChooser.showOpenDialog(stage);
+		return modelFile;
 	}
 	
+	//Method to change the current models in the Python script with the files selected
 	public void applyChanges(ActionEvent event) throws IOException {
-		BufferedReader pythonScriptReader = new BufferedReader(new FileReader("src/application/group108demo.py"));
-		StringBuffer inputBuffer = new StringBuffer();
-		String line;
-		
-		while((line = pythonScriptReader.readLine()) != null) {
-			if(line.contains("arousalModelPath =") && !arousalModel.getText().isEmpty()) {
-				line = "arousalModelPath = '" + arousalModel.getText() + "'";
-			} else if(line.contains("valenceModelPath =") && !valenceModel.getText().isEmpty()) {
-				line = "valenceModelPath = '" + valenceModel.getText() + "'";
-			}
-			
-			inputBuffer.append(line);
-			inputBuffer.append('\n');
+		if(!arousalModel.getText().isEmpty()) {
+			//Changes arousal model if there is a file selected for it
+			changePythonScript("src/application/group108demo.py","arousalModelPath =", "arousalModelPath ='" + arousalModel.getText() + "'");
 		}
-		pythonScriptReader.close();
-		
-		FileOutputStream writeToModelFile = new FileOutputStream("src/application/WAV_To_CSV/group108demo.py");
-		writeToModelFile.write(inputBuffer.toString().getBytes());
-		writeToModelFile.close();
+		if(!valenceModel.getText().isEmpty()) {
+			//Changes valence model if there is a file selected for it
+			changePythonScript("src/application/group108demo.py","valenceModelPath =", "valenceModelPath ='" + valenceModel.getText() + "'");
+		}
 	}
 	
+	//Method to return to visualisation screen.
 	public void ok(ActionEvent event) throws IOException {
 		changeScreen(event,Screen.VISUALISATION);
 	}
+
 }

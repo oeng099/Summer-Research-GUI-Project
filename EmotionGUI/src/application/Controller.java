@@ -97,4 +97,9 @@ public class Controller {
 			}
 		}); 
 	}
+
+	public void changingScriptLines() {
+		// TODO Auto-generated method stub
+		
+	}
 }

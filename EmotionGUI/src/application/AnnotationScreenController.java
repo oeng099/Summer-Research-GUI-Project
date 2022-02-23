@@ -101,10 +101,6 @@ public class AnnotationScreenController extends Controller implements Initializa
 	@FXML
 	Button clear;
 
-	private Stage stage;
-	private Scene scene;
-	private Parent root;
-
 	private Media media;
 	private MediaPlayer player;
 	private AutoClicker autoclicker;
