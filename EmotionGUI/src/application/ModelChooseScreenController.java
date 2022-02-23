@@ -3,7 +3,6 @@ package application;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -102,7 +101,7 @@ public class ModelChooseScreenController implements Initializable{
 	}
 	
 	public void ok(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("VisualiseScreen.fxml"));
+		root = FXMLLoader.load(getClass().getResource("fxml/VisualiseScreen.fxml"));
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
 		scene.getStylesheets().add(getClass().getResource("css/VisualiseScreen.css").toExternalForm());

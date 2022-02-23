@@ -3,23 +3,15 @@ package application;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -32,36 +24,26 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
-import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
-import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -366,12 +348,12 @@ public class VisualiseScreenController implements Initializable {
 		}
 
 		if (valenceCoordinate.getText().isEmpty() || arousalCoordinate.getText().isEmpty()) {
-			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1 to 1");
+			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1.0 to 1.0");
 		} else if (!(Double.parseDouble(valenceCoordinate.getText()) < 1.0
 				&& Double.parseDouble(valenceCoordinate.getText()) > -1.0)
 				|| !(Double.parseDouble(arousalCoordinate.getText()) < 1.0
 						&& Double.parseDouble(arousalCoordinate.getText()) > -1.0)) {
-			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1 to 1");
+			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1.0 to 1.0");
 		} else {
 			emotionCoordinates.setName("Manual Points");
 			manualPlotError.setText(" ");
@@ -516,7 +498,7 @@ public class VisualiseScreenController implements Initializable {
 	}
 
 	public void changeModel(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("ModelChooseScreen.fxml"));
+		root = FXMLLoader.load(getClass().getResource("fxml/ModelChooseScreen.fxml"));
 		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		scene = new Scene(root, borderPane.getWidth(), borderPane.getHeight());
 		stage.setTitle("Change the Valence and Arousal models");

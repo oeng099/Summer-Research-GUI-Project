@@ -1,7 +1,6 @@
 package application;
 
 import java.awt.event.InputEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +21,6 @@ import javax.imageio.ImageIO;
 
 import com.opencsv.CSVWriter;
 
-import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
@@ -46,8 +44,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -136,29 +132,10 @@ public class AnnotationScreenController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		timeSlider.valueProperty().addListener(new InvalidationListener() {
-
-			@Override
-			public void invalidated(Observable ov) {
-				if(timeSlider.isValueChanging()) {
-					player.seek(player.getTotalDuration().multiply(timeSlider.getValue()/100.0));
-				}
-				
-			}
-			
-		});
+		initialiseTimeSlider();
+		initialiseVolumeSlider();
 		
-		volumeSlider.valueProperty().addListener(new InvalidationListener() {
-
-			@Override
-			public void invalidated(Observable ov) {
-				if(volumeSlider.isValueChanging()) {
-					player.setVolume(volumeSlider.getValue()/100.0);
-				}
-				
-			}
-			
-		});
+		
 		
 		XYChart.Series<Number, Number> initialSeries  = new XYChart.Series<Number, Number>();
 		Circle circle = new Circle(0,0,(ValenceArousalPlot.getXAxis().getPrefWidth()-2)/2);
@@ -196,6 +173,35 @@ public class AnnotationScreenController implements Initializable{
 		
 	}
 	
+	//Method to set up the time slider functionality.
+	public void initialiseTimeSlider() {
+		timeSlider.valueProperty().addListener(new InvalidationListener() {
+
+			@Override
+			public void invalidated(Observable ov) {
+				if(timeSlider.isValueChanging()) {
+					player.seek(player.getTotalDuration().multiply(timeSlider.getValue()/100.0));
+				}
+				
+			}
+			
+		});
+	}
+	
+	public void initialiseVolumeSlider() {
+		volumeSlider.valueProperty().addListener(new InvalidationListener() {
+
+			@Override
+			public void invalidated(Observable ov) {
+				if(volumeSlider.isValueChanging()) {
+					player.setVolume(volumeSlider.getValue()/100.0);
+				}
+				
+			}
+			
+		});
+	}
+	
 	public void spacePressed() {
 		if(player.getStatus() == MediaPlayer.Status.PAUSED) {
 			pPlay = true;
@@ -229,6 +235,7 @@ public class AnnotationScreenController implements Initializable{
 			}
 		}
 	}
+	
 	
 	public void loadMedia(File file) {
 		media = new Media(file.toURI().toString());

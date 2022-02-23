@@ -31,7 +31,7 @@ public class HomeScreenController {
 	
 	public void changeToVisualise(ActionEvent event) {
 		try {
-			root = FXMLLoader.load(getClass().getResource("VisualiseScreen.fxml"));
+			root = FXMLLoader.load(getClass().getResource("fxml/VisualiseScreen.fxml"));
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
 			scene.getStylesheets().add(getClass().getResource("css/VisualiseScreen.css").toExternalForm());
@@ -45,7 +45,7 @@ public class HomeScreenController {
 	
 	public void changeToAnnotation(ActionEvent event) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("AnnotationScreen.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/AnnotationScreen.fxml"));
 			root = loader.load();
 			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
