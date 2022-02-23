@@ -24,6 +24,7 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
+import application.Controller.Screen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -51,7 +52,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class VisualiseScreenController implements Initializable {
+public class VisualiseScreenController extends Controller implements Initializable {
 
 	@FXML
 	Button selectFile;
@@ -311,18 +312,8 @@ public class VisualiseScreenController implements Initializable {
 		}
 	}
 
-	public void returnToMainMenu(ActionEvent event) {
-		try {
-			root = FXMLLoader.load(getClass().getResource("fxml/HomeScreen.fxml"));
-			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			scene = new Scene(root, borderPane.getWidth(), borderPane.getHeight());
-			scene.getStylesheets().add(getClass().getResource("css/HomeScreen.css").toExternalForm());
-			stage.setTitle("EmotionGUI");
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void returnToMainMenu(ActionEvent event) throws IOException {
+		changeScreen(event,Screen.HOME);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -497,13 +488,8 @@ public class VisualiseScreenController implements Initializable {
 		}
 	}
 
-	public void changeModel(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("fxml/ModelChooseScreen.fxml"));
-		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		scene = new Scene(root, borderPane.getWidth(), borderPane.getHeight());
-		stage.setTitle("Change the Valence and Arousal models");
-		stage.setScene(scene);
-		stage.show();
+	public void changeMachineLearningModels(ActionEvent event) throws IOException {
+		changeScreen(event,Screen.MODELCHOOSE);
 	}
 
 }

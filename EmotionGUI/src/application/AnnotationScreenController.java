@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 
 import com.opencsv.CSVWriter;
 
+import application.Controller.Screen;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
@@ -57,7 +58,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class AnnotationScreenController implements Initializable {
+public class AnnotationScreenController extends Controller implements Initializable {
 
 	@FXML
 	ScatterChart<Number, Number> ValenceArousalPlot;
@@ -235,7 +236,7 @@ public class AnnotationScreenController implements Initializable {
 		return series;
 	}
 
-	public void spacePressed() {
+	public void pKeyPressed() {
 		if (player.getStatus() == MediaPlayer.Status.PAUSED) {
 			pPlay = true;
 		}
@@ -542,18 +543,8 @@ public class AnnotationScreenController implements Initializable {
 		writer.close();
 	}
 
-	public void returnToMainMenu(ActionEvent event) {
-		try {
-			root = FXMLLoader.load(getClass().getResource("fxml/HomeScreen.fxml"));
-			stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			scene = new Scene(root, borderPane.getWidth(), borderPane.getHeight());
-			scene.getStylesheets().add(getClass().getResource("css/HomeScreen.css").toExternalForm());
-			stage.setTitle("EmotionGUI");
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void returnToMainMenu(ActionEvent event) throws IOException {
+		changeScreen(event,Screen.HOME);
 	}
 
 	// Method to clear the model

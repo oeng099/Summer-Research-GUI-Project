@@ -8,8 +8,6 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,7 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class ModelChooseScreenController{
+public class ModelChooseScreenController extends Controller{
 
 	Stage stage;
 	Scene scene;
@@ -92,12 +90,6 @@ public class ModelChooseScreenController{
 	}
 	
 	public void ok(ActionEvent event) throws IOException {
-		root = FXMLLoader.load(getClass().getResource("fxml/VisualiseScreen.fxml"));
-		stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		scene = new Scene(root,borderPane.getWidth(),borderPane.getHeight());
-		scene.getStylesheets().add(getClass().getResource("css/VisualiseScreen.css").toExternalForm());
-		stage.setTitle("Visualise Screen");
-		stage.setScene(scene);
-		stage.show();
+		changeScreen(event,Screen.VISUALISATION);
 	}
 }
