@@ -27,10 +27,8 @@ import com.opencsv.exceptions.CsvValidationException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
@@ -46,7 +44,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
-public class VisualiseScreenController extends Controller implements Initializable {
+public class VisualiseScreenController extends ValenceArousalScreenController{
 
 	@FXML
 	Button selectFile;
@@ -54,8 +52,6 @@ public class VisualiseScreenController extends Controller implements Initializab
 	Button plotFile;
 	@FXML
 	Button plotCoordinates;
-	@FXML
-	Button mainMenu;
 	@FXML
 	Button saveCoordinates;
 	@FXML
@@ -75,8 +71,6 @@ public class VisualiseScreenController extends Controller implements Initializab
 	@FXML
 	Text manualPlotError;
 	@FXML
-	Text coordinateDetail;
-	@FXML
 	Text valenceText;
 	@FXML
 	Text arousalText;
@@ -92,8 +86,6 @@ public class VisualiseScreenController extends Controller implements Initializab
 	Text selectAFileText;
 	@FXML
 	BorderPane borderPane;
-	@FXML
-	ScatterChart<Number, Number> ValenceArousalPlot;
 
 	private int numSeries = 0;
 
@@ -131,7 +123,6 @@ public class VisualiseScreenController extends Controller implements Initializab
 		Data<Number, Number> data = new Data<Number, Number>(0, 0);
 		data.setNode(circle);
 		initialSeries.getData().add(data);
-		initialSeries.setName("Landmark Emotions");
 
 		ArrayList<String> landmarkEmotions = new ArrayList<String>(Arrays.asList("angry", "afraid", "sad", "bored",
 				"excited", "interested", "happy", "pleased", "relaxed", "content"));
@@ -143,7 +134,7 @@ public class VisualiseScreenController extends Controller implements Initializab
 					Double.parseDouble(landmarkArousal[i]));
 
 			Label label = new Label(landmarkEmotions.get(i));
-
+			
 			landmarkData.setNode(label);
 
 			label.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -162,7 +153,7 @@ public class VisualiseScreenController extends Controller implements Initializab
 					coordinateDetail.setText("Point:");
 				}
 			});
-
+			
 			initialSeries.getData().add(landmarkData);
 		}
 
@@ -212,6 +203,7 @@ public class VisualiseScreenController extends Controller implements Initializab
 		}
 	}
 	
+	//Method to open the CSV Help screen.
 	public void openCSVHelp(ActionEvent event) throws IOException {
 		changeScreen(event,Screen.CSVHELP);
 	}

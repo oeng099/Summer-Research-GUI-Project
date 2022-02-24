@@ -12,10 +12,12 @@ public class PythonScriptManager{
 	private String line;
 	private String pythonScript;
 	
+	//Constructor for the PythonScriptManager class
 	public PythonScriptManager(String pythonScript) {
 		this.pythonScript = pythonScript;
 	}
 	
+	//Method to load the Python Script
 	public void loadPythonScript(String pythonScript) {
 		this.pythonScript = pythonScript;
 	}
