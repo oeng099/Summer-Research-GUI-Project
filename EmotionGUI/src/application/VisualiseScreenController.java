@@ -27,11 +27,8 @@ import com.opencsv.exceptions.CsvValidationException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
@@ -48,8 +45,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class VisualiseScreenController extends Controller implements Initializable {
 
@@ -102,10 +97,6 @@ public class VisualiseScreenController extends Controller implements Initializab
 
 	private int numSeries = 0;
 
-	private Stage stage;
-	private Scene scene;
-	private Parent root;
-
 	private double[] endR = new double[] { 251, 153, 9, 234 };
 	private double[] endG = new double[] { 20, 34, 18, 115 };
 	private double[] endB = new double[] { 20, 195, 121, 141 };
@@ -120,7 +111,6 @@ public class VisualiseScreenController extends Controller implements Initializab
 	
 	private ArrayList<ArrayList<Double>> annotationTimes = new ArrayList<ArrayList<Double>>();
 
-	private FXMLLoader loader;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -221,7 +211,12 @@ public class VisualiseScreenController extends Controller implements Initializab
 			CSVFilename.setText(file.toString());
 		}
 	}
+	
+	public void openCSVHelp(ActionEvent event) throws IOException {
+		changeScreen(event,Screen.CSVHELP);
+	}
 
+	
 	@SuppressWarnings("unchecked")
 	public void plotCSVFile(ActionEvent event) throws CsvValidationException, IOException {
 
@@ -413,20 +408,6 @@ public class VisualiseScreenController extends Controller implements Initializab
 			annotationTimes.removeAll(annotationTimes);
 			numSeries = 1;
 		}
-	}
-
-	public void CSVHelp(ActionEvent event) throws IOException {
-		loader = new FXMLLoader(getClass().getResource("fxml/CSVHelpScreen.fxml"));
-		root = (Parent) loader.load();
-		scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("css/CSVHelpScreen.css").toExternalForm());
-		stage = new Stage();
-		stage.setTitle("CSV File Info");
-		stage.setResizable(false);
-		stage.setScene(scene);
-
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.showAndWait();
 	}
 
 	public void WAV_TO_CSV(String WAVFile) throws IOException, InterruptedException {

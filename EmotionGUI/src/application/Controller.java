@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Controller {
@@ -31,7 +32,8 @@ public class Controller {
 		HOME,
 		VISUALISATION,
 		ANNOTATION,
-		MODELCHOOSE
+		MODELCHOOSE,
+		CSVHELP
 	}
 	
 	//Method to change the screen to whichever screen is inputed.
@@ -59,6 +61,12 @@ public class Controller {
 			showStage(buttonEvent,"css/ModelChooseScreen.css");
 			stage.setTitle("Change the Valence and Arousal Models");
 			break;
+		case CSVHELP:
+			loadLoader("fxml/CSVHelpScreen.fxml");
+			//Opens the CSV Help Screen on a new stage, separate to visualisation screen.
+			openNewStage("css/CSVHelpScreen.css");
+			stage.setTitle("CSV File Info");
+			break;
 		}
 	}
 	
@@ -82,6 +90,19 @@ public class Controller {
 		});
 	}
 	
+	//Method to open a new stage
+	public void openNewStage(String css) {
+		stage = new Stage();
+		scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource(css).toExternalForm());
+		stage.setResizable(false);
+		stage.setScene(scene);
+		
+		//Pauses the existing stage until the new stage is closed.
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.showAndWait();
+	}
+	
 	//Method to set a key for play/pause in the annotation screen
 	public void setPlayPauseKey() {
 		AnnotationScreenController annotationController = loader.getController();
@@ -96,10 +117,5 @@ public class Controller {
 				}
 			}
 		}); 
-	}
-
-	public void changingScriptLines() {
-		// TODO Auto-generated method stub
-		
 	}
 }

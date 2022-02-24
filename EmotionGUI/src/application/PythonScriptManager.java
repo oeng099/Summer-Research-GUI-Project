@@ -5,25 +5,34 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
-public abstract class ScriptChangeController extends Controller {
+public class PythonScriptManager{
 
-	protected BufferedReader pythonScriptReader;
-	protected StringBuffer inputBuffer;
-	protected String line;
+	private BufferedReader pythonScriptReader;
+	private StringBuffer inputBuffer;
+	private String line;
+	private String pythonScript;
+	
+	public PythonScriptManager(String pythonScript) {
+		this.pythonScript = pythonScript;
+	}
+	
+	public void loadPythonScript(String pythonScript) {
+		this.pythonScript = pythonScript;
+	}
 	
 	//Method for changing a Python script
-	public void changePythonScript(String pythonScript, String currentLine, String newLine) throws IOException {
-	pythonScriptReader = new BufferedReader(new FileReader(pythonScript));
+	public void changePythonScript(String currentLine, String newLine) throws IOException {
+	pythonScriptReader = new BufferedReader(new FileReader(this.pythonScript));
 	inputBuffer = new StringBuffer();
 	//Replace the currentLine being search for with newLine
 	searchAndReplaceInScript(pythonScriptReader,currentLine,newLine);
 	//Write to the Python Script
-	writeToFile(pythonScript);
+	writeToFile();
 	}
 	
 	//Method to write lines to a Python script
-	public void writeToFile(String pythonScript) throws IOException {
-		FileOutputStream writeToPythonFile = new FileOutputStream(pythonScript);
+	public void writeToFile() throws IOException {
+		FileOutputStream writeToPythonFile = new FileOutputStream(this.pythonScript);
 		writeToPythonFile.write(inputBuffer.toString().getBytes());
 		writeToPythonFile.close();
 	}

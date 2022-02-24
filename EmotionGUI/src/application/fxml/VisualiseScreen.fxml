@@ -198,7 +198,7 @@
                   <Insets bottom="90.0" left="20.0" right="230.0" top="2.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="CSVInfo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#CSVHelp" prefHeight="30.0" prefWidth="30.0" GridPane.rowIndex="2">
+            <Button fx:id="CSVInfo" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openCSVHelp" prefHeight="30.0" prefWidth="30.0" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="90.0" left="315.0" right="195.0" top="2.0" />
                </GridPane.margin>

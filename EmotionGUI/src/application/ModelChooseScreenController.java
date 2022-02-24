@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
-public class ModelChooseScreenController extends ScriptChangeController{
+public class ModelChooseScreenController extends Controller{
 	
 	@FXML
 	Text modelChangeInstructions;
@@ -69,13 +69,14 @@ public class ModelChooseScreenController extends ScriptChangeController{
 	
 	//Method to change the current models in the Python script with the files selected
 	public void applyChanges(ActionEvent event) throws IOException {
+		PythonScriptManager pythonScriptManager = new PythonScriptManager("src/applcation/group108demo.py");
 		if(!arousalModel.getText().isEmpty()) {
 			//Changes arousal model if there is a file selected for it
-			changePythonScript("src/application/group108demo.py","arousalModelPath =", "arousalModelPath ='" + arousalModel.getText() + "'");
+			pythonScriptManager.changePythonScript("arousalModelPath =", "arousalModelPath ='" + arousalModel.getText() + "'");
 		}
 		if(!valenceModel.getText().isEmpty()) {
 			//Changes valence model if there is a file selected for it
-			changePythonScript("src/application/group108demo.py","valenceModelPath =", "valenceModelPath ='" + valenceModel.getText() + "'");
+			pythonScriptManager.changePythonScript("valenceModelPath =", "valenceModelPath ='" + valenceModel.getText() + "'");
 		}
 	}
 	
