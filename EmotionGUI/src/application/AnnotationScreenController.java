@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -21,7 +20,6 @@ import javax.imageio.ImageIO;
 
 import com.opencsv.CSVWriter;
 
-import application.Controller.Screen;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
@@ -30,15 +28,9 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -51,11 +43,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class AnnotationScreenController extends ValenceArousalScreenController {
@@ -74,8 +63,6 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 	Button forward;
 	@FXML
 	Button backward;
-	@FXML
-	BorderPane borderPane;
 	@FXML
 	Slider speedSlider;
 	@FXML
@@ -310,7 +297,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 	}
 
 	public void startAutoClicker() {
-		this.autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK, player);
+		this.autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK);
 		autoclicker.startClicking();
 	}
 
@@ -350,36 +337,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 				totalMinutes, totalSeconds);
 	}
 
-	public void showMouseCoordinates() {
-		ValenceArousalPlot.setOnMouseMoved(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
 
-				if ((47.0 <= event.getX() && event.getX() <= 666.0)
-						&& (39.0 <= event.getY() && event.getY() <= 658.0)) {
-					double valenceSlope = 2.0 / 619.0;
-					double valenceConstant = -713.0 / 619.0;
-					double arousalSlope = -2.0 / 619.0;
-					double arousalConstant = 697.0 / 619.0;
-
-					double valenceConverted = event.getX() * valenceSlope + valenceConstant;
-					BigDecimal roundedValenceConverted = new BigDecimal(valenceConverted).setScale(2,
-							RoundingMode.HALF_UP);
-					double roundedValence = roundedValenceConverted.doubleValue();
-
-					double arousalConverted = event.getY() * arousalSlope + arousalConstant;
-					BigDecimal roundedArousalConverted = new BigDecimal(arousalConverted).setScale(2,
-							RoundingMode.HALF_UP);
-					double roundedArousal = roundedArousalConverted.doubleValue();
-
-					String coordinates = "Valence: " + roundedValence + " Arousal: " + roundedArousal;
-					coordinateDetail.setText(coordinates);
-				} else {
-					coordinateDetail.setText("Point: ");
-				}
-			}
-		});
-	}
 
 	public void createPointByClick() {
 		ValenceArousalPlot.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -483,10 +441,6 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 			writer.writeNext(coordinates);
 		}
 		writer.close();
-	}
-
-	public void returnToMainMenu(ActionEvent event) throws IOException {
-		changeScreen(event,Screen.HOME);
 	}
 
 	// Method to clear the model

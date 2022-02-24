@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -30,17 +29,13 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
@@ -84,10 +79,8 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 	Text WAVFileText;
 	@FXML
 	Text selectAFileText;
-	@FXML
-	BorderPane borderPane;
 
-	private int numSeries = 0;
+	private int numSeries = 1;
 
 	private double[] endR = new double[] { 251, 153, 9, 234 };
 	private double[] endG = new double[] { 20, 34, 18, 115 };
@@ -107,92 +100,29 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
+		//Sets the image of the CSVInfo button to an info icon
+		initialiseInfoIcon();
+		
+		//Adds the initial features to the Valence-Arousal Plot
+		initialiseModel();
+
+	}
+	
+	//Method to load the infoIcon image to the CSVInfo button
+	public void initialiseInfoIcon() {
+		//Loads the info icon image
 		URL imageURL = getClass().getResource("images/infoIcon.png");
 		Image image = new Image(imageURL.toExternalForm());
 		ImageView view = new ImageView(image);
+		
+		//Adjusts size of the image to fit the button
 		view.setFitHeight(30);
 		view.setPreserveRatio(true);
-
-		CSVInfo.setPrefSize(30, 30);
+		
 		CSVInfo.setGraphic(view);
 
-		XYChart.Series<Number, Number> initialSeries = new XYChart.Series<Number, Number>();
-		Circle circle = new Circle(0, 0, (ValenceArousalPlot.getXAxis().getPrefWidth() - 2) / 2);
-		circle.setFill(new Color(0, 0, 0, 0));
-		circle.setStroke(Color.BLACK);
-		Data<Number, Number> data = new Data<Number, Number>(0, 0);
-		data.setNode(circle);
-		initialSeries.getData().add(data);
-
-		ArrayList<String> landmarkEmotions = new ArrayList<String>(Arrays.asList("angry", "afraid", "sad", "bored",
-				"excited", "interested", "happy", "pleased", "relaxed", "content"));
-		String[] landmarkValence = { "-0.7", "-0.65", "-0.8", "-0.1", "0.37", "0.2", "0.5", "0.35", "0.6", "0.5" };
-		String[] landmarkArousal = { "0.65", "0.5", "-0.15", "-0.45", "0.9", "0.7", "0.5", "0.35", "-0.3", "-0.45" };
-
-		for (int i = 0; i < landmarkEmotions.size(); i++) {
-			Data<Number, Number> landmarkData = new Data<Number, Number>(Double.parseDouble(landmarkValence[i]),
-					Double.parseDouble(landmarkArousal[i]));
-
-			Label label = new Label(landmarkEmotions.get(i));
-			
-			landmarkData.setNode(label);
-
-			label.setOnMouseEntered(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent mouseEvent) {
-					int emotionIndexNumber = landmarkEmotions.indexOf(label.getText());
-					coordinateDetail.setText(
-							"Point: " + landmarkValence[emotionIndexNumber] + "," + landmarkArousal[emotionIndexNumber]
-									+ " (" + landmarkEmotions.get(emotionIndexNumber) + ")");
-				}
-			});
-
-			label.setOnMouseExited(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent mouseEvent) {
-					coordinateDetail.setText("Point:");
-				}
-			});
-			
-			initialSeries.getData().add(landmarkData);
-		}
-
-		ValenceArousalPlot.getData().add(initialSeries);
-		numSeries++;
-
 	}
-
-	public void showMouseCoordinates() {
-		ValenceArousalPlot.setOnMouseMoved(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-
-				if ((69.0 <= event.getX() && event.getX() <= 666.0)
-						&& (39.0 <= event.getY() && event.getY() <= 639.0)) {
-					double valenceSlope = 2.0 / 597.0;
-					double valenceConstant = -245.0 / 199.0;
-					double arousalSlope = 1.0 / 300.0;
-					double arousalConstant = -113.0 / 100.0;
-
-					double valenceConverted = event.getX() * valenceSlope + valenceConstant;
-					BigDecimal roundedValenceConverted = new BigDecimal(valenceConverted).setScale(2,
-							RoundingMode.HALF_UP);
-					double roundedValence = roundedValenceConverted.doubleValue();
-
-					double arousalConverted = event.getY() * arousalSlope + arousalConstant;
-					BigDecimal roundedArousalConverted = new BigDecimal(arousalConverted).setScale(2,
-							RoundingMode.HALF_UP);
-					double roundedArousal = roundedArousalConverted.doubleValue();
-
-					String coordinates = "Valence: " + roundedValence + " Arousal: " + roundedArousal;
-					coordinateDetail.setText(coordinates);
-				} else {
-					coordinateDetail.setText("Point: ");
-				}
-			}
-		});
-	}
-
+	
 	public void selectAFile(ActionEvent event) {
 
 		FileChooser fileChooser = new FileChooser();
@@ -298,9 +228,7 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		}
 	}
 
-	public void returnToMainMenu(ActionEvent event) throws IOException {
-		changeScreen(event,Screen.HOME);
-	}
+
 
 	@SuppressWarnings("unchecked")
 	public void plotManual(ActionEvent event) throws IOException {

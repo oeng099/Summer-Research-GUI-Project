@@ -4,7 +4,6 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javafx.scene.media.MediaPlayer;
 
 public class AutoClicker implements Runnable {
 
@@ -15,7 +14,7 @@ public class AutoClicker implements Runnable {
 	private AtomicBoolean running = new AtomicBoolean(false);
 	private boolean threadPause = false;
 
-	public AutoClicker(int button, MediaPlayer player) {
+	public AutoClicker(int button) {
 		this.button = button;
 		try {
 			robot = new Robot();

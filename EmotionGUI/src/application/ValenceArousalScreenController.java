@@ -1,8 +1,12 @@
 package application;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -61,7 +65,7 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 		return circleCentre;
 	}
 
-	
+	//Method to initialise the landmark emotions on the valence-arousal plot
 	public XYChart.Series<Number, Number> initialiseLandmarkEmotions(XYChart.Series<Number, Number> series) {
 
 		// Iterates through the landmark emotions and add all to the series
@@ -71,36 +75,56 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 			// Sets a label with the name of the emotion that is represented in landmarkData
 			Label emotion = new Label(landmarkEmotions.get(i));
 			landmarkData.setNode(emotion);
-			
-			emotion.setOnMouseEntered(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent mouseEvent) {
-					int emotionIndexNumber = landmarkEmotions.indexOf(emotion.getText());
-					coordinateDetail.setText(
-							"Point: " + landmarkValence[emotionIndexNumber] + "," + landmarkArousal[emotionIndexNumber]
-									+ " (" + landmarkEmotions.get(emotionIndexNumber) + ")");
-				}
-			});
-
-			emotion.setOnMouseExited(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent mouseEvent) {
-					coordinateDetail.setText("Point:");
-				}
-			});
-			
-			//emotion = showEmotionDetailsWhenHover(emotion);
 			series.getData().add(landmarkData);
 		}
 
 		return series;
 	}
 	
-	public Label showEmotionDetailsWhenHover(Label emotion) {
-	
-	return emotion;
+	//Method to display the valence and arousal coordinate of the mouse position when it is over the valence-arousal plot
+	public void showMouseCoordinates() {
+		
+		double modelLeftCoordinate = 47.0;
+		double modelRightCoordinate = 660.0;
+		double modelTopCoordinate = 39.0;
+		double modelBottomCoordinate = 658.0;
+		
+		double valenceSlope = 2.0 / 619.0;
+		double valenceConstant = -713.0 / 619.0;
+		
+		double arousalSlope = -2.0 / 619.0;
+		double arousalConstant = 697.0 / 619.0;
+		
+		ValenceArousalPlot.setOnMouseMoved(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+
+				if ((event.getX() >= modelLeftCoordinate && event.getX() <= modelRightCoordinate)
+						&& (event.getY() >= modelTopCoordinate && event.getY() <= modelBottomCoordinate)) {
+
+
+					double valence = convertCoordinate(event.getX(),valenceSlope,valenceConstant);
+
+					double arousal = convertCoordinate(event.getY(),arousalSlope,arousalConstant);
+
+					String coordinates = "Valence: " + valence + " Arousal: " + arousal;
+					coordinateDetail.setText(coordinates);
+				} else {
+					coordinateDetail.setText("Point: ");
+				}
+			}
+		});
 	}
 	
-
+	public double convertCoordinate(double position, double slope, double constant) {
+		double coordinateConverted = position * slope + constant;
+		BigDecimal roundedCoordinateConverted = new BigDecimal(coordinateConverted).setScale(2,
+				RoundingMode.HALF_UP);
+		return roundedCoordinateConverted.doubleValue();
+	}
 	
+	//Method to return to the home screen
+	public void returnToMainMenu(ActionEvent event) throws IOException {
+		changeScreen(event,Screen.HOME);
+	}
 }
