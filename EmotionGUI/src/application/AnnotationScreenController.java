@@ -38,7 +38,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -174,29 +173,21 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 
 	public void selectMediaFile(ActionEvent event) throws IOException, InterruptedException {
 
-		FileChooser fileChooser = new FileChooser();
+		File mediaFile = selectAFile();
 
-		File file = fileChooser.showOpenDialog(stage);
-		if (file != null) {
-
-			String fileName = file.getName();
-			String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1, file.getName().length());
-			String fileNameWithoutExtension = fileName.replace("." + fileExtension, "");
-			if (fileExtension.equals("mp4")) {
-				loadMedia(file);
-				audioVisual.setVisible(true);
-				waveform.setVisible(false);
-			}
-			;
-			if (fileExtension.equals("wav")) {
-				loadMedia(file);
-				audioVisual.setVisible(false);
-				waveform.setVisible(true);
-				loadWaveform(file.toString());
-				Image audioWaveform = new Image(new FileInputStream(
-						"src/application/images/audio_waveforms/" + fileNameWithoutExtension + "_Audio_Waveform.png"));
-				waveform.setImage(audioWaveform);
-			}
+		if (isCorrectFileType(mediaFile.toString(),"mp4")) {
+			loadMedia(mediaFile);
+			audioVisual.setVisible(true);
+			waveform.setVisible(false);
+		} else if(isCorrectFileType(mediaFile.toString(),"wav")) {
+			loadMedia(mediaFile);
+			audioVisual.setVisible(false);
+			waveform.setVisible(true);
+			loadWaveform(mediaFile.toString());
+			String fileNameWithoutExtension = mediaFile.getName().replace(".wav","");
+			Image audioWaveform = new Image(new FileInputStream(
+					"src/application/images/audio_waveforms/" + fileNameWithoutExtension + "_Audio_Waveform.png"));
+			waveform.setImage(audioWaveform);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -19,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
 
 
@@ -125,6 +127,23 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 		BigDecimal roundedCoordinateConverted = new BigDecimal(coordinateConverted).setScale(2,
 				RoundingMode.HALF_UP);
 		return roundedCoordinateConverted.doubleValue();
+	}
+	
+	//Method to open a fileChoose to select a file
+	public File selectAFile() {
+		FileChooser fileChooser = new FileChooser();
+		File file = fileChooser.showOpenDialog(stage);
+		return file;
+	}
+	
+	//Method to check if a file has the correct extension
+	public boolean isCorrectFileType(String filename, String extension) {
+		String filenameExtension = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
+		if (filenameExtension.equals(extension)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	//Method to return to the home screen

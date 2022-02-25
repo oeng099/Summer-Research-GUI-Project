@@ -24,7 +24,6 @@ import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
@@ -34,17 +33,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 public class VisualiseScreenController extends ValenceArousalScreenController{
 
 	@FXML
-	Button selectFile;
+	Button selectCSVFileButton ;
 	@FXML
-	Button plotFile;
+	Button selectWAVFileButton;
+	@FXML
+	Button plotCSVFileButton;
+	@FXML
+	Button plotWAVFileButton;
 	@FXML
 	Button plotCoordinates;
 	@FXML
@@ -123,13 +124,13 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 
 	}
 	
-	public void selectAFile(ActionEvent event) {
+	//Method to select a CSV file and display it on screen
+	public void selectCSVFile(ActionEvent event) {
 
-		FileChooser fileChooser = new FileChooser();
-
-		File file = fileChooser.showOpenDialog(stage);
-		if (file != null) {
-			CSVFilename.setText(file.toString());
+		File csvFile = selectAFile();
+		//If the file has the correct extension, set CSVFilename textfield to its name
+		if (isCorrectFileType(csvFile.toString(),"csv")) {
+			CSVFilename.setText(csvFile.toString());
 		}
 	}
 	
@@ -359,19 +360,19 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		writeToModelFile.close();
 	}
 
+	//Method to select a WAV file and display it on the screen
 	public void selectWAVFile(ActionEvent event) {
-
-		FileChooser fileChooser = new FileChooser();
-
-		File file = fileChooser.showOpenDialog(stage);
-		if (file != null) {
-			WAVFilename.setText(file.toString());
+		
+		File WAVFile = selectAFile();
+		//If the file has the correct extension, set WAVFilename textfield to its name
+		if (isCorrectFileType(WAVFile.toString(),"wav")) {
+			WAVFilename.setText(WAVFile.toString());
 		}
 	}
 
 	public void plotWAVFile(ActionEvent event) throws IOException, CsvValidationException, InterruptedException {
 		String WAVFile = WAVFilename.getText();
-		if (checkCorrectFileType(WAVFile, "wav")) {
+		if (isCorrectFileType(WAVFile, "wav")) {
 			WAV_TO_CSV(WAVFile);
 			String[] WAVFileArray = WAVFile.split("\\\\");
 			String CSVFile = WAVFileArray[WAVFileArray.length - 1].replace("wav", "csv");
@@ -379,14 +380,7 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		}
 	}
 
-	public boolean checkCorrectFileType(String filename, String extension) {
-		String filenameExtension = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
-		if (filenameExtension.equals(extension)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+
 
 	public void changeMachineLearningModels(ActionEvent event) throws IOException {
 		changeScreen(event,Screen.MODELCHOOSE);
