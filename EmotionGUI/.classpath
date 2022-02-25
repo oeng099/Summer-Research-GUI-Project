@@ -11,12 +11,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/External_Library">
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JAVAFX11">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JAVAFX11">
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/External Libraries">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

@@ -48,6 +48,7 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 		initialSeries.getData().add(circle);
 		// Sets up the landmark emotion points in the model
 		initialSeries = initialiseLandmarkEmotions(initialSeries);
+		initialSeries.setName("");
 
 		ValenceArousalPlot.getData().add(initialSeries);
 	}
@@ -83,7 +84,7 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 	
 	//Method to display the valence and arousal coordinate of the mouse position when it is over the valence-arousal plot
 	public void showMouseCoordinates() {
-		
+		//Set up the model edge coordinates
 		double modelLeftCoordinate = 47.0;
 		double modelRightCoordinate = 660.0;
 		double modelTopCoordinate = 39.0;
@@ -98,15 +99,15 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 		ValenceArousalPlot.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-
+				//Checks if the mouse is currently on the model
 				if ((event.getX() >= modelLeftCoordinate && event.getX() <= modelRightCoordinate)
 						&& (event.getY() >= modelTopCoordinate && event.getY() <= modelBottomCoordinate)) {
 
-
+					//Converts the mouse coordinate to produce valence and arousal coordinates
 					double valence = convertCoordinate(event.getX(),valenceSlope,valenceConstant);
-
 					double arousal = convertCoordinate(event.getY(),arousalSlope,arousalConstant);
 
+					//Set coordinateDetail to display the valence-arousal coordinates
 					String coordinates = "Valence: " + valence + " Arousal: " + arousal;
 					coordinateDetail.setText(coordinates);
 				} else {
@@ -116,8 +117,11 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 		});
 	}
 	
+	//Method to convert the mouse coordinate to a valence or arousal coordinate
 	public double convertCoordinate(double position, double slope, double constant) {
+		//Calculate the coordinate on the model from the mouse coordinate
 		double coordinateConverted = position * slope + constant;
+		//Round the coordinate to 2 d.p.
 		BigDecimal roundedCoordinateConverted = new BigDecimal(coordinateConverted).setScale(2,
 				RoundingMode.HALF_UP);
 		return roundedCoordinateConverted.doubleValue();
