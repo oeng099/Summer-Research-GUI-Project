@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -7,25 +8,28 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
-
-
 public abstract class ValenceArousalScreenController extends Controller implements Initializable {
-	
+
 	@FXML
 	protected ScatterChart<Number, Number> ValenceArousalPlot;
 	@FXML
@@ -35,10 +39,10 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 
 	// Sets up the landmark emotions with their respective valence and arousal
 	// values
-	ArrayList<String> landmarkEmotions = new ArrayList<String>(Arrays.asList("angry", "afraid", "sad", "bored",
-			"excited", "interested", "happy", "pleased", "relaxed", "content"));
-	double landmarkValence[] = { -0.7, -0.65, -0.8, -0.1, 0.37, 0.2, 0.5, 0.35, 0.6, 0.5 };
-	double landmarkArousal[] = { 0.65, 0.5, -0.15, -0.45, 0.9, 0.7, 0.5, 0.35, -0.3, -0.45 };
+	protected ArrayList<String> landmarkEmotions = new ArrayList<String>(Arrays.asList("angry", "afraid", "sad",
+			"bored", "excited", "interested", "happy", "pleased", "relaxed", "content"));
+	protected double landmarkValence[] = { -0.7, -0.65, -0.8, -0.1, 0.37, 0.2, 0.5, 0.35, 0.6, 0.5 };
+	protected double landmarkArousal[] = { 0.65, 0.5, -0.15, -0.45, 0.9, 0.7, 0.5, 0.35, -0.3, -0.45 };
 
 	// Method to set up the initial features on the Valence-Arousal Plot model
 	public void initialiseModel() {
@@ -68,7 +72,7 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 		return circleCentre;
 	}
 
-	//Method to initialise the landmark emotions on the valence-arousal plot
+	// Method to initialise the landmark emotions on the valence-arousal plot
 	public XYChart.Series<Number, Number> initialiseLandmarkEmotions(XYChart.Series<Number, Number> series) {
 
 		// Iterates through the landmark emotions and add all to the series
@@ -83,33 +87,34 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 
 		return series;
 	}
-	
-	//Method to display the valence and arousal coordinate of the mouse position when it is over the valence-arousal plot
+
+	// Method to display the valence and arousal coordinate of the mouse position
+	// when it is over the valence-arousal plot
 	public void showMouseCoordinates() {
-		//Set up the model edge coordinates
+		// Set up the model edge coordinates
 		double modelLeftCoordinate = 47.0;
 		double modelRightCoordinate = 660.0;
 		double modelTopCoordinate = 39.0;
 		double modelBottomCoordinate = 658.0;
-		
+
 		double valenceSlope = 2.0 / 619.0;
 		double valenceConstant = -713.0 / 619.0;
-		
+
 		double arousalSlope = -2.0 / 619.0;
 		double arousalConstant = 697.0 / 619.0;
-		
+
 		ValenceArousalPlot.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				//Checks if the mouse is currently on the model
+				// Checks if the mouse is currently on the model
 				if ((event.getX() >= modelLeftCoordinate && event.getX() <= modelRightCoordinate)
 						&& (event.getY() >= modelTopCoordinate && event.getY() <= modelBottomCoordinate)) {
 
-					//Converts the mouse coordinate to produce valence and arousal coordinates
-					double valence = convertCoordinate(event.getX(),valenceSlope,valenceConstant);
-					double arousal = convertCoordinate(event.getY(),arousalSlope,arousalConstant);
+					// Converts the mouse coordinate to produce valence and arousal coordinates
+					double valence = convertCoordinate(event.getX(), valenceSlope, valenceConstant);
+					double arousal = convertCoordinate(event.getY(), arousalSlope, arousalConstant);
 
-					//Set coordinateDetail to display the valence-arousal coordinates
+					// Set coordinateDetail to display the valence-arousal coordinates
 					String coordinates = "Valence: " + valence + " Arousal: " + arousal;
 					coordinateDetail.setText(coordinates);
 				} else {
@@ -118,25 +123,38 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 			}
 		});
 	}
-	
-	//Method to convert the mouse coordinate to a valence or arousal coordinate
+
+	// Method to convert the mouse coordinate to a valence or arousal coordinate
 	public double convertCoordinate(double position, double slope, double constant) {
-		//Calculate the coordinate on the model from the mouse coordinate
+		// Calculate the coordinate on the model from the mouse coordinate
 		double coordinateConverted = position * slope + constant;
-		//Round the coordinate to 2 d.p.
-		BigDecimal roundedCoordinateConverted = new BigDecimal(coordinateConverted).setScale(2,
-				RoundingMode.HALF_UP);
+		// Round the coordinate to 2 d.p.
+		BigDecimal roundedCoordinateConverted = new BigDecimal(coordinateConverted).setScale(2, RoundingMode.HALF_UP);
 		return roundedCoordinateConverted.doubleValue();
 	}
-	
-	//Method to open a fileChoose to select a file
-	public File selectAFile() {
+
+	// Method to set up a fileChooser to select a file with the correct extension
+	public FileChooser setUpFileChooser(String description, String[] extension) {
 		FileChooser fileChooser = new FileChooser();
+		// Adds file filters to the fileChooser
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(description, extension);
+		fileChooser.getExtensionFilters().add(extFilter);
+		return fileChooser;
+	}
+
+	// Method to allow users to select a file
+	public File openFile(FileChooser fileChooser) {
 		File file = fileChooser.showOpenDialog(stage);
 		return file;
 	}
-	
-	//Method to check if a file has the correct extension
+
+	// Method to allow users to save a new file
+	public File saveFile(FileChooser fileChooser) {
+		File file = fileChooser.showSaveDialog(stage);
+		return file;
+	}
+
+	// Method to check if a file has the correct extension
 	public boolean isCorrectFileType(String filename, String extension) {
 		String filenameExtension = filename.substring(filename.lastIndexOf(".") + 1, filename.length());
 		if (filenameExtension.equals(extension)) {
@@ -145,9 +163,27 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 			return false;
 		}
 	}
-	
-	//Method to return to the home screen
+
+	//Method to save the current state of the Valence-Arousal plot as a png image
+	public void saveAsPNG(ActionEvent event) {
+		//Sets image variable to a snapshot of the Valence-Arousal plot
+		WritableImage image = ValenceArousalPlot.snapshot(new SnapshotParameters(), null);
+
+		//Sets up a file chooser to only show PNG files and then allows the user to write a filename to save the image as
+		FileChooser pngFileChooser = setUpFileChooser("PNG files", new String[] { "*.png" });
+		File pngFile = saveFile(pngFileChooser);
+
+		try {
+			BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+			//Write the image to the file
+			ImageIO.write(bufferedImage, "png", pngFile);
+		} catch (IOException e) {
+			System.out.println("Valence-Arousal plot cannot be saved as an image.");
+		}
+	}
+
+	// Method to return to the home screen
 	public void returnToMainMenu(ActionEvent event) throws IOException {
-		changeScreen(event,Screen.HOME);
+		changeScreen(event, Screen.HOME);
 	}
 }

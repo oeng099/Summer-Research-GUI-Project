@@ -1,12 +1,8 @@
 package application;
 
 import java.awt.event.InputEvent;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -16,27 +12,22 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
-
 import com.opencsv.CSVWriter;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
@@ -179,7 +170,9 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 	//Method to select and load a media file into the media player
 	public void selectMediaFile(ActionEvent event) throws IOException, InterruptedException {
 
-		File mediaFile = selectAFile();
+		//Sets up a file chooser to only see mp4 and wav files and then allows user to select a file
+		FileChooser mediaFileChooser = setUpFileChooser("Media Files",new String[] {"*.mp4","*.wav"});
+		File mediaFile = openFile(mediaFileChooser);
 		
 		if (isCorrectFileType(mediaFile.toString(),"mp4")) {
 			//If file selected is an mp4 file it is loaded and the player is made visible
@@ -389,22 +382,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 		}
 	}
 
-	public void saveAsPNG(ActionEvent event) {
-		WritableImage image = ValenceArousalPlot.snapshot(new SnapshotParameters(), null);
 
-		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png", "*.png");
-		fileChooser.getExtensionFilters().add(extFilter);
-
-		File file = fileChooser.showSaveDialog(stage);
-
-		try {
-			BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
-			ImageIO.write(bufferedImage, "png", file);
-		} catch (IOException e) {
-			System.out.println("Scatter plot cannot be converted.");
-		}
-	}
 
 	public void saveAsCSV(ActionEvent event) throws IOException {
 

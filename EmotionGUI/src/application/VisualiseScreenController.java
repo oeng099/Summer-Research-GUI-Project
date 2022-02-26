@@ -1,9 +1,6 @@
 package application;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,10 +11,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
-
-import javafx.embed.swing.SwingFXUtils;
-
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
@@ -26,13 +19,11 @@ import com.opencsv.exceptions.CsvValidationException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
@@ -127,10 +118,12 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 	//Method to select a CSV file and display it on screen
 	public void selectCSVFile(ActionEvent event) {
 
-		File csvFile = selectAFile();
+		//Sets up a file chooser to only show CSV files then allows user to select a file
+		FileChooser CSVFileChooser = setUpFileChooser("CSV files",new String[] {"*.csv"});
+		File CSVFile = openFile(CSVFileChooser);
 		//If the file has the correct extension, set CSVFilename textfield to its name
-		if (isCorrectFileType(csvFile.toString(),"csv")) {
-			CSVFilename.setText(csvFile.toString());
+		if (isCorrectFileType(CSVFile.toString(),"csv")) {
+			CSVFilename.setText(CSVFile.toString());
 		}
 	}
 	
@@ -278,23 +271,6 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 			}
 		}
 	}
-
-	public void saveAsPNG(ActionEvent event) {
-		WritableImage image = ValenceArousalPlot.snapshot(new SnapshotParameters(), null);
-		
-		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PNG files (*.png","*.png");
-		fileChooser.getExtensionFilters().add(extFilter);
-		
-		File file = fileChooser.showSaveDialog(stage);
-		
-		try {
-			BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
-			ImageIO.write(bufferedImage,"png",file);
-		} catch (IOException e) {
-			System.out.println("Scatter plot cannot be converted.");
-		}
-	}
 	
 	public void saveAsCSV(ActionEvent event) throws IOException {
 		
@@ -341,7 +317,10 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 	//Method to select a WAV file and display it on the screen
 	public void selectWAVFile(ActionEvent event) {
 
-		File WAVFile = selectAFile();
+		//Sets up a file chooser to only show WAV files then allows user to select a file
+		FileChooser WAVFileChooser = setUpFileChooser("WAVfiles",new String[] {"*.wav"});
+		File WAVFile = openFile(WAVFileChooser);
+		
 		if (WAVFile != null) {
 			// If the file has the correct extension, set WAVFilename textfield to its name
 			if (isCorrectFileType(WAVFile.toString(), "wav")) {
