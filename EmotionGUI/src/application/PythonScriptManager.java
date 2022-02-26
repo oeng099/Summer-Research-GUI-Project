@@ -1,6 +1,7 @@
 package application;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -52,6 +53,17 @@ public class PythonScriptManager{
 			inputBuffer.append('\n');
 		}
 		pythonScriptReader.close();
+	}
+	
+	//Method to run Python script inputed
+	public void runScript(String script) throws IOException, InterruptedException {
+		String[] command = new String[] {"python", script};
+		ProcessBuilder builder = new ProcessBuilder(command);
+		//Changes directory of the builder to the location of all the Python scripts
+		builder.directory(new File("src/application"));
+		Process process = builder.start();
+		//Thread waits for the process to finish
+		process.waitFor();
 	}
 	
 }

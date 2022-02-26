@@ -99,7 +99,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 	double differenceG;
 	double differenceB;
 
-	boolean pPlay = false;
+	boolean pPressed = false;
 
 	private int numNodes;
 	private Duration totalTime;
@@ -118,7 +118,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 		initialiseModel();
 	};
 
-	// Method to set up the time slider functionality.
+	// Method to set up the time slider
 	public void initialiseTimeSlider() {
 		timeSlider.valueProperty().addListener(new InvalidationListener() {
 
@@ -134,7 +134,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 		});
 	}
 
-	// Method to set up the volume slider functionality.
+	// Method to set up the volume slider
 	public void initialiseVolumeSlider() {
 		volumeSlider.valueProperty().addListener(new InvalidationListener() {
 
@@ -151,6 +151,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 		});
 	}
 
+	//Method to set up the speed slider
 	public void initialiseSpeedSlider() {
 		speedSlider.setMaxWidth(400.0);
 		//Changes the player rate and speed text to match the value the speed slider is changed to.
@@ -164,66 +165,62 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 		});
 	}
 
+	//Method to switch the media status between PLAYING and PAUSED when p key is pressed
 	public void pKeyPressed() {
+		//Sets pPressed to true if p was pressed to change the status of the player from PAUSED to PLAYING
+		//This is to ensure there is no time delay when the AutoClicker is resumed .
 		if (player.getStatus() == MediaPlayer.Status.PAUSED) {
-			pPlay = true;
+			pPressed = true;
 		}
+		//Runs the changeMediaStatus method set to playPause button
 		playPause.fire();
 	}
 
+	//Method to select and load a media file into the media player
 	public void selectMediaFile(ActionEvent event) throws IOException, InterruptedException {
 
 		File mediaFile = selectAFile();
-
+		
 		if (isCorrectFileType(mediaFile.toString(),"mp4")) {
+			//If file selected is an mp4 file it is loaded and the player is made visible
 			loadMedia(mediaFile);
 			audioVisual.setVisible(true);
 			waveform.setVisible(false);
 		} else if(isCorrectFileType(mediaFile.toString(),"wav")) {
+			//If file selected is a wav file it is loaded, the player is made not visible and a waveform image
+			//is loaded in its place
 			loadMedia(mediaFile);
 			audioVisual.setVisible(false);
 			waveform.setVisible(true);
-			loadWaveform(mediaFile.toString());
-			String fileNameWithoutExtension = mediaFile.getName().replace(".wav","");
-			Image audioWaveform = new Image(new FileInputStream(
-					"src/application/images/audio_waveforms/" + fileNameWithoutExtension + "_Audio_Waveform.png"));
-			waveform.setImage(audioWaveform);
+			//Loads a png of the waveform of the the wav file
+			loadWaveform(mediaFile);
 		}
 	}
 
+	//Method to load the media player with a file
 	public void loadMedia(File file) {
 		media = new Media(file.toURI().toString());
 		player = new MediaPlayer(media);
 		audioVisual.setMediaPlayer(player);
 	}
-
-	public void loadWaveform(String WAVFileName) throws IOException, InterruptedException {
-		changeScriptInput(WAVFileName, new String("src/application/plotWAV.py"), new String("wavfile = "));
-		String[] command = new String[] { "python", "plotWAV.py" };
-		ProcessBuilder builder = new ProcessBuilder(command);
-		builder.directory(new File("src/application"));
-		Process process = builder.start();
-		process.waitFor();
+	
+	//Method to load an image of a waveform to the screen
+	public void loadWaveform(File mediaFile) throws IOException, InterruptedException {
+		//Creates the waveform png based on the file inputed
+		createWaveform(mediaFile.toString());
+		String fileNameWithoutExtension = mediaFile.getName().replace(".wav","");
+		//Creates an image based on the name of the image created by createWaveform
+		Image audioWaveform = new Image(new FileInputStream(
+				"src/application/images/audio_waveforms/" + fileNameWithoutExtension + "_Audio_Waveform.png"));
+		waveform.setImage(audioWaveform);
 	}
 
-	public void changeScriptInput(String WAVFile, String script, String lineToChange) throws IOException {
-		BufferedReader pythonScriptReader = new BufferedReader(new FileReader(script));
-		StringBuffer inputBuffer = new StringBuffer();
-		String line;
-
-		while ((line = pythonScriptReader.readLine()) != null) {
-			if (line.contains(lineToChange)) {
-				line = lineToChange + "r'" + WAVFile + "'";
-			}
-
-			inputBuffer.append(line);
-			inputBuffer.append('\n');
-		}
-		pythonScriptReader.close();
-
-		FileOutputStream writeToModelFile = new FileOutputStream(script);
-		writeToModelFile.write(inputBuffer.toString().getBytes());
-		writeToModelFile.close();
+	//Method to create an waveform image from a wav file
+	public void createWaveform(String WAVFileName) throws IOException, InterruptedException {
+		PythonScriptManager pythonScriptManager = new PythonScriptManager("src/application/plotWAV.py");
+		//Inputs the name of the WAVFile into the Python script
+		pythonScriptManager.changePythonScript("wavfile =","wavfile = r'" + WAVFileName + "'");
+		pythonScriptManager.runScript("plotWAV.py");
 	}
 
 	public void playMediaFile(ActionEvent event) {
@@ -257,8 +254,8 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 			autoclicker.pauseClicking();
 		} else {
 			player.play();
-			autoclicker.resumeClicking(pPlay);
-			pPlay = false;
+			autoclicker.resumeClicking(pPressed);
+			pPressed = false;
 		}
 	}
 

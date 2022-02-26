@@ -331,57 +331,43 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		}
 	}
 
+	//Method to get the predicted emotional output of a WAV file from a machine-learning models to a CSV file
 	public void WAV_TO_CSV(String WAVFile) throws IOException, InterruptedException {
-		changeScriptInput(WAVFile, new String("src/application/group108demo.py"), new String("scriptInput = "));
-		String[] command = new String[] {"python", "group108demo.py", WAVFile };
-		ProcessBuilder builder = new ProcessBuilder(command);
-		builder.directory(new File("src/application"));
-		Process process = builder.start();
-		process.waitFor();
-	}
-
-	public void changeScriptInput(String WAVFile, String script, String lineToChange) throws IOException {
-		BufferedReader pythonScriptReader = new BufferedReader(new FileReader(script));
-		StringBuffer inputBuffer = new StringBuffer();
-		String line;
-
-		while ((line = pythonScriptReader.readLine()) != null) {
-			if (line.contains(lineToChange)) {
-				line = lineToChange + "r'" + WAVFile + "'";
-			}
-
-			inputBuffer.append(line);
-			inputBuffer.append('\n');
-		}
-		pythonScriptReader.close();
-
-		FileOutputStream writeToModelFile = new FileOutputStream(script);
-		writeToModelFile.write(inputBuffer.toString().getBytes());
-		writeToModelFile.close();
+		PythonScriptManager pythonScriptManager = new PythonScriptManager("src/application/group108demo.py");
+		pythonScriptManager.changePythonScript("scriptInput =","scriptInput = r'" + WAVFile + "'");
+		pythonScriptManager.runScript("group108demo.py");
 	}
 
 	//Method to select a WAV file and display it on the screen
 	public void selectWAVFile(ActionEvent event) {
-		
+
 		File WAVFile = selectAFile();
-		//If the file has the correct extension, set WAVFilename textfield to its name
-		if (isCorrectFileType(WAVFile.toString(),"wav")) {
-			WAVFilename.setText(WAVFile.toString());
+		if (WAVFile != null) {
+			// If the file has the correct extension, set WAVFilename textfield to its name
+			if (isCorrectFileType(WAVFile.toString(), "wav")) {
+				WAVFilename.setText(WAVFile.toString());
+			}
 		}
 	}
-
+	
+	//Method to plot the emotional data of a selected WAV file onto the model
 	public void plotWAVFile(ActionEvent event) throws IOException, CsvValidationException, InterruptedException {
-		String WAVFile = WAVFilename.getText();
-		if (isCorrectFileType(WAVFile, "wav")) {
-			WAV_TO_CSV(WAVFile);
-			String[] WAVFileArray = WAVFile.split("\\\\");
-			String CSVFile = WAVFileArray[WAVFileArray.length - 1].replace("wav", "csv");
-			plotCSVFile("src\\application\\WAV_To_CSV\\CSV_Outputs\\" + CSVFile);
+		
+		//If the WAVFilename textfield is empty, run selectWAVFile method
+		if(WAVFilename.getText().isEmpty()) {
+			selectWAVFileButton.fire();
 		}
+		File WAVFile = new File(WAVFilename.getText());
+		//Creates a CSV file that contains the predicted emtional output of the WAV file from the machine-learning models
+		WAV_TO_CSV(WAVFile.toString());
+		//Gets the name of the CSV file created
+		String CSVFile = WAVFile.getName().replace(".wav", ".csv");
+		//Plots the CSV file generated onto the model
+		plotCSVFile("src/application/WAV_To_CSV/CSV_Outputs/" + CSVFile);
 	}
 
 
-
+	//Method to change to the screen to change machine-learning models it is trained on
 	public void changeMachineLearningModels(ActionEvent event) throws IOException {
 		changeScreen(event,Screen.MODELCHOOSE);
 	}
