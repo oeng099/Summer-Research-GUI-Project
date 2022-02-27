@@ -161,7 +161,7 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 	
 	//Method to plot a series on the model
 	public void plotSeries(int numNodes,XYChart.Series<Number,Number> series,ArrayList<Double> timeValues) {
-		//Sets the increments that each colour changes by as each node is plotted.
+		//Sets the increments that each colour changes by as each node is plotted
 		calculateDifferences(numNodes, numSeries);
 		//Adds the nodes onto the model and colours them
 		series.setName("Emotion Points" + numSeries);
@@ -172,52 +172,88 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		numSeries++;
 	}
 
-	@SuppressWarnings("unchecked")
+	// Method to plot points onto the model manually
 	public void plotManual(ActionEvent event) throws IOException {
 
-		boolean hasManual = false;
-		int hasManualIndex = -1;
-		int currentIndex = 0;
-		XYChart.Series<Number, Number> emotionCoordinates;
-		for (XYChart.Series<Number, Number> ValenceArousalSeries : ValenceArousalPlot.getData()) {
-			if (ValenceArousalSeries.getName().equals("Manual Points")) {
-				hasManual = true;
-				hasManualIndex = currentIndex;
-				break;
-			}
-			currentIndex++;
+		// Checks if there is already a manual series in the Valence-Arousal model
+		boolean hasManual;
+		// Returns a positive int if a manual plot series already exists and -1 if it
+		// does not
+		int manualIndex = findManualIndex();
+		if (manualIndex == -1) {
+			hasManual = false;
+		} else {
+			hasManual = true;
 		}
 
-		if (hasManual) {
-			emotionCoordinates = ValenceArousalPlot.getData().get(currentIndex);
-		} else {
-			emotionCoordinates = new XYChart.Series<Number, Number>();
-		}
+		// Sets up the emotionCoordinates variable depending on hasManual
+		XYChart.Series<Number, Number> emotionCoordinates = setUpManualEmotionCoordinates(hasManual, manualIndex);
 
-		if (valenceCoordinate.getText().isEmpty() || arousalCoordinate.getText().isEmpty()) {
-			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1.0 to 1.0");
-		} else if (!(Double.parseDouble(valenceCoordinate.getText()) < 1.0
-				&& Double.parseDouble(valenceCoordinate.getText()) > -1.0)
-				|| !(Double.parseDouble(arousalCoordinate.getText()) < 1.0
-						&& Double.parseDouble(arousalCoordinate.getText()) > -1.0)) {
-			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1.0 to 1.0");
-		} else {
+		// If the valence and arousal inputs are acceptable, the new node is added and then plotted onto the model
+		if (hasAcceptableInputs()) {
 			emotionCoordinates.setName("Manual Points");
-			manualPlotError.setText(" ");
+			manualPlotError.setText("");
 			double valence = Double.parseDouble(valenceCoordinate.getText());
 			double arousal = Double.parseDouble(arousalCoordinate.getText());
-			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
-			data.setNode(new HoverNode(valenceCoordinate.getText(), arousalCoordinate.getText()));
-			emotionCoordinates.getData().add(data);
-
-			if (hasManual) {
-				ValenceArousalPlot.getData().remove(hasManualIndex);
-				ValenceArousalPlot.getData().addAll(emotionCoordinates);
-			} else {
-				ValenceArousalPlot.getData().addAll(emotionCoordinates);
-				numSeries++;
-			}
+			//Add the new node to the emotionCoordinates series
+			emotionCoordinates = addNewNode(emotionCoordinates, valence, arousal);
+			//Plot the manual series on the model
+			plotManualSeries(hasManual, manualIndex, emotionCoordinates);
+		} else {
+			manualPlotError.setText("Please enter valid numbers for both valence and arousal from -1.0 to 1.0");
 		}
+	}
+	
+	//Method to plot the manual series depending on whether a manual series already exists in the model
+	public void plotManualSeries(boolean hasManual, int manualIndex, XYChart.Series<Number, Number> emotionCoordinates) {
+		if (hasManual) {
+			//If manual plot series already exists, remove the existing series and plot the new one
+			ValenceArousalPlot.getData().remove(manualIndex);
+			ValenceArousalPlot.getData().add(emotionCoordinates);
+		} else {
+			//If it does not already exist plot the new series and add to the total number of series
+			ValenceArousalPlot.getData().add(emotionCoordinates);
+			numSeries++;
+		}
+	}
+	
+	//Method to set up the emotionCoordinates variable depending on whether a manual plot series already exists
+	public XYChart.Series<Number, Number> setUpManualEmotionCoordinates (boolean hasManual, int manualIndex) {
+		if (hasManual) {
+			//returns the manual plot series if it exists
+			return ValenceArousalPlot.getData().get(manualIndex);
+		} else {
+			return new XYChart.Series<Number, Number>();
+		}
+	}
+	
+	//Method to check if the inputs in manual coordinates textfield are acceptable to be plotted
+	public boolean hasAcceptableInputs() {
+		//Checks if both valence and arousal inputs are both between -1.0 to 1.0
+		if (Double.parseDouble(valenceCoordinate.getText()) < 1.0
+				&& Double.parseDouble(valenceCoordinate.getText()) > -1.0
+				&& Double.parseDouble(arousalCoordinate.getText()) < 1.0
+						&& Double.parseDouble(arousalCoordinate.getText()) > -1.0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	//Method to return the index of the manual points series if it already exists in the Valence-Arousal model
+	public int findManualIndex() {
+
+		int manualIndex = 0;
+		//Iterates through all series in the Valence-Arousal Model
+		for (XYChart.Series<Number, Number> ValenceArousalSeries : ValenceArousalPlot.getData()) {
+			//If manual plot series is found, its index in the ValenceArousalPlot variable is returned
+			if (ValenceArousalSeries.getName().equals("Manual Points")) {
+				return manualIndex;
+			}
+			manualIndex++;
+		}
+		//If not found, -1 is returned instead.
+		return -1;
 	}
 
 
