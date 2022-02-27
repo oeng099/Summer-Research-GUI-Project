@@ -278,6 +278,9 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 			currentB += differenceB;
 		}
 	}
+	
+	public abstract void clearModel(ActionEvent event);
+
 
 	// Method to return to the home screen
 	public void returnToMainMenu(ActionEvent event) throws IOException {

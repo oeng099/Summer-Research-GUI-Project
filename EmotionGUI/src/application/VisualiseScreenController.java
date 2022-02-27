@@ -68,8 +68,6 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 	@FXML
 	Text selectAFileText;
 
-
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -180,10 +178,6 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		numSeries++;
 	}
 
-
-
-
-
 	@SuppressWarnings("unchecked")
 	public void plotManual(ActionEvent event) throws IOException {
 
@@ -232,13 +226,7 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		}
 	}
 
-	public void clearModel(ActionEvent event) {
-		if (ValenceArousalPlot.getData().size() > 1) {
-			ValenceArousalPlot.getData().remove(1, ValenceArousalPlot.getData().size());
-			annotationTimes.removeAll(annotationTimes);
-			numSeries = 1;
-		}
-	}
+
 
 	//Method to get the predicted emotional output of a WAV file from a machine-learning models to a CSV file
 	public void WAV_TO_CSV(String WAVFile) throws IOException, InterruptedException {
@@ -276,6 +264,20 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		String CSVFile = WAVFile.getName().replace(".wav", ".csv");
 		//Plots the CSV file generated onto the model
 		plotCSVFile("src/application/WAV_To_CSV/CSV_Outputs/" + CSVFile);
+	}
+	
+	//Method to clear the Valence-Arousal model
+	@Override
+	public void clearModel(ActionEvent event) {
+		//Checks if there are emotional coordinates series
+		if (ValenceArousalPlot.getData().size() > 1) {
+			//Remove all series from index 1 to its size (does not remove 0 as that is initalSeries)
+			ValenceArousalPlot.getData().remove(1, ValenceArousalPlot.getData().size());
+			//Resets all annotationTimes
+			annotationTimes.removeAll(annotationTimes);
+			//Resets numSeries back to 1
+			numSeries = 1;
+		}
 	}
 
 

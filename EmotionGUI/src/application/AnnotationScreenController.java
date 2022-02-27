@@ -352,7 +352,8 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 
 
 
-	// Method to clear the model
+	// Method to clear the Valence-Arousal model
+	@Override
 	public void clearModel(ActionEvent event) {
 		// Checking if Emotion Coordinates series is plotted on the model
 		if (ValenceArousalPlot.getData().size() > 1) {
