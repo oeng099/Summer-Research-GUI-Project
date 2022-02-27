@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -18,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
@@ -48,6 +50,20 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 	protected double landmarkArousal[] = { 0.65, 0.5, -0.15, -0.45, 0.9, 0.7, 0.5, 0.35, -0.3, -0.45 };
 	
 	protected ArrayList<ArrayList<Double>> annotationTimes = new ArrayList<ArrayList<Double>>();
+	
+	protected int numSeries = 0;
+
+	protected double[] endR = new double[] { 251, 153, 9, 234 };
+	protected double[] endG = new double[] { 20, 34, 18, 115 };
+	protected double[] endB = new double[] { 20, 195, 121, 141 };
+
+	protected double[] startR = new double[] { 23, 253, 255, 137 };
+	protected double[] startG = new double[] { 255, 231, 146, 227 };
+	protected double[] startB = new double[] { 101, 45, 0, 181 };
+
+	protected double differenceR;
+	protected double differenceG;
+	protected double differenceB;
 
 	// Method to set up the initial features on the Valence-Arousal Plot model
 	public void initialiseModel() {
@@ -62,6 +78,7 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 		initialSeries.setName("");
 
 		ValenceArousalPlot.getData().add(initialSeries);
+		this.numSeries++;
 	}
 
 	// Method to plot the centre circle on the model
@@ -229,9 +246,42 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 			writer.writeNext(coordinates);
 		}
 	}
+	
+	//Method to calculate the increment changes for each of the rgb colour values. 
+	public void calculateDifferences(int numNodes, int numSeries) {
+		//Gets the index of the next colour gradation that has not yet been used
+		int currentSeries = numSeries - 1;
+		//Calculates the differences for each value by finding the overall difference between the end and start
+		//colour values and dividing by the total number of nodes
+		this.differenceR = (endR[currentSeries] - startR[currentSeries]) / numNodes;
+		this.differenceG = (endG[currentSeries] - startG[currentSeries]) / numNodes;
+		this.differenceB = (endB[currentSeries] - startB[currentSeries]) / numNodes;
+	}
+
+	//Method to set colour gradation to a series plotted on the Valence-Arousal model
+	public void colourNodes(XYChart<Number, Number> ValenceArousalPlot, int numSeries) {
+		//Gets the nodes from the latest series plotted
+		Set<Node> nodes = ValenceArousalPlot.lookupAll(".series" + numSeries);
+
+		//Sets up the colours for the first node
+		int currentSeries = numSeries - 1;
+		double currentR = startR[currentSeries];
+		double currentG = startG[currentSeries];
+		double currentB = startB[currentSeries];
+
+		//Iterates through all nodes and adds and a small difference value to each colour value each iteration
+		//to have the next node be a slightly different colour
+		for (Node n : nodes) {
+			n.setStyle("-fx-background-color: rgb(" + currentR + "," + currentG + "," + currentB + ")");
+			currentR += differenceR;
+			currentG += differenceG;
+			currentB += differenceB;
+		}
+	}
 
 	// Method to return to the home screen
 	public void returnToMainMenu(ActionEvent event) throws IOException {
 		changeScreen(event, Screen.HOME);
 	}
+
 }

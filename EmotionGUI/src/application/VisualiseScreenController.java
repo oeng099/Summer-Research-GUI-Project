@@ -2,23 +2,19 @@ package application;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
-import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvValidationException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -72,19 +68,7 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 	@FXML
 	Text selectAFileText;
 
-	private int numSeries = 1;
 
-	private double[] endR = new double[] { 251, 153, 9, 234 };
-	private double[] endG = new double[] { 20, 34, 18, 115 };
-	private double[] endB = new double[] { 20, 195, 121, 141 };
-
-	private double[] startR = new double[] { 23, 253, 255, 137 };
-	private double[] startG = new double[] { 255, 231, 146, 227 };
-	private double[] startB = new double[] { 101, 45, 0, 181 };
-
-	private double differenceR;
-	private double differenceG;
-	private double differenceB;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -196,28 +180,7 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		numSeries++;
 	}
 
-	public void calculateDifferences(int numNodes, int numSeries) {
-		int currentSeries = numSeries - 1;
-		this.differenceR = (endR[currentSeries] - startR[currentSeries]) / numNodes;
-		this.differenceG = (endG[currentSeries] - startG[currentSeries]) / numNodes;
-		this.differenceB = (endB[currentSeries] - startB[currentSeries]) / numNodes;
-	}
 
-	public void colourNodes(XYChart<Number, Number> ValenceArousalPlot, int numSeries) {
-		Set<Node> nodes = ValenceArousalPlot.lookupAll(".series" + numSeries);
-
-		int currentSeries = numSeries - 1;
-		double currentR = startR[currentSeries];
-		double currentG = startG[currentSeries];
-		double currentB = startB[currentSeries];
-
-		for (Node n : nodes) {
-			n.setStyle("-fx-background-color: rgb(" + currentR + "," + currentG + "," + currentB + ")");
-			currentR += differenceR;
-			currentG += differenceG;
-			currentB += differenceB;
-		}
-	}
 
 
 

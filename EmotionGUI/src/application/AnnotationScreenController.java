@@ -3,16 +3,12 @@ package application;
 import java.awt.event.InputEvent;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.Set;
-
-import com.opencsv.CSVWriter;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -21,7 +17,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -75,18 +70,6 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 	private Media media;
 	private MediaPlayer player;
 	private AutoClicker autoclicker;
-
-	private double endR = 251;
-	private double endG = 20;
-	private double endB = 20;
-
-	private double startR = 23;
-	private double startG = 255;
-	private double startB = 101;
-
-	double differenceR;
-	double differenceG;
-	double differenceB;
 
 	boolean pPressed = false;
 
@@ -217,9 +200,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 	public void playMediaFile(ActionEvent event) {
 
 		this.numNodes = (int) Math.floor(player.getStopTime().toMillis() / 500);
-		this.differenceR = (endR - startR) / numNodes;
-		this.differenceG = (endG - startG) / numNodes;
-		this.differenceB = (endB - startB) / numNodes;
+		calculateDifferences(numNodes,numSeries);
 
 		this.totalTime = player.getTotalDuration();
 		player.setVolume(volumeSlider.getValue() / 100.0);
@@ -268,7 +249,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 			ValenceArousalPlot.getData().remove(1);
 		}
 		ValenceArousalPlot.getData().add(emotionCoordinates);
-		colourNodes(ValenceArousalPlot);
+		colourNodes(ValenceArousalPlot,numSeries);
 	}
 
 	public void goForwardFiveSeconds(ActionEvent event) {
@@ -319,6 +300,8 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 
 
 	public void createPointByClick() {
+		
+		ArrayList<Double> mediaAnnotationTimes = new ArrayList<Double>();
 		ValenceArousalPlot.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -342,7 +325,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 
 					double annotationTime = player.getCurrentTime().toSeconds();
 					double roundAT = Math.round(annotationTime * 100.0) / 100.0;
-					annotationTimes.get(1).add(roundAT);
+					mediaAnnotationTimes.add(roundAT);
 
 					XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(roundedValence,
 							roundedArousal);
@@ -353,6 +336,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 
 			}
 		});
+		annotationTimes.add(0,mediaAnnotationTimes);
 	}
 
 	public void plotEmotionalCoordinates(XYChart.Data<Number, Number> data) {
@@ -362,24 +346,8 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 			ValenceArousalPlot.getData().remove(1);
 		}
 		ValenceArousalPlot.getData().add(emotionCoordinates);
-		colourNodes(ValenceArousalPlot);
+		colourNodes(ValenceArousalPlot,numSeries);
 	}
-
-	public void colourNodes(XYChart<Number, Number> ValenceArousalPlot) {
-		Set<Node> nodes = ValenceArousalPlot.lookupAll(".series" + 1);
-
-		double currentR = startR;
-		double currentG = startG;
-		double currentB = startB;
-
-		for (Node n : nodes) {
-			n.setStyle("-fx-background-color: rgb(" + currentR + "," + currentG + "," + currentB + ")");
-			currentR += differenceR;
-			currentG += differenceG;
-			currentB += differenceB;
-		}
-	}
-
 
 
 
