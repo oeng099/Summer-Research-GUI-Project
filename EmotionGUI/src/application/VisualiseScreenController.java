@@ -111,70 +111,64 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		changeScreen(event,Screen.CSVHELP);
 	}
 
-	
-	@SuppressWarnings("unchecked")
+	//Method to plot the emotional data of a CSV file on the model
 	public void plotCSVFile(ActionEvent event) throws CsvValidationException, IOException {
-
+		
+		//Set up the CSV reader with the CSV file to plot. Skip first line as it contains headers
 		File file = new File(CSVFilename.getText());
 		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
+		
 		String[] lineInFile;
 		int numNodes = 0;
 
+		//Initialise a series to contain valence and arousal values and a corresponding arraylist for time values
 		XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
 		ArrayList<Double> currentSeriesTime = new ArrayList<Double>();
 
+		//Iterates through the entire CSV file 
 		while ((lineInFile = reader.readNext()) != null) {
+			//Extract the time, valence and arousal values from the file
 			currentSeriesTime.add(Double.parseDouble(lineInFile[0]));
 			double unroundedValence = Double.parseDouble(lineInFile[1]);
 			double unroundedArousal = Double.parseDouble(lineInFile[2]);
-			BigDecimal roundedValence = new BigDecimal(unroundedValence).setScale(2, RoundingMode.HALF_UP);
-			BigDecimal roundedArousal = new BigDecimal(unroundedArousal).setScale(2, RoundingMode.HALF_UP);
-			double valence = roundedValence.doubleValue();
-			double arousal = roundedArousal.doubleValue();
-			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
-			data.setNode(new HoverNode(Double.toString(valence), Double.toString(arousal), coordinateDetail));
-			emotionCoordinates.getData().add(data);
+			
+			//Round the valence and arousal values extracted
+			double valence = roundDoubleToTwoDP(unroundedValence);
+			double arousal = roundDoubleToTwoDP(unroundedArousal);
+			
+			//Add the a node created using the valence and arousal values to the emotionCoordinates series
+			emotionCoordinates = addNewNode(emotionCoordinates,valence,arousal);
 			numNodes++;
 		}
-		calculateDifferences(numNodes, numSeries);
-		emotionCoordinates.setName("Emotion Points" + numSeries);
-		manualPlotError.setText(" ");
-		ValenceArousalPlot.getData().addAll(emotionCoordinates);
-		colourNodes(ValenceArousalPlot, numSeries);
-		annotationTimes.add(currentSeriesTime);
-		numSeries++;
+		//Once all of the CSV file has been read, plot the series and store the annotation times
+		plotSeries(numNodes,emotionCoordinates,currentSeriesTime);
 	}
-
-	@SuppressWarnings("unchecked")
-	public void plotCSVFile(String CSVFile) throws CsvValidationException, IOException {
-
-		File file = new File(CSVFile);
-		CSVReader reader = new CSVReaderBuilder(new FileReader(file)).withSkipLines(1).build();
-		String[] lineInFile;
-		int numNodes = 0;
-
-		XYChart.Series<Number, Number> emotionCoordinates = new XYChart.Series<Number, Number>();
-		ArrayList<Double> currentSeriesTime = new ArrayList<Double>();
-
-		while ((lineInFile = reader.readNext()) != null) {
-			currentSeriesTime.add(Double.parseDouble(lineInFile[0]));
-			double unroundedValence = Double.parseDouble(lineInFile[1]);
-			double unroundedArousal = Double.parseDouble(lineInFile[2]);
-			BigDecimal roundedValence = new BigDecimal(unroundedValence).setScale(2, RoundingMode.HALF_UP);
-			BigDecimal roundedArousal = new BigDecimal(unroundedArousal).setScale(2, RoundingMode.HALF_UP);
-			double valence = roundedValence.doubleValue();
-			double arousal = roundedArousal.doubleValue();
-			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
-			data.setNode(new HoverNode(Double.toString(valence), Double.toString(arousal), coordinateDetail));
-			emotionCoordinates.getData().add(data);
-			numNodes++;
-		}
+	
+	//Method to add a node to a series
+	public XYChart.Series<Number, Number> addNewNode(XYChart.Series<Number, Number> series,double valence, double arousal) {
+		XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
+		//Sets a HoverNode to the data so that when the point is hovered over in the model it will display its coordinates
+		data.setNode(new HoverNode(Double.toString(valence), Double.toString(arousal)));
+		series.getData().add(data);
+		return series;
+	}
+	
+	//Method to round a double to 2dp
+	public double roundDoubleToTwoDP(double numToRound) {
+		BigDecimal roundedNum = new BigDecimal(numToRound).setScale(2, RoundingMode.HALF_UP);
+		return roundedNum.doubleValue();
+	}
+	
+	//Method to plot a series on the model
+	public void plotSeries(int numNodes,XYChart.Series<Number,Number> series,ArrayList<Double> timeValues) {
+		//Sets the increments that each colour changes by as each node is plotted.
 		calculateDifferences(numNodes, numSeries);
-		emotionCoordinates.setName("Emotion Points" + numSeries);
-		manualPlotError.setText(" ");
-		ValenceArousalPlot.getData().addAll(emotionCoordinates);
+		//Adds the nodes onto the model and colours them
+		series.setName("Emotion Points" + numSeries);
+		ValenceArousalPlot.getData().add(series);
 		colourNodes(ValenceArousalPlot, numSeries);
-		annotationTimes.add(currentSeriesTime);
+		//Adds the corresponding time values of the series to the annotationTimes variable
+		annotationTimes.add(timeValues);
 		numSeries++;
 	}
 
@@ -213,7 +207,7 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 			double valence = Double.parseDouble(valenceCoordinate.getText());
 			double arousal = Double.parseDouble(arousalCoordinate.getText());
 			XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
-			data.setNode(new HoverNode(valenceCoordinate.getText(), arousalCoordinate.getText(), coordinateDetail));
+			data.setNode(new HoverNode(valenceCoordinate.getText(), arousalCoordinate.getText()));
 			emotionCoordinates.getData().add(data);
 
 			if (hasManual) {
@@ -258,12 +252,15 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 			selectWAVFileButton.fire();
 		}
 		File WAVFile = new File(WAVFilename.getText());
-		//Creates a CSV file that contains the predicted emtional output of the WAV file from the machine-learning models
+		//Creates a CSV file that contains the predicted emotional output of the WAV file from the machine-learning models
 		WAV_TO_CSV(WAVFile.toString());
-		//Gets the name of the CSV file created
+		//Gets the name of the CSV file created and sets it to the CSVFile name textfield
 		String CSVFile = WAVFile.getName().replace(".wav", ".csv");
+		CSVFilename.setText("src/application/WAV_To_CSV/CSV_Outputs/" + CSVFile);
 		//Plots the CSV file generated onto the model
-		plotCSVFile("src/application/WAV_To_CSV/CSV_Outputs/" + CSVFile);
+		plotCSVFileButton.fire();
+		//Clears the textfield of the generated CSV file
+		CSVFilename.clear();
 	}
 	
 	//Method to clear the Valence-Arousal model

@@ -329,8 +329,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 
 					XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(roundedValence,
 							roundedArousal);
-					data.setNode(new HoverNode(Double.toString(roundedValence), Double.toString(roundedArousal),
-							coordinateDetail));
+					data.setNode(new HoverNode(Double.toString(roundedValence), Double.toString(roundedArousal)));
 					plotEmotionalCoordinates(data);
 				}
 
