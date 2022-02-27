@@ -85,9 +85,6 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 	private double differenceR;
 	private double differenceG;
 	private double differenceB;
-	
-	private ArrayList<ArrayList<Double>> annotationTimes = new ArrayList<ArrayList<Double>>();
-
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -270,33 +267,6 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 				numSeries++;
 			}
 		}
-	}
-	
-	public void saveAsCSV(ActionEvent event) throws IOException {
-		
-		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv","*.csv");
-		fileChooser.getExtensionFilters().add(extFilter);
-		
-		File file = fileChooser.showSaveDialog(stage);
-		String csv = file.toString();
-		CSVWriter writer = new CSVWriter(new FileWriter(csv));
-		
-		String [] record = "Time,Valence,Arousal".split(",");
-		writer.writeNext(record);
-		XYChart.Series<Number, Number> emotionCoordinates = ValenceArousalPlot.getData().get(1);
-		
-		for(int i = 0; i < emotionCoordinates.getData().size(); i++) {
-			Number time = annotationTimes.get(0).get(i);
-			Number valence = emotionCoordinates.getData().get(i).getXValue();
-			Number  arousal = emotionCoordinates.getData().get(i).getYValue();
-			String[] coordinates = new String[3];
-			coordinates[0] = time.toString();
-			coordinates[1] = valence.toString();
-			coordinates[2] = arousal.toString();
-			writer.writeNext(coordinates);
-		}
-		writer.close();
 	}
 
 	public void clearModel(ActionEvent event) {

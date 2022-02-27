@@ -76,8 +76,6 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 	private MediaPlayer player;
 	private AutoClicker autoclicker;
 
-	private ArrayList<Double> annotationTimes = new ArrayList<Double>();
-
 	private double endR = 251;
 	private double endG = 20;
 	private double endB = 20;
@@ -344,7 +342,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 
 					double annotationTime = player.getCurrentTime().toSeconds();
 					double roundAT = Math.round(annotationTime * 100.0) / 100.0;
-					annotationTimes.add(roundAT);
+					annotationTimes.get(1).add(roundAT);
 
 					XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(roundedValence,
 							roundedArousal);
@@ -384,30 +382,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 
 
 
-	public void saveAsCSV(ActionEvent event) throws IOException {
 
-		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv", "*.csv");
-		fileChooser.getExtensionFilters().add(extFilter);
-
-		File file = fileChooser.showSaveDialog(stage);
-		String csv = file.toString();
-		CSVWriter writer = new CSVWriter(new FileWriter(csv));
-
-		String[] record = "Time,Valence,Arousal".split(",");
-		writer.writeNext(record);
-
-		for (int i = 0; i < emotionCoordinates.getData().size(); i++) {
-			Number valence = emotionCoordinates.getData().get(i).getXValue();
-			Number arousal = emotionCoordinates.getData().get(i).getYValue();
-			String[] coordinates = new String[3];
-			coordinates[0] = annotationTimes.get(i).toString();
-			coordinates[1] = valence.toString();
-			coordinates[2] = arousal.toString();
-			writer.writeNext(coordinates);
-		}
-		writer.close();
-	}
 
 	// Method to clear the model
 	public void clearModel(ActionEvent event) {

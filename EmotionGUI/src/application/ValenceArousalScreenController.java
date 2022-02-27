@@ -2,6 +2,7 @@ package application;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+
+import com.opencsv.CSVWriter;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -43,6 +46,8 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 			"bored", "excited", "interested", "happy", "pleased", "relaxed", "content"));
 	protected double landmarkValence[] = { -0.7, -0.65, -0.8, -0.1, 0.37, 0.2, 0.5, 0.35, 0.6, 0.5 };
 	protected double landmarkArousal[] = { 0.65, 0.5, -0.15, -0.45, 0.9, 0.7, 0.5, 0.35, -0.3, -0.45 };
+	
+	protected ArrayList<ArrayList<Double>> annotationTimes = new ArrayList<ArrayList<Double>>();
 
 	// Method to set up the initial features on the Valence-Arousal Plot model
 	public void initialiseModel() {
@@ -179,6 +184,49 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 			ImageIO.write(bufferedImage, "png", pngFile);
 		} catch (IOException e) {
 			System.out.println("Valence-Arousal plot cannot be saved as an image.");
+		}
+	}
+	
+	// Method to save the data on the Valence-Arousal model into a CSV file
+	public void saveAsCSV(ActionEvent event) throws IOException {
+
+		// Sets up a file chooser to only show CSV files and then allows the user to
+		// name the CSV file the model data will be saved to
+		FileChooser CSVFileChooser = setUpFileChooser("CSV files", new String[] { "*.csv" });
+		File CSVFile = saveFile(CSVFileChooser);
+
+		// Set up the writer to the CSV file and the header for each series
+		CSVWriter writer = new CSVWriter(new FileWriter(CSVFile));
+		String[] headers = "Time,Valence,Arousal".split(",");
+
+		// Get the total number of series in the model, will be saving the
+		// ValenceArousal Plot data from its index 1
+		// to its last index (as index 0 is initialSeries)
+		int numEmotionSeries = ValenceArousalPlot.getData().size();
+
+		//Iterates through all emotion series on the Valence-Arousal plot 
+		for (int i = 1; i < numEmotionSeries; i++) {
+			writer.writeNext(headers);
+			//Gets the current series valence and arousal data and corresponding annotation time
+			XYChart.Series<Number, Number> emotionCoordinates = ValenceArousalPlot.getData().get(i);
+			ArrayList<Double> currentSeriesTime = annotationTimes.get(i - 1);
+			//Writes the current series to the CSV file
+			writeSeriesToCSV(writer,emotionCoordinates,currentSeriesTime);
+		}
+		writer.close();
+	}
+	
+	//Method to write the emotional data of a series and it corresponding time to a CSV file
+	public void writeSeriesToCSV(CSVWriter writer,XYChart.Series<Number, Number> series,ArrayList<Double> times) {
+		//Iterates through all of the series
+		for (int j = 0; j < series.getData().size(); j++) {
+			//Get the time,valence and arousal values of a point
+			Number time = times.get(j);
+			Number valence = series.getData().get(j).getXValue();
+			Number arousal = series.getData().get(j).getYValue();
+			//Write the values to the CSV file
+			String[] coordinates = new String[] { time.toString(), valence.toString(), arousal.toString() };
+			writer.writeNext(coordinates);
 		}
 	}
 
