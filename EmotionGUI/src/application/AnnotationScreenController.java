@@ -4,8 +4,6 @@ import java.awt.event.InputEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -197,27 +195,67 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 		pythonScriptManager.runScript("plotWAV.py");
 	}
 
+	//Method to play a media file from start
 	public void playMediaFile(ActionEvent event) {
 
+		//Set up the total number of nodes to be plotted, the colour gradation increments and total time
 		this.numNodes = (int) Math.floor(player.getStopTime().toMillis() / 500);
 		calculateDifferences(numNodes,numSeries);
-
 		this.totalTime = player.getTotalDuration();
+		
 		player.setVolume(volumeSlider.getValue() / 100.0);
-		player.currentTimeProperty().addListener(
-				(observable, oldTime, newTime) -> timeLabel.setText(formatTime(newTime, player.getTotalDuration())));
+		
+		//Sets up a listener to have the time label match the player time
+		updateTimeLabel();
+		
+		//Start the autoclicker to begin annotation
 		startAutoClicker();
 		try {
+			//Thread is paused for five seconds, similar to that of the autoclicker to allow user to move
+			//into correct position for annotation
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		//Starts playing the media
 		player.play();
-		updateTime();
+		//Sets up a listener to have the time slider match the player time
+		updateTimeSlider();
+		
+		//When the media ends, stop annotation
 		player.setOnEndOfMedia(() -> {
 			autoclicker.stopClicking();
 		});
 		;
+	}
+	
+	//Method to set a listener to the player so that the timeSlider will move in accordance to the player time
+	public void updateTimeSlider() {
+		player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Duration> ov, Duration oldTime, Duration currentTime) {
+				timeSlider.setValue(currentTime.toMillis() / totalTime.toMillis() * 100.0);
+			}
+
+		});
+	}
+	
+	//Method to set up a listener to the player so that the time label will be updated to the player time
+	public void updateTimeLabel() {
+		player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Duration> ov, Duration oldTime, Duration currentTime) {
+					timeLabel.setText(formatTime(currentTime, player.getTotalDuration()));
+		}
+	});
+	}
+	
+	//Method to start the autoclicker that serves as the way for users to annotate
+	public void startAutoClicker() {
+		this.autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK);
+		autoclicker.startClicking();
 	}
 
 	public void changeMediaStatus(ActionEvent event) {
@@ -231,47 +269,44 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 		}
 	}
 
+	//Method to play a media from the start again
 	public void playfromStart(ActionEvent event) {
+		//Set the player back to its start time
 		player.seek(player.getStartTime());
+		//Clears the model by pressing the clear button
 		clear.fire();
+		//Plays the media again by pressing the play button
 		playMedia.fire();
 	}
 
+	//Method to skip five seconds behind in the media
 	public void goBackFiveSeconds(ActionEvent event) {
+		//Sets the player time to five seconds behind
 		player.seek(player.getCurrentTime().subtract(Duration.seconds(5)));
-		double pointsInFiveSec = 5.0 / (Double.valueOf(autoclicker.getDelayTime()) / 1000);
-		int pointsToRemove = (int) Math.round(pointsInFiveSec) + 1;
+		//Calculates the number of points to remove
+		int pointsToRemove = calculatePointsToRemove(autoclicker.getDelayTime());
+		//Remove the points plotted in the last five seconds from the emotionCoordinates series
 		int currentPointsLength = emotionCoordinates.getData().size();
 		for (int i = currentPointsLength - 1; i > currentPointsLength - pointsToRemove; i--) {
 			emotionCoordinates.getData().remove(i);
 		}
-		if (ValenceArousalPlot.getData().contains(emotionCoordinates)) {
-			ValenceArousalPlot.getData().remove(1);
-		}
-		ValenceArousalPlot.getData().add(emotionCoordinates);
-		colourNodes(ValenceArousalPlot,numSeries);
+		plotAnnotationCoordinates(emotionCoordinates);
 	}
-
+	
+	//Method to calculate the number of points to remove
+	public int calculatePointsToRemove(int rate) {
+		//Calculates the number of points that were plotted in the last five seconds
+		double pointsInFiveSec = 5.0 / (Double.valueOf(rate) / 1000);
+		//Rounds the number of points up 
+		int pointsToRemove = (int) Math.round(pointsInFiveSec) + 1;
+		return pointsToRemove;
+	}
+	
+	//Method to skip five seconds ahead in the media
 	public void goForwardFiveSeconds(ActionEvent event) {
+		//Sets the player time to five seconds ahead
 		player.seek(player.getCurrentTime().add(Duration.seconds(5)));
 	}
-
-	public void startAutoClicker() {
-		this.autoclicker = new AutoClicker(InputEvent.BUTTON1_DOWN_MASK);
-		autoclicker.startClicking();
-	}
-
-	public void updateTime() {
-		player.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Duration> ov, Duration oldTime, Duration currentTime) {
-				timeSlider.setValue(currentTime.toMillis() / totalTime.toMillis() * 100.0);
-			}
-
-		});
-	}
-
 	
 	//Method to format the current time and total time of the MediaPlayer
 	public String formatTime(Duration currentTime, Duration totalTime) {
@@ -311,7 +346,7 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 		annotationTimes.add(0,mediaAnnotationTimes);
 	}
 
-	//Method to plot the cooridnates of the data from annotation to the model
+	//Method to plot the coordinates of the data from annotation to the model
 	public void plotAnnotationCoordinates(XYChart.Series<Number, Number> series) {
 		emotionCoordinates.setName("Emotion Coordinates");
 		//If there is an already existing emotionCoordiantes series, remove it
