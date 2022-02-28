@@ -272,61 +272,38 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 		});
 	}
 
+	
+	//Method to format the current time and total time of the MediaPlayer
 	public String formatTime(Duration currentTime, Duration totalTime) {
-		int secondsElapsed = (int) Math.floor(currentTime.toSeconds());
-		int hoursElapsed = secondsElapsed / 360;
-		if (hoursElapsed > 0) {
-			secondsElapsed -= hoursElapsed * 360;
-		}
-		int minutesElapsed = secondsElapsed / 60;
-		if (minutesElapsed > 0) {
-			secondsElapsed -= minutesElapsed * 60;
-		}
+		
+		//Gets the time the player is currently on and the total time of the player
+		Time presentTime = new Time((int) Math.floor(currentTime.toSeconds()));
+		Time finishTime = new Time((int) Math.floor(totalTime.toSeconds()));
 
-		int totalSeconds = (int) Math.floor(totalTime.toSeconds());
-		int totalHours = totalSeconds / 360;
-		if (totalHours > 0) {
-			totalSeconds -= totalSeconds * 360;
-		}
-		int totalMinutes = totalSeconds / 60;
-		if (totalMinutes > 0) {
-			totalSeconds -= totalMinutes * 60;
-		}
-
-		return String.format("%d:%02d:%02d/%d:%02d:%02d", hoursElapsed, minutesElapsed, secondsElapsed, totalHours,
-				totalMinutes, totalSeconds);
+		return String.format("%d:%02d:%02d/%d:%02d:%02d", presentTime.getHours(), presentTime.getMinutes(),presentTime.getSeconds(), finishTime.getHours(),
+				finishTime.getMinutes(), finishTime.getSeconds());
 	}
 
-
-
+	//Method to create a point on the model at the location of a mouse click
 	public void createPointByClick() {
 		
 		ArrayList<Double> mediaAnnotationTimes = new ArrayList<Double>();
 		ValenceArousalPlot.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				//Checks if the mouse cursor is within the model
+				if (isInModel(event)) {
 
-				if ((47.0 <= event.getX() && event.getX() <= 666.0)
-						&& (39.0 <= event.getY() && event.getY() <= 658.0)) {
+					// Converts the mouse coordinate to produce valence and arousal coordinates
+					double valence = convertCoordinate(event.getX(), valenceSlope, valenceConstant);
+					double arousal = convertCoordinate(event.getY(), arousalSlope, arousalConstant);
+					
+					//Adds the current time of the annotation to mediaAnnotationTimes
+					mediaAnnotationTimes.add(getTimeFromPlayer());
 
-					double valenceConverted = event.getX() * valenceSlope + valenceConstant;
-					BigDecimal roundedValenceConverted = new BigDecimal(valenceConverted).setScale(2,
-							RoundingMode.HALF_UP);
-					double roundedValence = roundedValenceConverted.doubleValue();
-
-					double arousalConverted = event.getY() * arousalSlope + arousalConstant;
-					BigDecimal roundedArousalConverted = new BigDecimal(arousalConverted).setScale(2,
-							RoundingMode.HALF_UP);
-					double roundedArousal = roundedArousalConverted.doubleValue();
-
-					double annotationTime = player.getCurrentTime().toSeconds();
-					double roundAT = Math.round(annotationTime * 100.0) / 100.0;
-					mediaAnnotationTimes.add(roundAT);
-
-					XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(roundedValence,
-							roundedArousal);
-					data.setNode(new HoverNode(Double.toString(roundedValence), Double.toString(roundedArousal)));
-					plotEmotionalCoordinates(data);
+					//Add the new point to the emotionCoordinates series and then plot the new series
+					emotionCoordinates = addNewNode(emotionCoordinates,valence,arousal);
+					plotAnnotationCoordinates(emotionCoordinates);
 				}
 
 			}
@@ -334,17 +311,25 @@ public class AnnotationScreenController extends ValenceArousalScreenController {
 		annotationTimes.add(0,mediaAnnotationTimes);
 	}
 
-	public void plotEmotionalCoordinates(XYChart.Data<Number, Number> data) {
-		emotionCoordinates.getData().add(data);
+	//Method to plot the cooridnates of the data from annotation to the model
+	public void plotAnnotationCoordinates(XYChart.Series<Number, Number> series) {
 		emotionCoordinates.setName("Emotion Coordinates");
+		//If there is an already existing emotionCoordiantes series, remove it
 		if (ValenceArousalPlot.getData().contains(emotionCoordinates)) {
 			ValenceArousalPlot.getData().remove(1);
 		}
 		ValenceArousalPlot.getData().add(emotionCoordinates);
 		colourNodes(ValenceArousalPlot,numSeries);
 	}
-
-
+	
+	//Method to get the time from the Media Player
+	public double getTimeFromPlayer() {
+		
+		double annotationTime = player.getCurrentTime().toSeconds();
+		//Round the time extracted to two 2 dp
+		double roundAT = Math.round(annotationTime * 100.0) / 100.0;
+		return roundAT;
+	}
 
 
 	// Method to clear the Valence-Arousal model

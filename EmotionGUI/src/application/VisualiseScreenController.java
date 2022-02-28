@@ -144,14 +144,7 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		plotSeries(numNodes,emotionCoordinates,currentSeriesTime);
 	}
 	
-	//Method to add a node to a series
-	public XYChart.Series<Number, Number> addNewNode(XYChart.Series<Number, Number> series,double valence, double arousal) {
-		XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
-		//Sets a HoverNode to the data so that when the point is hovered over in the model it will display its coordinates
-		data.setNode(new HoverNode(Double.toString(valence), Double.toString(arousal)));
-		series.getData().add(data);
-		return series;
-	}
+
 	
 	//Method to round a double to 2dp
 	public double roundDoubleToTwoDP(double numToRound) {
