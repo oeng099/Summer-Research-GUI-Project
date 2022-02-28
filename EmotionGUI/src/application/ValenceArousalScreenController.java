@@ -64,6 +64,18 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 	protected double differenceR;
 	protected double differenceG;
 	protected double differenceB;
+	
+	// Set up the model edge coordinates
+	protected double modelLeftCoordinate = 47.0;
+	protected double modelRightCoordinate = 660.0;
+	protected double modelTopCoordinate = 39.0;
+	protected double modelBottomCoordinate = 658.0;
+
+	protected double valenceSlope = 2.0 / 619.0;
+	protected double valenceConstant = -713.0 / 619.0;
+
+	protected double arousalSlope = -2.0 / 619.0;
+	protected double arousalConstant = 697.0 / 619.0;
 
 	// Method to set up the initial features on the Valence-Arousal Plot model
 	public void initialiseModel() {
@@ -113,24 +125,12 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 	// Method to display the valence and arousal coordinate of the mouse position
 	// when it is over the valence-arousal plot
 	public void showMouseCoordinates() {
-		// Set up the model edge coordinates
-		double modelLeftCoordinate = 47.0;
-		double modelRightCoordinate = 660.0;
-		double modelTopCoordinate = 39.0;
-		double modelBottomCoordinate = 658.0;
-
-		double valenceSlope = 2.0 / 619.0;
-		double valenceConstant = -713.0 / 619.0;
-
-		double arousalSlope = -2.0 / 619.0;
-		double arousalConstant = 697.0 / 619.0;
 
 		ValenceArousalPlot.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				// Checks if the mouse is currently on the model
-				if ((event.getX() >= modelLeftCoordinate && event.getX() <= modelRightCoordinate)
-						&& (event.getY() >= modelTopCoordinate && event.getY() <= modelBottomCoordinate)) {
+				if ((isInModel(event))) {
 
 					// Converts the mouse coordinate to produce valence and arousal coordinates
 					double valence = convertCoordinate(event.getX(), valenceSlope, valenceConstant);
@@ -144,6 +144,16 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 				}
 			}
 		});
+	}
+	
+	//Method to check if the mouse cursor is in the model
+	public boolean isInModel(MouseEvent event) {
+		if ((event.getX() >= modelLeftCoordinate && event.getX() <= modelRightCoordinate)
+				&& (event.getY() >= modelTopCoordinate && event.getY() <= modelBottomCoordinate)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// Method to convert the mouse coordinate to a valence or arousal coordinate
@@ -277,6 +287,15 @@ public abstract class ValenceArousalScreenController extends Controller implemen
 			currentG += differenceG;
 			currentB += differenceB;
 		}
+	}
+	
+	//Method to add a node to a series
+	public XYChart.Series<Number, Number> addNewNode(XYChart.Series<Number, Number> series,double valence, double arousal) {
+		XYChart.Data<Number, Number> data = new XYChart.Data<Number, Number>(valence, arousal);
+		//Sets a HoverNode to the data so that when the point is hovered over in the model it will display its coordinates
+		data.setNode(new HoverNode(Double.toString(valence), Double.toString(arousal)));
+		series.getData().add(data);
+		return series;
 	}
 	
 	public abstract void clearModel(ActionEvent event);

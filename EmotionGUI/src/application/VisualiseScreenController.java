@@ -313,7 +313,6 @@ public class VisualiseScreenController extends ValenceArousalScreenController{
 		}
 	}
 
-
 	//Method to change to the screen to change machine-learning models it is trained on
 	public void changeMachineLearningModels(ActionEvent event) throws IOException {
 		changeScreen(event,Screen.MODELCHOOSE);
