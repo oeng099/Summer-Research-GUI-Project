@@ -56,7 +56,7 @@ print('Current Working Directory: ' , os.getcwd())
 # audioInputFolder = 'demo/audioInput/'
 # for dir, _, filenames in os.walk(audioInputFolder):
 #  pass
-scriptInput = r'C:\Users\owene\Desktop\Summer-Research-GUI-Project\EmotionGUI\testing\WAV files\JLCO_female1_confident_4b_1.wav'
+scriptInput = r'C:\Users\owene\Desktop\Summer-Research-GUI-Project\EmotionGUI\testing\WAV files\JLCO_female1_angry_1a_1.wav'
 
 
 

@@ -17,6 +17,7 @@ EmotionGUI requires the following to run:
 
 - Javafx SDK (11.02 or later)
 - Python3
+- Latest Java version (18.0.1 or later)
 
 To be able to plot the predicted emotional coordinates from WAV files, download all libraries required by the 'group108demo.py' file. These include:
 	- tensorflow
@@ -25,7 +26,7 @@ To be able to plot the predicted emotional coordinates from WAV files, download 
 	- librosa
 	- pydub
 	- matplotlib
-	-IPython
+	- IPython
 
 To download, in the terminal type 'pip install' followed by the library to download.
 
